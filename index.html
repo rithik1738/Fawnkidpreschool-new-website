@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fawn Kids Academy - Premium Preschool</title>
+  <script>
+    // Immediate script to prevent dark mode flashing
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  </script>
+  <link rel="stylesheet" href="styles.css?v=11">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Gradient Border Property & Animation */
+    @property --gradient-angle {
+      syntax: "<angle>";
+      initial-value: 0deg;
+      inherits: false;
+    }
+
+    @keyframes gradient-rotate {
+      from {
+        --gradient-angle: 0deg;
+      }
+      to {
+        --gradient-angle: 360deg;
+      }
+    }
+
+    /* Word Entrance Animation Styles */
+    @keyframes word-appear { 
+      0% { 
+        opacity: 0; 
+        transform: translateY(30px) scale(0.8); 
+        filter: blur(10px); 
+      } 
+      50% { 
+        opacity: 0.8; 
+        transform: translateY(10px) scale(0.95); 
+        filter: blur(2px); 
+      } 
+      100% { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+        filter: blur(0); 
+      } 
+    }
+    .word-animate { 
+      display: inline-block; 
+      opacity: 0; 
+      margin-right: 0.15em; 
+      transition: color 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), text-shadow 0.4s ease; 
+      will-change: transform, opacity, filter;
+    }
+    .word-animate:hover { 
+      color: #A67C46 !important; /* Premium Fawn gold/brown */ 
+      transform: translateY(-6px) scale(1.08); 
+      text-shadow: 0 10px 20px rgba(166, 124, 70, 0.3);
+      cursor: pointer;
+    }
+
+    /* Specific Home Page Styles */
+    .hero-bg-shape {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 48%;
+      height: 100%;
+      background: #FAFAF7; /* Very subtle warm white/beige */
+      border-bottom-left-radius: 120px;
+      z-index: 1;
+    }
+    
+    /* Pure CSS Badges */
+    .css-badge-yellow {
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      background: linear-gradient(135deg, #FBE3A8, #F1CA74);
+      padding: 24px 20px;
+      border-radius: 20px;
+      box-shadow: 0 12px 24px rgba(241, 202, 116, 0.4);
+      text-align: center;
+      z-index: 10;
+      min-width: 110px;
+    }
+    .css-badge-yellow .badge-number {
+      font-family: 'Raleway', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #333;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .css-badge-yellow .badge-text {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #555;
+      letter-spacing: 1.5px;
+      line-height: 1.4;
+    }
+
+    .css-glassy-card {
+      position: absolute;
+      bottom: 40px;
+      left: -50px;
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      padding: 28px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+      z-index: 10;
+      width: 280px;
+      
+      /* Clean, Static Frosted Glass Background */
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      
+      transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
+    }
+    .css-glassy-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      padding: 2px; /* Border thickness */
+      background: conic-gradient(
+        from var(--gradient-angle, 0deg),
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.6) 30%,
+        #f9de90 50%,
+        rgba(255, 255, 255, 0.6) 70%,
+        rgba(255, 255, 255, 0.1) 100%
+      );
+      -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+              mask-composite: exclude;
+      pointer-events: none;
+      animation: gradient-rotate 4s linear infinite;
+    }
+    .css-glassy-card:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 30px 60px rgba(255, 255, 255, 0.15);
+    }
+    .css-glassy-card .stars {
+      color: #111;
+      margin-bottom: 16px;
+      font-size: 1.2rem;
+      display: flex;
+      gap: 6px;
+    }
+    .css-glassy-card .glassy-quote {
+      font-family: 'Raleway', sans-serif;
+      font-size: 1.5rem;
+      color: #111;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .css-glassy-card .glassy-author {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #333;
+      letter-spacing: 1.5px;
+    }
+
+    .banner-section {
+      padding: 60px 0;
+      text-align: center;
+    }
+    .banner-section h2 {
+      font-size: 2.8rem;
+      margin-bottom: 40px;
+      color: var(--color-text);
+    }
+    .banner-section h2 em {
+      color: var(--color-accent);
+      font-style: italic;
+    }
+    .banner-img {
+      width: 100%;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-top: 60px;
+    }
+    .feature-card {
+      border-radius: var(--radius-xl);
+      padding: 50px;
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-card.green {
+      background: var(--color-primary);
+      color: #fff;
+    }
+    .feature-card.brown {
+      background: #8A6B42;
+      color: #fff;
+    }
+    .feature-card.white {
+      background: var(--color-section-alt);
+      color: var(--color-text);
+    }
+    .feature-card-img {
+      padding: 0;
+      height: 350px;
+    }
+    .feature-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .feature-card h3 {
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+      color: inherit;
+    }
+    .feature-card p {
+      font-size: 2rem;
+      line-height: 1.4;
+      font-weight: 300;
+    }
+    .feature-card.green p,
+    .feature-card.brown p {
+      color: rgba(255, 255, 255, 0.95) !important;
+    }
+    .feature-card.green h3,
+    .feature-card.brown h3 {
+      color: #ffffff !important;
+    }
+    .feature-card.white p {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--color-text-muted);
+    }
+    .feature-card.white h3 {
+      font-size: 3.5rem;
+      color: var(--color-text);
+      font-weight: 300;
+      letter-spacing: 0;
+      margin-bottom: 10px;
+      font-family: var(--font-body);
+    }
+    .feature-card.white h3 span {
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      font-weight: 600;
+      margin-left: 15px;
+      vertical-align: middle;
+    }
+
+    /* Philosophy Section */
+    .philosophy-section {
+      padding: 120px 0;
+    }
+    .philosophy-img {
+      border-radius: var(--radius-xl) 100px var(--radius-xl) var(--radius-xl);
+      overflow: hidden;
+      height: 450px;
+    }
+    .philosophy-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .philosophy-content {
+      padding-left: 40px;
+    }
+    .philosophy-content h2 {
+      font-size: 4rem;
+      line-height: 1.1;
+      margin-top: 20px;
+    }
+    .philosophy-content h2 em {
+      color: #8A6B42;
+      font-style: italic;
+    }
+
+    /* Curriculum Section */
+    .curriculum-list {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+    .curriculum-item {
+      display: flex;
+      gap: 20px;
+    }
+    .curriculum-icon {
+      font-size: 1.5rem;
+      color: var(--color-text);
+      margin-top: 5px;
+    }
+    .curriculum-text h4 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+    .curriculum-text p {
+      font-size: 0.95rem;
+      color: var(--color-text-muted);
+    }
+    .curriculum-badges {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .curriculum-badge {
+      background: var(--color-section-alt);
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .curriculum-img {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      height: 600px;
+    }
+    .curriculum-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Programs Grid */
+    .programs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-top: 50px;
+    }
+    .prog-card {
+      border-radius: 32px;
+      padding: 50px;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      
+      /* Glassmorphism Backdrop Blur */
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      
+      /* Clean, Static Glass Background */
+      background: linear-gradient(var(--bg-start), var(--bg-end));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      
+      transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.5s ease;
+    }
+    .prog-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 32px;
+      padding: 3px; /* Border thickness */
+      background: conic-gradient(
+        from var(--gradient-angle, 0deg),
+        transparent 0%,
+        transparent 35%,
+        var(--glow-color) 50%,
+        transparent 65%,
+        transparent 100%
+      );
+      -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+              mask-composite: exclude;
+      pointer-events: none;
+      animation: gradient-rotate 4s linear infinite;
+    }
+    .prog-card:hover {
+      transform: translateY(-15px) scale(1.02);
+      box-shadow: 0 30px 60px var(--shadow-glow);
+    }
+    .prog-card .badge {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-weight: 700;
+      display: inline-block;
+      margin-bottom: 24px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .prog-card:hover .badge {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(255, 255, 255, 0.15);
+    }
+    .prog-card h3 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      font-weight: 400;
+      font-family: 'Raleway', sans-serif;
+      color: inherit;
+      transition: transform 0.4s ease;
+    }
+    .prog-card:hover h3 {
+      transform: translateX(10px);
+    }
+    .prog-card p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      line-height: 1.6;
+      opacity: 0.9;
+      color: inherit;
+    }
+    .prog-card ul {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 40px;
+      list-style: none;
+      padding-left: 0;
+    }
+    .prog-card ul li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .prog-btn {
+      display: inline-block;
+      padding: 12px 30px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-decoration: none;
+      margin-top: auto;
+      
+      /* Glassy Dark Button Style */
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #ffffff !important;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(5px);
+    }
+    .prog-btn:hover {
+      background: #ffffff !important;
+      color: #111111 !important;
+      border-color: #ffffff;
+      box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
+    }
+
+    /* Card Themes */
+    .prog-card.light {
+      --bg-start: rgba(30, 24, 15, 0.85);
+      --bg-end: rgba(18, 14, 8, 0.95);
+      --glow-color: #f9de90;
+      --shadow-glow: rgba(249, 222, 144, 0.25);
+      color: #ffffff;
+    }
+    .prog-card.light .badge { background: rgba(249, 222, 144, 0.15); color: #f9de90; border: 1px solid rgba(249, 222, 144, 0.3); }
+    .prog-card.light ul li i { color: #f9de90; font-size: 1rem; }
+
+    .prog-card.brown {
+      --bg-start: rgba(35, 18, 15, 0.85);
+      --bg-end: rgba(20, 10, 8, 0.95);
+      --glow-color: #ff8a73;
+      --shadow-glow: rgba(255, 138, 115, 0.25);
+      color: #ffffff;
+    }
+    .prog-card.brown .badge { background: rgba(255, 138, 115, 0.15); color: #ff8a73; border: 1px solid rgba(255, 138, 115, 0.3); }
+    .prog-card.brown ul li i { color: #ff8a73; font-size: 1rem; }
+
+    .prog-card.dark-green {
+      --bg-start: rgba(15, 28, 18, 0.85);
+      --bg-end: rgba(8, 16, 10, 0.95);
+      --glow-color: #8ae89c;
+      --shadow-glow: rgba(138, 232, 156, 0.2);
+      color: #ffffff;
+    }
+    .prog-card.dark-green .badge { background: rgba(138, 232, 156, 0.15); color: #8ae89c; border: 1px solid rgba(138, 232, 156, 0.3); }
+    .prog-card.dark-green ul li i { color: #8ae89c; font-size: 1rem; }
+
+    .prog-card.green {
+      --bg-start: rgba(32, 28, 12, 0.85);
+      --bg-end: rgba(18, 16, 6, 0.95);
+      --glow-color: #fce074;
+      --shadow-glow: rgba(252, 224, 116, 0.25);
+      color: #ffffff;
+    }
+    .prog-card.green .badge { background: rgba(252, 224, 116, 0.15); color: #fce074; border: 1px solid rgba(252, 224, 116, 0.3); }
+    .prog-card.green ul li i { color: #fce074; font-size: 1rem; }
+
+    /* Other Courses – deep ocean teal */
+    .prog-card.teal {
+      --bg-start: rgba(15, 25, 35, 0.85);
+      --bg-end: rgba(8, 14, 20, 0.95);
+      --glow-color: #74cbfb;
+      --shadow-glow: rgba(116, 203, 251, 0.2);
+      color: #ffffff;
+    }
+    .prog-card.teal .badge { background: rgba(116, 203, 251, 0.15); color: #74cbfb; border: 1px solid rgba(116, 203, 251, 0.3); }
+    .prog-card.teal ul li i { color: #74cbfb; font-size: 1rem; }
+
+    /* CTA Section */
+    .cta-banner-new {
+      background: var(--color-primary);
+      border-radius: var(--radius-xl);
+      padding: 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      margin: 100px 0;
+      color: #fff;
+    }
+    .cta-banner-new h2 {
+      font-size: 3.5rem;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .cta-banner-new h2 em {
+      font-style: italic;
+      color: #D4B97A;
+    }
+    .cta-banner-new p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 30px;
+      max-width: 400px;
+    }
+    .cta-banner-new .buttons {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    .btn-brown {
+      background: #8A6B42;
+      color: #fff;
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    .btn-brown:hover {
+      background: #755935;
+      transform: translateY(-2px);
+    }
+    .btn-text-link {
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .cta-banner-new img {
+      border-radius: var(--radius-lg);
+      width: 100%;
+    }
+
+    /* FAQ */
+    .faq-section {
+      padding: 80px 0;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .faq-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    .faq-header h2 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    .faq-header .subtitle {
+      color: var(--color-text-muted);
+    }
+    .faq-item {
+      border-bottom: 1px solid var(--color-border);
+      padding: 24px 0;
+      transition: all 0.3s ease;
+    }
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      font-size: 1.15rem;
+      cursor: pointer;
+      color: #111;
+      transition: color 0.3s ease;
+    }
+    .faq-question:hover {
+      color: var(--color-teal);
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+      font-size: 0.95rem;
+      transition: all 0.4s ease-in-out;
+    }
+    .faq-item.active .faq-question {
+      color: var(--color-teal);
+    }
+    .faq-item.active .faq-answer {
+      max-height: 500px;
+      opacity: 1;
+      margin-top: 15px;
+    }
+    .faq-question i {
+      transition: transform 0.4s ease;
+    }
+    .faq-item.active .faq-question i {
+      transform: rotate(180deg);
+    }
+    .faq-contact {
+      text-align: center;
+      margin-top: 50px;
+    }
+    .faq-contact h3 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+    .btn-outline-gray {
+      border: 1px solid var(--color-border);
+      padding: 10px 24px;
+      border-radius: 50px;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    @media (max-width: 768px) {
+      .programs-grid {
+        grid-template-columns: 1fr !important;
+        gap: 24px !important;
+        padding: 0 10px !important;
+      }
+      .prog-card {
+        background: #000000 !important;
+        color: #ffffff !important;
+        border: none !important;
+        padding: 35px 25px !important;
+        border-radius: 24px !important;
+        min-height: 220px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        justify-content: flex-start !important;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15) !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
+      .prog-card::before {
+        display: none !important;
+      }
+      .prog-card .badge {
+        background: rgba(255, 255, 255, 0.15) !important;
+        color: #ffffff !important;
+        border: 1px solid rgba(255, 255, 255, 0.25) !important;
+        font-size: 0.7rem !important;
+        margin-bottom: 16px !important;
+        padding: 6px 12px !important;
+      }
+      .prog-card h3 {
+        color: #ffffff !important;
+        font-size: 1.8rem !important;
+        font-weight: 600 !important;
+        margin-bottom: 12px !important;
+        transform: none !important;
+        text-align: left !important;
+      }
+      .prog-card p {
+        color: rgba(255, 255, 255, 0.8) !important;
+        font-size: 0.95rem !important;
+        line-height: 1.6 !important;
+        margin-bottom: 24px !important;
+        text-align: left !important;
+      }
+      .prog-card ul {
+        display: none !important; /* Hide checklist on mobile for clean vertical alignment */
+      }
+      .prog-btn {
+        background: #ffffff !important;
+        color: #000000 !important;
+        border: none !important;
+        width: 100% !important;
+        text-align: center !important;
+        font-size: 0.9rem !important;
+        font-weight: 700 !important;
+        border-radius: 12px !important;
+        padding: 14px 0 !important;
+        margin-top: auto !important;
+        display: block !important;
+        box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1) !important;
+      }
+      .prog-btn:hover {
+        background: #f0f0f0 !important;
+        transform: translateY(-2px) !important;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      body .programs-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+        width: 100vw !important;
+        max-width: 100vw !important;
+        margin-left: calc(50% - 50vw) !important;
+        margin-right: calc(50% - 50vw) !important;
+        padding: 0 !important;
+        gap: 32px !important;
+        box-sizing: border-box !important;
+        justify-items: center !important;
+      }
+
+      body .programs-grid .prog-card {
+        width: calc(100vw - 96px) !important;
+        max-width: 580px !important;
+        margin-left: 48px !important;
+        margin-right: auto !important;
+        min-height: 260px !important;
+        padding: 36px 38px !important;
+        border-radius: 20px !important;
+        background: #000000 !important;
+        box-shadow: none !important;
+        box-sizing: border-box !important;
+      }
+
+      body .programs-grid .prog-card .badge {
+        background: transparent !important;
+        border: 0 !important;
+        color: #ffffff !important;
+        font-size: 1.45rem !important;
+        font-weight: 500 !important;
+        letter-spacing: 0 !important;
+        line-height: 1.2 !important;
+        padding: 0 !important;
+        margin-bottom: 0 !important;
+        text-transform: none !important;
+      }
+
+      body .programs-grid .prog-card h3 {
+        display: block !important;
+        color: #ffffff !important;
+        font-size: 1.8rem !important;
+        line-height: 1.2 !important;
+        margin: 18px 0 12px !important;
+      }
+
+      body .programs-grid .prog-card p {
+        display: block !important;
+        color: rgba(255, 255, 255, 0.78) !important;
+        font-size: 0.95rem !important;
+        line-height: 1.55 !important;
+        margin-bottom: 22px !important;
+      }
+
+      body .programs-grid .prog-card ul {
+        display: none !important;
+      }
+
+      body .programs-grid .prog-card .prog-btn {
+        display: inline-block !important;
+        width: auto !important;
+        min-width: 150px !important;
+        padding: 13px 24px !important;
+        border-radius: 10px !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body .programs-grid {
+        gap: 28px !important;
+      }
+
+      body .programs-grid .prog-card {
+        width: calc(100vw - 72px) !important;
+        margin-left: 24px !important;
+        min-height: 232px !important;
+        padding: 34px 38px !important;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      body .programs-grid {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) !important;
+        width: 100vw !important;
+        max-width: 100vw !important;
+        margin-left: calc(50% - 50vw) !important;
+        margin-right: calc(50% - 50vw) !important;
+        padding: 0 !important;
+        gap: 28px !important;
+        justify-items: center !important;
+      }
+
+      body .programs-grid .prog-card {
+        width: calc(100vw - 48px) !important;
+        max-width: 580px !important;
+        min-height: auto !important;
+        margin: 0 auto !important;
+        padding: 34px 28px !important;
+        border-radius: 28px !important;
+        background: linear-gradient(var(--bg-start), var(--bg-end)) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        box-shadow: 0 18px 42px var(--shadow-glow) !important;
+        color: #ffffff !important;
+        backdrop-filter: blur(25px) !important;
+        -webkit-backdrop-filter: blur(25px) !important;
+      }
+
+      body .programs-grid .reveal-left,
+      body .programs-grid .reveal-right {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      body .programs-grid .prog-card::before {
+        display: block !important;
+        border-radius: inherit !important;
+      }
+
+      body .programs-grid .prog-card.light .badge { background: rgba(249, 222, 144, 0.15) !important; color: #f9de90 !important; border: 1px solid rgba(249, 222, 144, 0.3) !important; }
+      body .programs-grid .prog-card.brown .badge { background: rgba(255, 138, 115, 0.15) !important; color: #ff8a73 !important; border: 1px solid rgba(255, 138, 115, 0.3) !important; }
+      body .programs-grid .prog-card.dark-green .badge { background: rgba(138, 232, 156, 0.15) !important; color: #8ae89c !important; border: 1px solid rgba(138, 232, 156, 0.3) !important; }
+      body .programs-grid .prog-card.green .badge { background: rgba(252, 224, 116, 0.15) !important; color: #fce074 !important; border: 1px solid rgba(252, 224, 116, 0.3) !important; }
+      body .programs-grid .prog-card.teal .badge { background: rgba(116, 203, 251, 0.15) !important; color: #74cbfb !important; border: 1px solid rgba(116, 203, 251, 0.3) !important; }
+
+      body .programs-grid .prog-card .badge {
+        display: inline-block !important;
+        font-size: 0.7rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 1.5px !important;
+        line-height: 1.2 !important;
+        margin-bottom: 20px !important;
+        padding: 7px 14px !important;
+        border-radius: 30px !important;
+        text-transform: uppercase !important;
+      }
+
+      body .programs-grid .prog-card h3 {
+        display: block !important;
+        color: inherit !important;
+        font-size: 2rem !important;
+        font-weight: 400 !important;
+        line-height: 1.2 !important;
+        margin: 0 0 16px !important;
+      }
+
+      body .programs-grid .prog-card p {
+        display: block !important;
+        color: inherit !important;
+        font-size: 1rem !important;
+        line-height: 1.55 !important;
+        margin-bottom: 24px !important;
+        opacity: 0.86 !important;
+      }
+
+      body .programs-grid .prog-card ul {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+        margin-bottom: 32px !important;
+      }
+
+      body .programs-grid .prog-card .prog-btn {
+        display: inline-block !important;
+        width: 100% !important;
+        padding: 14px 22px !important;
+        border-radius: 8px !important;
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        color: #ffffff !important;
+        text-align: center !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo/Logo.pdf (1) 2.png" alt="Fawn Kids Logo">
+        <span>FAWN KIDS</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="active">HOME</a>
+        <a href="programs.html">PROGRAMS</a>
+        <a href="curriculum.html">CURRICULUM</a>
+        <a href="admission.html">ADMISSIONS</a>
+        <a href="about.html">ABOUT</a>
+      </div>
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-outline">Login</a>
+        <a href="signup.html" class="btn btn-primary">Sign up</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" style="padding-top: 140px; padding-bottom: 80px; min-height: 90vh;">
+    <div class="hero-bg-shape" style="width: 48%; border-bottom-left-radius: 120px;"></div>
+    <div class="container grid-2" style="position: relative; z-index: 2; align-items: center;">
+      <div class="hero-content reveal-left" style="max-width: 600px; padding-right: 40px;">
+        <h1 style="font-size: 4.2rem; line-height: 1.1; margin-bottom: 24px; color: #111; font-weight: 600; letter-spacing: -1.5px;">
+          <span class="word-animate" data-delay="100">Why</span>
+          <span class="word-animate" data-delay="250">Choose</span><br>
+          <span class="word-animate" data-delay="400">Our</span>
+          <span class="word-animate" data-delay="550">Preschool</span><br>
+          <span class="word-animate" data-delay="700">for</span>
+          <span class="word-animate" data-delay="850">Your</span>
+          <span class="word-animate" data-delay="1000">Child's</span><br>
+          <em style="color: #A67C46; font-style: italic; font-weight: 600; font-family: 'Raleway', sans-serif; display: inline-block;">
+            <span class="word-animate" data-delay="1150">First</span>
+            <span class="word-animate" data-delay="1300">Steps?</span>
+          </em>
+        </h1>
+        <p style="font-size: 1.1rem; color: #444; margin-bottom: 40px; max-width: 480px; line-height: 1.6;">
+          Experience a premium Montessori curriculum. We combine hands-on learning with a nurturing environment to inspire excellence.
+        </p>
+        <div class="hero-actions" style="display: flex; gap: 16px;">
+          <a href="contact.html#visit-us" class="btn btn-primary" style="background: #2D6A4F; padding: 18px 36px;">VISIT OUR PRESCHOOL</a>
+          <a href="#" class="btn btn-outline" style="padding: 18px 36px;">OUR GALLERY</a>
+        </div>
+      </div>
+      <div class="hero-image reveal-right" style="position: relative;">
+        <!-- Base Image with rounded corners -->
+        <img src="images/Header/1/Placeholder Image.png" alt="Child drawing at Fawn Kids" style="width: 100%; height: auto; display: block; border-radius: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.08);">
+        
+        <!-- Pure CSS 10+ Badge -->
+        <div class="css-badge-yellow float-anim">
+          <div class="badge-number">10+</div>
+          <div class="badge-text">LEARNING<br>ZONES</div>
+        </div>
+
+        <!-- Pure CSS Glassy Testimonial Card -->
+        <div class="css-glassy-card float-anim" style="animation-delay: 1s;">
+          <div class="stars">
+            <i class="fa-regular fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+          </div>
+          <div class="glassy-quote">"Purely Joyful."</div>
+          <div class="glassy-author">— MONTESSORI EXCELLENCE</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Banner Section -->
+  <section class="container banner-section">
+    <h2 class="reveal">Why <em>Choose</em> Fawn Kids?</h2>
+    <div class="banner-img reveal">
+      <img src="images/▶ Layout/238/Green & Pink Simpel Welcome Spring A4 Document Landscape (1500 x 500 px) 1.png" alt="Play, Learn, Grow">
+    </div>
+  </section>
+
+  <!-- Features Grid -->
+  <section class="container">
+    <div class="features-grid">
+      <!-- Card 1 -->
+      <div class="feature-card green reveal-left">
+        <div style="margin-bottom: 20px;"><i class="fa-regular fa-face-smile" style="font-size: 2rem; color: #D4B97A;"></i></div>
+        <h3>Safe & Engaging Play</h3>
+        <p>Introducing the joy of discovery through sensory play and socialization in a warm, secure environment.</p>
+      </div>
+      <!-- Card 2 -->
+      <div class="feature-card brown reveal-right">
+        <div style="margin-bottom: 20px;"><i class="fa-solid fa-school" style="font-size: 2rem; color: #D4B97A;"></i></div>
+        <h3>Premium Facilities</h3>
+        <p>Thoughtfully designed learning spaces and research-backed materials in every classroom.</p>
+      </div>
+      <!-- Card 3 -->
+      <div class="feature-card white reveal-left">
+        <div style="margin-bottom: 20px;"><i class="fa-solid fa-seedling" style="font-size: 2rem; color: #D4B97A;"></i></div>
+        <h3>100% <span>Montessori</span></h3>
+        <p>An expert-designed curriculum crafted for foundational excellence.</p>
+      </div>
+      <!-- Card 4 Image -->
+      <div class="feature-card feature-card-img reveal-right">
+        <img src="images/Layout/34/Placeholder Image.png" alt="Child in wooden play structure">
+      </div>
+    </div>
+  </section>
+
+  <!-- Philosophy Section -->
+  <section class="section section-alt" style="margin-top: 100px;">
+    <div class="container grid-2">
+      <div class="philosophy-img reveal-left">
+        <img src="images/Layout/218/Placeholder Image.png" alt="Montessori wooden beads">
+      </div>
+      <div class="philosophy-content reveal-right">
+        <p class="subtitle">— PHILOSOPHY</p>
+        <h2>Hands-On Learning,<br><em>Hearts-On Care</em></h2>
+      </div>
+    </div>
+  </section>
+
+  <!-- Curriculum / Foundation -->
+  <section class="section container">
+    <div class="grid-2">
+      <div class="curriculum-list reveal-left">
+        <div class="curriculum-item">
+          <i class="fa-solid fa-cart-shopping curriculum-icon"></i>
+          <div class="curriculum-text">
+            <h4>The Foundation for Lifelong Excellence</h4>
+            <p>A child's journey to success starts with the right environment, perfect tools, and inspiring role models. Early education is more than just play—it's the most critical phase for their cognitive growth.</p>
+            <a href="curriculum.html" style="color: var(--color-text); font-weight: 600; font-size: 0.9rem; margin-top: 10px; display: block;">Learn <i class="fa-solid fa-chevron-right" style="font-size: 0.7rem; margin-left: 5px;"></i></a>
+          </div>
+        </div>
+        
+        <div class="curriculum-item">
+          <i class="fa-solid fa-seedling curriculum-icon"></i>
+          <div class="curriculum-text">
+            <h4>Rapid Growth:</h4>
+            <p>The brain develops fastest in these formative years.</p>
+          </div>
+        </div>
+
+        <div class="curriculum-item">
+          <i class="fa-solid fa-brain curriculum-icon"></i>
+          <div class="curriculum-text">
+            <h4>Vital Connections:</h4>
+            <p>75% of a child's neural pathways are formed by age 7.</p>
+          </div>
+        </div>
+
+        <div class="curriculum-item">
+          <i class="fa-regular fa-face-smile-beam curriculum-icon"></i>
+          <div class="curriculum-text">
+            <h4>Peak Absorption</h4>
+            <p>Between ages 2 and 6, a child's ability to learn and grasp new concepts is at its absolute peak.</p>
+          </div>
+        </div>
+
+        <div class="curriculum-item">
+          <i class="fa-regular fa-compass curriculum-icon"></i>
+          <div class="curriculum-text">
+            <h4>The Right Environment</h4>
+            <p>Without quality stimulation, overall development can be seriously delayed.</p>
+          </div>
+        </div>
+
+        <div class="curriculum-badges">
+          <div class="curriculum-badge"><i class="fa-solid fa-brain"></i> Cognitive Growth</div>
+          <div class="curriculum-badge"><i class="fa-solid fa-users"></i> Social Skills</div>
+        </div>
+      </div>
+      <div class="curriculum-img reveal-right">
+        <img src="images/Gallery/8/Placeholder Image 4.png" alt="Child playing chess with glowing brain">
+      </div>
+    </div>
+  </section>
+
+  <!-- Specialized Drawing & Painting Course -->
+  <section class="container" style="margin-bottom: 80px;">
+    <div class="cta-banner-new reveal" style="margin: 0; background: #092B1C; position: relative; overflow: hidden; border-radius: 32px; align-items: center;">
+      <div style="position: absolute; right: -100px; top: -100px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(212, 185, 122, 0.2) 0%, transparent 70%); z-index: 1;"></div>
+      <div style="position: relative; z-index: 2; text-align: left;">
+        <span style="background: rgba(212, 185, 122, 0.15); color: #D4B97A; padding: 8px 20px; border-radius: 20px; font-weight: 700; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 24px; display: inline-block;">CREATIVE ARTS</span>
+        <h2 style="font-size: 3.5rem; color: #fff; line-height: 1.1; margin-bottom: 20px;">
+          Drawing &amp;<br><em style="color: #D4B97A; font-style: italic;">Painting Class</em>
+        </h2>
+        <p style="font-size: 1.1rem; color: rgba(255,255,255,0.8); margin-bottom: 30px; line-height: 1.6; max-width: 100%;">
+          A vibrant space where imagination meets color. Our Drawing &amp; Painting classes foster fine motor skills, unleash creativity, and allow your child to express themselves confidently through art.
+        </p>
+        <a href="drawing-painting.html" class="btn-brown" style="display: inline-block; text-decoration: none;">Enroll Now</a>
+      </div>
+      <div style="position: relative; z-index: 2;">
+        <img src="images/drawing_painting.png" alt="Child drawing and painting" style="border-radius: 24px; width: 100%; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
+      </div>
+    </div>
+  </section>
+
+  <!-- Programs -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2>Programs</h2>
+        <p>Nurturing Every Milestone</p>
+        <p style="max-width: 600px; margin: 15px auto 0;">A seamless educational journey through Playgroup, Nursery, LKG and UKG, building confidence step by step.</p>
+      </div>
+
+      <div class="programs-grid">
+        <!-- Playgroup -->
+        <div class="prog-card light reveal-left">
+          <span class="badge">FIRST STEPS</span>
+          <h3>Playgroup</h3>
+          <p>The perfect first step in your child's educational journey. We build early confidence and foundational skills through expert-guided exploration.</p>
+          <ul>
+            <li><i class="fa-regular fa-circle-check"></i> EARLY SOCIAL SKILLS</li>
+            <li><i class="fa-regular fa-circle-check"></i> HANDS-ON DISCOVERY</li>
+          </ul>
+          <a href="playgroup-program.html" class="prog-btn">LEARN MORE</a>
+        </div>
+
+        <!-- Nursery -->
+        <div class="prog-card brown reveal-right">
+          <span class="badge">EARLY EXPLORERS</span>
+          <h3>Nursery</h3>
+          <p>Transitioning from pure play to structured exploration. We foster independence, early vocabulary, and cognitive skills in a vibrant, engaging setting.</p>
+          <ul>
+            <li><i class="fa-regular fa-circle-check"></i> VOCABULARY ENRICHMENT</li>
+            <li><i class="fa-regular fa-circle-check"></i> CREATIVE EXPRESSION</li>
+          </ul>
+          <a href="nursery-program.html" class="prog-btn">LEARN MORE</a>
+        </div>
+
+        <!-- LKG -->
+        <div class="prog-card dark-green reveal-left">
+          <span class="badge">MOST POPULAR</span>
+          <h3>LKG</h3>
+          <p>Transitioning to structured Montessori activities, focusing on language, logic, and creative expression.</p>
+          <ul>
+            <li><i class="fa-regular fa-circle-check"></i> HANDS-ON MONTESSORI LEARNING</li>
+            <li><i class="fa-regular fa-circle-check"></i> ADVANCED LOGICAL THINKING</li>
+          </ul>
+          <a href="lkg-program.html" class="prog-btn">LEARN MORE</a>
+        </div>
+
+        <!-- UKG -->
+        <div class="prog-card green reveal-right">
+          <span class="badge">SENIOR YEAR</span>
+          <h3>UKG</h3>
+          <p>Advanced Montessori concepts preparing children for formal schooling with confidence and academic readiness.</p>
+          <ul>
+            <li><i class="fa-regular fa-circle-check"></i> SCHOOL READINESS PROGRAM</li>
+            <li><i class="fa-regular fa-circle-check"></i> CONFIDENT COMMUNICATION</li>
+          </ul>
+          <a href="ukg-program.html" class="prog-btn">LEARN MORE</a>
+        </div>
+
+        <!-- Other Courses -->
+        <div class="prog-card teal reveal-left">
+          <span class="badge">BEYOND ACADEMICS</span>
+          <h3 style="font-family: 'Raleway', sans-serif; color: #fff;">Other Courses</h3>
+          <p style="color: rgba(255,255,255,0.85);">Enriching your child's journey with specialized programs designed to nurture unique talents beyond the standard curriculum.</p>
+          <ul>
+            <li><i class="fa-regular fa-circle-check"></i> MULTIPLE SKILL TRACKS</li>
+            <li><i class="fa-regular fa-circle-check"></i> EXPERT-LED SESSIONS</li>
+          </ul>
+          <a href="drawing-painting.html" class="prog-btn">LEARN MORE</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="container">
+    <div class="cta-banner-new reveal">
+      <div>
+        <h2>Secure Your<br>Child's Future<br><em>with Fawn Kids.</em></h2>
+        <p>Schedule a private tour of our campus, explore our curriculum, and see our safe play areas in action.</p>
+        <div class="buttons">
+          <a href="tel:+919445566377" class="btn-brown">BOOK A CALL</a>
+          <a href="programs.html" class="btn-text-link">VIEW PROGRAM DETAILS</a>
+        </div>
+      </div>
+      <div>
+        <img src="images/Blog/65/Active learning.png" alt="Teacher and child">
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQs -->
+  <section class="faq-section reveal">
+    <div class="faq-header">
+      <h2>FAQs</h2>
+      <p class="subtitle">ASK A QUESTIONS FOR DOUBTS</p>
+    </div>
+    
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>1. What is the teaching methodology followed at Fawn Kids Academy?</span>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        We follow a specialized Montessori-inspired curriculum powered by Kreedo Early Childhood Solutions. Our approach is play-based and child-centric, focusing on hands-on experiential learning rather than rote memorization. We provide scientifically backed learning materials that help children develop cognitive, motor, and social skills at their own pace.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>2. What are the age criteria for different programs?</span>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        We offer structured programs tailored for early childhood development:<br><br>
+        Playgroup: 3+ Years<br>
+        Nursery (Pre-KG): 3 to 4 Years<br>
+        LKG: 4 to 5 Years<br>
+        UKG: 5 to 6 Years
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>3. Why is early education so important for my child?</span>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        Research shows that 75% of a child's neural connectivity is established by the age of 7. The ages between 2 and 6 are the peak years for absorbing new concepts. We provide the right environment, stimulation, and tools to maximize both your child's inherent and acquired intelligence during this critical window.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>4. Who are the educators guiding my child?</span>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        Our leadership team and educators bring a unique blend of expertise. Guided by our founders, who hold qualifications in Montessori Education, Fine Arts, and Science, our teachers act as inspiring role models. They focus on nurturing every child's creativity, independence, and foundational learning.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>5. How can I enroll my child or schedule a campus visit?</span>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        We would love to welcome you and your child! You can click the "Enroll Now" button on our website, call us directly at 9445566377 / 9499909005, or drop an email to fawnkidspreschool@gmail.com to schedule a campus tour and discuss the admission process.
+      </div>
+    </div>
+
+    <div class="faq-contact">
+      <h3>Still have questions?</h3>
+      <a href="contact.html" class="btn-outline-gray">Contact</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-newsletter">
+          <h4>Stay in the loop</h4>
+          <p>Get updates on programs and learning insights</p>
+        </div>
+        <div class="newsletter-form-new">
+          <input type="email" placeholder="Your email">
+          <button class="btn-subscribe">Subscribe</button>
+        </div>
+      </div>
+
+      <div class="footer-main">
+        <div class="footer-info-col">
+          <img src="images/logo/Logo.pdf (1) 2.png" alt="Fawn Kids Logo" class="footer-logo">
+          <div class="footer-contact-item">
+            <strong>Address</strong>
+            No: 1 A/9, Nehru Nagar Main Road, Nehru Nagar, Tondiarpet, Chennai – 81.
+          </div>
+          <div class="footer-contact-item">
+            <strong>Contact</strong>
+            <a href="tel:+919445566377">+91 94455 66377</a> / <a href="tel:+919499909005">94999 09005</a><br>
+            <a href="mailto:fawnkidspreschool@gmail.com">fawnkidspreschool@gmail.com</a>
+          </div>
+          <div class="footer-socials">
+            <a href="contact.html#connect-online" aria-label="Connect with Fawn Kids"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.instagram.com/fawnkids_preschool_academy?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" aria-label="Connect with Fawn Kids on Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="contact.html#connect-online" aria-label="Connect with Fawn Kids"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="careers.html" aria-label="Fawn Kids careers"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="resources.html#family-guides" aria-label="Fawn Kids resources"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-links-col">
+          <h5>Quick Links</h5>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="programs.html">Programs</a></li>
+            <li><a href="curriculum.html">Curriculum</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="about.html">About us</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <h5>Support</h5>
+          <ul>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="careers.html">Careers</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="resources.html">Resources</a></li>
+            <li><p>© 2025 Fawn Kids School. All rights reserved.</p></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom-new">
+        <div class="footer-privacy">Privacy policy</div>
+        <div class="footer-legal-links">
+          <a href="terms.html">Terms of service</a>
+          <a href="cookies.html">Cookie settings</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="site.js"></script>
+  <script>
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Scroll Reveal Animation Observer
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.15
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Word Entrance Animation
+    const animateWords = () => {
+      const wordElements = document.querySelectorAll('.word-animate');
+      wordElements.forEach(word => {
+        const delay = parseInt(word.getAttribute('data-delay')) || 0;
+        setTimeout(() => {
+          if (word) word.style.animation = 'word-appear 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+        }, delay);
+      });
+    };
+    // Run word entrance animation on load
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(animateWords, 300);
+    });
+    // Fallback if DOMContentLoaded already fired
+    if (document.readyState === 'interactive' || document.readyState === 'complete') {
+      setTimeout(animateWords, 300);
+    }
+
+    // FAQ Accordion Logic
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      question.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        
+        // Close all other FAQs
+        faqItems.forEach(faq => {
+          faq.classList.remove('active');
+        });
+
+        // Open current FAQ if it was not active
+        if (!isActive) {
+          item.classList.add('active');
+        }
+      });
+    });
+  </script>
+
+  <!-- Curtain Transition Overlay -->
+  <div id="curtain-overlay"></div>
+
+  <!-- Floating Dark Mode Toggle Button -->
+  <button id="theme-toggle-btn" class="floating-theme-toggle" aria-label="Toggle Dark Mode">
+    <div class="icon-wrapper">
+      <i class="fas fa-moon moon-icon"></i>
+      <i class="fas fa-sun sun-icon"></i>
+    </div>
+  </button>
+
+  <script>
+    (function() {
+      const toggleBtn = document.getElementById('theme-toggle-btn');
+      const curtain = document.getElementById('curtain-overlay');
+      
+      if (toggleBtn && curtain) {
+        let isAnimating = false;
+        
+        toggleBtn.addEventListener('click', () => {
+          if (isAnimating) return;
+          isAnimating = true;
+          
+          const isCurrentlyDark = document.documentElement.classList.contains('dark');
+          const nextTheme = isCurrentlyDark ? 'light' : 'dark';
+          
+          // Set curtain background color based on next theme bg token
+          curtain.style.backgroundColor = nextTheme === 'dark' ? '#0e0e0e' : '#FAF6F0';
+          
+          // Drop the curtain (scaleY from 0 to 1, origin top)
+          curtain.style.transformOrigin = 'top';
+          curtain.style.transform = 'scaleY(1)';
+          
+          // Wait for curtain to cover screen (550ms)
+          setTimeout(() => {
+            // Toggle theme class
+            if (nextTheme === 'dark') {
+              document.documentElement.classList.add('dark');
+              localStorage.setItem('theme', 'dark');
+            } else {
+              document.documentElement.classList.remove('dark');
+              localStorage.setItem('theme', 'light');
+            }
+            
+            // Raise the curtain (scaleY from 1 to 0, origin bottom)
+            curtain.style.transformOrigin = 'bottom';
+            curtain.style.transform = 'scaleY(0)';
+            
+            // Complete transition after raising
+            setTimeout(() => {
+              // Reset origin for next time
+              curtain.style.transformOrigin = 'top';
+              isAnimating = false;
+            }, 550);
+          }, 550);
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

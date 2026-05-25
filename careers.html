@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Join the team at Fawn Kids Academy. Career opportunities for educators and school staff.">
+  <title>Careers | Fawn Kids Academy</title>
+  <link rel="stylesheet" href="styles.css?v=11">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary: #1A5A11;
+      --color-primary-dark: #092B1C;
+      --color-accent: #D4B97A;
+      --color-bg-soft: #FAF9F6;
+    }
+    body { font-family: 'Inter', sans-serif; background: #fff; color: #1A1A1A; }
+    h1, h2, h3 { font-family: 'Raleway', sans-serif; }
+
+    .careers-hero {
+      padding: 180px 0 100px;
+      background: var(--color-primary-dark);
+      color: #fff;
+      text-align: center;
+    }
+    .careers-hero h1 { font-size: 4rem; line-height: 1.1; margin-bottom: 24px; }
+    .careers-hero p { font-size: 1.2rem; color: rgba(255,255,255,0.7); max-width: 700px; margin: 0 auto; }
+
+    .culture-section { padding: 100px 0; background: #fff; }
+    .culture-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+    }
+    .culture-card {
+      padding: 40px;
+      background: var(--color-bg-soft);
+      border-radius: 30px;
+      text-align: center;
+    }
+    .culture-card i { font-size: 2.5rem; color: var(--color-primary); margin-bottom: 20px; }
+    .culture-card h4 { font-size: 1.4rem; margin-bottom: 15px; }
+    .culture-card p { color: #666; line-height: 1.6; }
+
+    .jobs-section { padding: 100px 0; background: var(--color-bg-soft); }
+    .job-card {
+      background: #fff;
+      padding: 40px;
+      border-radius: 24px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+      transition: all 0.3s ease;
+    }
+    .job-card:hover { transform: scale(1.01); box-shadow: 0 20px 40px rgba(0,0,0,0.06); }
+    .job-info h4 { font-size: 1.5rem; margin-bottom: 5px; }
+    .job-info span { color: #999; font-size: 0.9rem; }
+
+    .apply-cta {
+      padding: 80px 0;
+      text-align: center;
+    }
+
+    @media (max-width: 1024px) {
+      .culture-grid { grid-template-columns: 1fr; }
+      .job-card { flex-direction: column; text-align: center; gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo/Logo.pdf (1) 2.png" alt="Fawn Kids Logo">
+        <span>FAWN KIDS</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">HOME</a>
+        <a href="programs.html">PROGRAMS</a>
+        <a href="curriculum.html">CURRICULUM</a>
+        <a href="admission.html">ADMISSIONS</a>
+        <a href="about.html">ABOUT</a>
+      </div>
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-outline">Login</a>
+        <a href="signup.html" class="btn btn-primary">Sign up</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="careers-hero">
+      <div class="container">
+        <span class="subtitle" style="color: var(--color-accent); font-weight: 700; letter-spacing: 4px; margin-bottom: 20px; display: block;">JOIN OUR TEAM</span>
+        <h1>Shape the Future with <br><em style="color: var(--color-accent); font-style: italic;">Purpose & Passion.</em></h1>
+        <p>Become part of a culture that values structured warmth, scientific inquiry, and the pure joy of early learning.</p>
+      </div>
+    </section>
+
+    <section class="culture-section">
+      <div class="container">
+        <div class="culture-grid">
+          <div class="culture-card reveal">
+            <i class="fa-solid fa-heart"></i>
+            <h4>Child-Centric</h4>
+            <p>We prioritize the child's natural development and curiosity in absolutely everything we do.</p>
+          </div>
+          <div class="culture-card reveal" style="transition-delay: 0.1s;">
+            <i class="fa-solid fa-lightbulb"></i>
+            <h4>Continuous Growth</h4>
+            <p>Our educators are lifelong learners, constantly evolving their pedagogy and skills.</p>
+          </div>
+          <div class="culture-card reveal" style="transition-delay: 0.2s;">
+            <i class="fa-solid fa-leaf"></i>
+            <h4>Structured Warmth</h4>
+            <p>We believe in creating a safe, loving environment backed by the rigors of the Montessori method.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="jobs-section">
+      <div class="container">
+        <h2 style="text-align: center; font-size: 3rem; margin-bottom: 60px;">Open Roles</h2>
+        
+        <div class="job-card reveal">
+          <div class="job-info">
+            <h4>Montessori Educator</h4>
+            <span>Full-time · Tondiarpet Campus</span>
+          </div>
+          <a href="mailto:fawnkidspreschool@gmail.com" class="btn btn-primary">Apply Now</a>
+        </div>
+
+        <div class="job-card reveal" style="transition-delay: 0.1s;">
+          <div class="job-info">
+            <h4>Parent Support Associate</h4>
+            <span>Full-time · Operations</span>
+          </div>
+          <a href="mailto:fawnkidspreschool@gmail.com" class="btn btn-primary">Apply Now</a>
+        </div>
+
+        <div class="job-card reveal" style="transition-delay: 0.2s;">
+          <div class="job-info">
+            <h4>Program Coordinator</h4>
+            <span>Full-time · Academic Head Office</span>
+          </div>
+          <a href="mailto:fawnkidspreschool@gmail.com" class="btn btn-primary">Apply Now</a>
+        </div>
+
+        <p style="text-align: center; margin-top: 40px; color: #666;">Don't see a role that fits? Send us your resume anyway! <a href="mailto:fawnkidspreschool@gmail.com" style="color: var(--color-primary); font-weight: 700;">fawnkidspreschool@gmail.com</a></p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-newsletter">
+          <h4>Stay in the loop</h4>
+          <p>Get updates on programs and learning insights</p>
+        </div>
+        <div class="newsletter-form-new">
+          <input type="email" placeholder="Your email">
+          <button class="btn-subscribe">Subscribe</button>
+        </div>
+      </div>
+
+      <div class="footer-main">
+        <div class="footer-info-col">
+          <img src="images/logo/Logo.pdf (1) 2.png" alt="Fawn Kids Logo" class="footer-logo">
+          <div class="footer-contact-item">
+            <strong>Address</strong>
+            No: 1 A/9, Nehru Nagar Main Road, Nehru Nagar, Tondiarpet, Chennai – 81.
+          </div>
+          <div class="footer-contact-item">
+            <strong>Contact</strong>
+            <a href="tel:+919445566377">+91 94455 66377</a> / <a href="tel:+919499909005">94999 09005</a><br>
+            <a href="mailto:fawnkidspreschool@gmail.com">fawnkidspreschool@gmail.com</a>
+          </div>
+          <div class="footer-socials">
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.instagram.com/fawnkids_preschool_academy?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" aria-label="Connect with Fawn Kids on Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-links-col">
+          <h5>Quick Links</h5>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="programs.html">Programs</a></li>
+            <li><a href="curriculum.html">Curriculum</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="about.html">About us</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <h5>Support</h5>
+          <ul>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="careers.html">Careers</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="resources.html">Resources</a></li>
+            <li><p>© 2025 Fawn Kids School. All rights reserved.</p></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom-new">
+        <div class="footer-privacy">Privacy policy</div>
+        <div class="footer-legal-links">
+          <a href="terms.html">Terms of service</a>
+          <a href="cookies.html">Cookie settings</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="site.js"></script>
+</body>
+</html>

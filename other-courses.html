@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore our specialized Other Courses at Fawn Kids Academy including Abacus, Vedic Maths, Bharatanatyam, Phonics, and more.">
+  <title>Other Courses | Fawn Kids Academy</title>
+  <script>
+    // Immediate script to prevent dark mode flashing
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  </script>
+  <link rel="stylesheet" href="styles.css?v=11">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-bg-page: #FAF9F6;
+      --color-text-deep: #092B1C; /* Deep Green matching playgroup/nursery */
+      --color-accent-gold: #D4B97A;
+    }
+    body {
+      background: var(--color-bg-page);
+      color: var(--color-text-deep);
+      font-family: 'Inter', sans-serif;
+    }
+    h1, h2, h3, h4 { font-family: 'Raleway', sans-serif; color: var(--color-text-deep); }
+    
+    /* Hero Section */
+    .program-hero {
+      padding: 180px 0 100px;
+      text-align: center;
+    }
+    .program-tag {
+      display: inline-block;
+      background: rgba(212, 185, 122, 0.15);
+      color: #A3844D;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+    }
+    .program-hero h1 {
+      font-size: 4.8rem;
+      font-weight: 600;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      letter-spacing: -1px;
+    }
+    .program-hero p {
+      font-size: 1.25rem;
+      color: #4A6356;
+      max-width: 650px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    .btn-primary-green {
+      background: var(--color-text-deep);
+      color: #fff;
+      padding: 18px 36px;
+      border-radius: 30px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      font-family: 'Inter', sans-serif;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-primary-green:hover {
+      background: #1A5A11;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 25px rgba(9, 43, 28, 0.15);
+    }
+    .btn-outline-green {
+      background: transparent;
+      color: var(--color-text-deep);
+      border: 1px solid var(--color-text-deep);
+      padding: 18px 36px;
+      border-radius: 30px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      font-family: 'Inter', sans-serif;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-outline-green:hover {
+      background: rgba(9, 43, 28, 0.05);
+      transform: translateY(-2px);
+    }
+
+    /* Course Categories Section */
+    .categories-section {
+      padding: 60px 0 120px;
+    }
+    .category-block {
+      margin-bottom: 80px;
+    }
+    .category-header {
+      margin-bottom: 40px;
+      text-align: center;
+    }
+    .category-header h2 {
+      font-size: 2.8rem;
+      position: relative;
+      display: inline-block;
+    }
+    .category-header h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: var(--color-accent-gold);
+      border-radius: 2px;
+    }
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+    .course-card {
+      background: var(--color-bg-page);
+      border-radius: 24px;
+      padding: 40px 30px;
+      text-align: center;
+      transition: all 0.4s ease;
+      border: 1px solid transparent;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .course-card:hover {
+      background: #fff;
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+      border-color: #F0EBE1;
+    }
+    .course-icon {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 24px;
+      background: rgba(212, 185, 122, 0.15);
+      color: #A3844D;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+    }
+    .course-card:hover .course-icon {
+      background: var(--color-accent-gold);
+      color: #fff;
+      transform: scale(1.1);
+    }
+    .course-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 16px;
+    }
+    .course-card p {
+      font-size: 1rem;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 0;
+    }
+
+    /* CTA Banner */
+    .cta-banner-green {
+      background: var(--color-text-deep);
+      border-radius: 32px;
+      padding: 100px 40px;
+      text-align: center;
+      margin-bottom: 100px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-banner-green::after {
+      content: '';
+      position: absolute;
+      top: -50%; left: -20%;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(212, 185, 122, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .cta-banner-green h2 { color: #fff; font-size: 3.5rem; margin-bottom: 24px; position: relative; z-index: 2; }
+    .cta-banner-green p { color: rgba(255,255,255,0.8); font-size: 1.2rem; margin-bottom: 40px; position: relative; z-index: 2; }
+    .cta-banner-green .btn-cta-gold {
+      background: var(--color-accent-gold);
+      color: var(--color-text-deep);
+      padding: 18px 48px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 2;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .cta-banner-green .btn-cta-gold:hover {
+      background: #E8D39E;
+      transform: translateY(-4px);
+      box-shadow: 0 15px 30px rgba(212, 185, 122, 0.25);
+    }
+    
+    @media (max-width: 1024px) {
+      .course-grid { grid-template-columns: repeat(2, 1fr); }
+      .program-hero h1 { font-size: 3.5rem; }
+    }
+    @media (max-width: 768px) {
+      .course-grid { grid-template-columns: 1fr; }
+      .course-card {
+        background: #000 !important;
+        color: #fff !important;
+        border: none !important;
+        padding: 30px !important;
+        border-radius: 20px !important;
+      }
+      .course-card h3 {
+        color: #fff !important;
+        font-size: 1.6rem !important;
+      }
+      .course-card p {
+        color: #fff !important;
+      }
+      .course-icon {
+        background: rgba(255, 255, 255, 0.1) !important;
+        color: #fff !important;
+      }
+      .program-hero h1 { font-size: 2.8rem; }
+      .hero-buttons { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo/Logo.pdf (1) 2.png" alt="Fawn Kids Logo">
+        <span>FAWN KIDS</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">HOME</a>
+        <a href="programs.html" class="active">PROGRAMS</a>
+        <a href="curriculum.html">CURRICULUM</a>
+        <a href="admission.html">ADMISSIONS</a>
+        <a href="about.html">ABOUT</a>
+      </div>
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-outline">Login</a>
+        <a href="signup.html" class="btn btn-primary">Sign up</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Section 1: Hero -->
+    <section class="program-hero">
+      <div class="container">
+        <span class="program-tag reveal">Beyond Academics</span>
+        <h1 class="reveal">Other Courses</h1>
+        <p class="reveal">Enriching your child's journey with specialized programs designed to nurture unique talents, foster creativity, and build specialized skills beyond the standard curriculum.</p>
+        <div class="hero-buttons reveal">
+          <a href="admission.html" class="btn-primary-green">Enroll Now</a>
+          <a href="contact.html" class="btn-outline-green">Contact Us</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Course Categories -->
+    <section class="categories-section">
+      <div class="container">
+        
+        <!-- Category 1 -->
+        <div class="category-block reveal">
+          <div class="category-header">
+            <h2>Math &amp; Cognitive Skills</h2>
+          </div>
+          <div class="course-grid">
+            <div class="course-card">
+              <div class="course-icon"><i class="fa-solid fa-calculator"></i></div>
+              <h3>Abacus</h3>
+              <p>Enhance mental arithmetic speed and concentration through visual math techniques.</p>
+            </div>
+            <div class="course-card">
+              <div class="course-icon"><i class="fa-solid fa-square-root-variable"></i></div>
+              <h3>Vedic Maths</h3>
+              <p>Master the ancient secrets of lightning-fast calculations and mathematical accuracy.</p>
+            </div>
+            <div class="course-card">
+              <div class="course-icon"><i class="fa-solid fa-cubes"></i></div>
+              <h3>Rubik’s Cube</h3>
+              <p>Develop spatial awareness and problem-solving skills, one twist at a time.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category 2 -->
+        <div class="category-block reveal">
+          <div class="category-header">
+            <h2>Arts &amp; Culture</h2>
+          </div>
+          <div class="course-grid">
+            <div class="course-card">
+              <div class="course-icon"><i class="fa-solid fa-palette"></i></div>
+              <h3>Drawing &amp; Painting</h3>
+              <p>A vibrant space where imagination meets color, fostering fine motor skills and creativity.</p>
+            </div>
+            <div class="course-card">
+              <div class="course-icon"><i class="fa-solid fa-shoe-prints"></i></div>
+              <h3>Bharatanatyam</h3>
+              <p>Connecting children to heritage through the grace, rhythm, and discipline of classical dance.</p>
+            </div>
+            <div class="course-card">
+              <div class="course-icon"><i class="fa-solid fa-music"></i></div>
+              <h3>Music / Vocal Class</h3>
+              <p>Discover the joy of melody and rhythm while building confidence through vocal training.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category 3 -->
+        <div class="category-block reveal">
+          <div class="category-header">
+            <h2>Language &amp; Literacy</h2>
+          </div>
+          <div class="course-grid">
+            <div class="course-card">
+              <div class="course-icon"><i class="fa-solid fa-language"></i></div>
+              <h3>Phonics</h3>
+              <p>Building the foundation for fluent reading and perfect pronunciation from an early age.</p>
+            </div>
+            <div class="course-card">
+              <div class="course-icon"><i class="fa-solid fa-pen-nib"></i></div>
+              <h3>Handwriting</h3>
+              <p>The art of precision—improving focus and legibility through structured writing practice.</p>
+            </div>
+            <div class="course-card">
+              <div class="course-icon"><i class="fa-solid fa-book-open-reader"></i></div>
+              <h3>Hindi / Sabha Exams</h3>
+              <p>Comprehensive language training focused on academic excellence and national certification.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section 3: Bold CTA Banner -->
+    <section class="container">
+      <div class="cta-banner-green reveal">
+        <h2>Unleash Their Potential</h2>
+        <p>Give your child the opportunity to discover their passion. Register for an extracurricular program today.</p>
+        <a href="admission.html" class="btn-cta-gold">Register Now</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-newsletter">
+          <h4>Stay in the loop</h4>
+          <p>Get updates on programs and learning insights</p>
+        </div>
+        <div class="newsletter-form-new">
+          <input type="email" placeholder="Your email">
+          <button class="btn-subscribe">Subscribe</button>
+        </div>
+      </div>
+
+      <div class="footer-main">
+        <div class="footer-info-col">
+          <img src="images/logo/Logo.pdf (1) 2.png" alt="Fawn Kids Logo" class="footer-logo">
+          <div class="footer-contact-item">
+            <strong>Address</strong>
+            No: 1 A/9, Nehru Nagar Main Road, Nehru Nagar, Tondiarpet, Chennai – 81.
+          </div>
+          <div class="footer-contact-item">
+            <strong>Contact</strong>
+            <a href="tel:+919445566377">+91 94455 66377</a> / <a href="tel:+919499909005">94999 09005</a><br>
+            <a href="mailto:fawnkidspreschool@gmail.com">fawnkidspreschool@gmail.com</a>
+          </div>
+          <div class="footer-socials">
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.instagram.com/fawnkids_preschool_academy?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" aria-label="Connect with Fawn Kids on Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-links-col">
+          <h5>Quick Links</h5>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="programs.html">Programs</a></li>
+            <li><a href="curriculum.html">Curriculum</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="about.html">About us</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <h5>Support</h5>
+          <ul>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="careers.html">Careers</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="resources.html">Resources</a></li>
+            <li><p>© 2025 Fawn Kids School. All rights reserved.</p></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom-new">
+        <div class="footer-privacy">Privacy policy</div>
+        <div class="footer-legal-links">
+          <a href="terms.html">Terms of service</a>
+          <a href="cookies.html">Cookie settings</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Scroll Reveal Animation Observer
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.15
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+  <script src="site.js"></script>
+</body>
+</html>

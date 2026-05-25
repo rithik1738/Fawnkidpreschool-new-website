@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Enroll in our Drawing & Painting Class. Available offline and online. Cultivate creativity and fine motor skills.">
+  <title>Drawing & Painting Class | Fawn Kids Academy</title>
+  <script>
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  </script>
+  <link rel="stylesheet" href="styles.css?v=11">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-bg-dp: #FDFAF5;
+      --color-text-dp: #092B1C;
+      --color-accent-dp: #D4B97A;
+    }
+    body {
+      background: var(--color-bg-dp);
+      color: var(--color-text-dp);
+      font-family: 'Inter', sans-serif;
+    }
+    h1, h2, h3, h4, h5 { font-family: 'Raleway', sans-serif; color: var(--color-text-dp); }
+
+    /* Hero Section */
+    .dp-hero {
+      padding: 180px 0 100px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .dp-hero::before {
+      content: '';
+      position: absolute;
+      top: -20%; right: -10%;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(212, 185, 122, 0.15) 0%, transparent 70%);
+      z-index: -1;
+    }
+    .dp-tag {
+      display: inline-block;
+      background: rgba(212, 185, 122, 0.2);
+      color: #A3844D;
+      padding: 8px 24px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .dp-hero h1 {
+      font-size: 4.5rem;
+      font-weight: 600;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .dp-hero p {
+      font-size: 1.2rem;
+      color: #4A6356;
+      max-width: 700px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+    
+    .mode-badges {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .mode-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      border: 1px solid #E8E0D8;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #092B1C;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+    }
+    .mode-badge i { color: #D4B97A; }
+
+    .btn-dp-primary {
+      background: var(--color-text-dp);
+      color: #fff;
+      padding: 18px 40px;
+      border-radius: 30px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 4px 0 #04140D;
+    }
+    .btn-dp-primary:hover {
+      background: #1A5A11;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 #04140D, 0 10px 20px rgba(9,43,28,0.2);
+    }
+    .btn-dp-primary:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #04140D;
+    }
+
+    /* Syllabus Grid */
+    .syllabus-section {
+      padding: 80px 0 120px;
+    }
+    .syllabus-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    .syllabus-header h2 {
+      font-size: 3rem;
+      margin-bottom: 16px;
+    }
+    .syllabus-header p {
+      color: #666;
+      font-size: 1.1rem;
+    }
+
+    .syllabus-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+    }
+    
+    .syllabus-card {
+      background: #fff;
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+      border: 1px solid #F0EBE1;
+      transition: all 0.3s ease;
+    }
+    .syllabus-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(212, 185, 122, 0.25);
+      border-color: #E8D39E;
+    }
+    
+    .syllabus-card-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #F0EBE1;
+    }
+    .syllabus-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: rgba(212, 185, 122, 0.15);
+      color: #A3844D;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+    }
+    .syllabus-card h3 {
+      font-size: 1.4rem;
+    }
+
+    .syllabus-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      list-style: none;
+      padding: 0;
+    }
+    .syllabus-list li {
+      font-size: 0.95rem;
+      color: #444;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.4;
+    }
+    .syllabus-list li span.num {
+      color: #D4B97A;
+      font-weight: 700;
+      font-size: 0.85rem;
+      min-width: 16px;
+    }
+
+    /* Dark Mode specific */
+    html.dark .dp-hero p,
+    html.dark .syllabus-header p,
+    html.dark .syllabus-list li {
+      color: var(--color-text-muted);
+    }
+    html.dark .mode-badge {
+      background: #1A1A1A;
+      border-color: #333;
+      color: #fff;
+    }
+    html.dark .syllabus-card {
+      background: var(--color-card-bg);
+      border-color: var(--color-border);
+    }
+    html.dark .syllabus-card:hover {
+      box-shadow: 0 20px 40px rgba(212, 185, 122, 0.35);
+      border-color: #D4B97A;
+    }
+    html.dark .syllabus-card-header {
+      border-color: #333;
+    }
+    html.dark h1, html.dark h2, html.dark h3 {
+      color: #fff;
+    }
+
+    @media (max-width: 900px) {
+      .syllabus-grid { grid-template-columns: 1fr; }
+      .dp-hero h1 { font-size: 3.2rem; }
+    }
+    @media (max-width: 600px) {
+      .syllabus-list { grid-template-columns: 1fr; }
+      .mode-badges { flex-direction: column; align-items: center; }
+    }
+    /* Modal Styles */
+    .enroll-modal-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.7); backdrop-filter: blur(5px);
+      z-index: 9999; display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden; transition: all 0.3s ease;
+    }
+    .enroll-modal-overlay.active { opacity: 1; visibility: visible; }
+    .enroll-modal {
+      background: #fff; width: 90%; max-width: 850px; border-radius: 24px;
+      padding: 40px; position: relative;
+      transform: translateY(30px) scale(0.95); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      max-height: 90vh; overflow-y: auto;
+    }
+    .enroll-modal-overlay.active .enroll-modal { transform: translateY(0) scale(1); }
+    .close-modal {
+      position: absolute; top: 20px; right: 20px; background: #F0EBE1; border: none;
+      width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1.2rem;
+      color: #333; transition: all 0.2s;
+    }
+    .close-modal:hover { background: #E8D39E; color: #000; }
+    
+    .modal-header { text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #EEE; }
+    .modal-header h3 { font-size: 2rem; color: var(--color-text-dp); margin-bottom: 10px; }
+    .modal-header p { color: #666; font-size: 1rem; }
+    
+    .modal-body-content { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    .modal-form h4, .modal-payment h4 { font-size: 1.2rem; margin-bottom: 20px; color: #333; }
+    
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; color: #444; text-align: left; }
+    .form-group input, .form-group select {
+      width: 100%; padding: 14px; border: 1px solid #DDD; border-radius: 12px;
+      font-family: inherit; background: #F9F9F9; transition: border-color 0.2s;
+    }
+    .form-group input:focus, .form-group select:focus { border-color: var(--color-accent-dp); outline: none; background: #fff; }
+    
+    .modal-payment { background: #F8F9FA; padding: 30px; border-radius: 16px; text-align: center; border: 1px solid #EEE; }
+    .qr-box { background: #fff; padding: 20px; border-radius: 16px; display: inline-block; box-shadow: 0 10px 25px rgba(0,0,0,0.05); margin-bottom: 15px; }
+    .qr-box img { width: 180px; height: 180px; display: block; margin: 0 auto 15px; }
+    .upi-id { font-weight: 600; color: #333; font-size: 1.1rem; }
+    .scan-text { color: #666; font-size: 0.95rem; }
+    
+    .modal-footer { margin-top: 30px; text-align: center; padding-top: 20px; border-top: 1px solid #EEE; }
+    .btn-confirm-enroll {
+      background: #28a745; color: #fff; border: none; padding: 16px 40px; border-radius: 30px;
+      font-weight: 600; font-size: 1.1rem; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(40,167,69,0.3);
+    }
+    .btn-confirm-enroll:hover { background: #218838; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(40,167,69,0.4); }
+
+    .btn-enroll-module {
+      margin-top: 25px; width: 100%; padding: 14px; background: var(--color-text-dp);
+      color: #fff; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s;
+    }
+    .btn-enroll-module:hover { background: var(--color-accent-dp); color: var(--color-text-dp); }
+
+    /* Modal Dark Mode specific */
+    html.dark .enroll-modal { background: #1A1A1A; border: 1px solid #333; }
+    html.dark .close-modal { background: #333; color: #fff; }
+    html.dark .close-modal:hover { background: #D4B97A; color: #000; }
+    html.dark .modal-header { border-color: #333; }
+    html.dark .modal-form h4, html.dark .modal-payment h4 { color: #fff; }
+    html.dark .form-group label { color: #CCC; }
+    html.dark .form-group input, html.dark .form-group select { background: #222; border-color: #444; color: #fff; }
+    html.dark .modal-payment { background: #222; border-color: #333; }
+    html.dark .qr-box { background: #111; border: 1px solid #333; }
+    html.dark .upi-id { color: #fff; }
+    html.dark .modal-footer { border-color: #333; }
+    html.dark .btn-enroll-module { background: #333; }
+    html.dark .btn-enroll-module:hover { background: #D4B97A; color: #000; }
+
+    @media (max-width: 768px) {
+      .enroll-modal-overlay {
+        align-items: flex-start !important;
+        overflow-y: auto !important;
+        padding: 24px 0 !important;
+      }
+      .enroll-modal {
+        width: 92% !important;
+        margin: 20px auto !important;
+        padding: 24px 16px !important;
+        border-radius: 20px !important;
+        max-height: none !important;
+        overflow-y: visible !important;
+      }
+      .close-modal {
+        top: 15px !important;
+        right: 15px !important;
+        width: 36px !important;
+        height: 36px !important;
+        font-size: 1rem !important;
+      }
+      .modal-header {
+        margin-bottom: 24px !important;
+        padding-bottom: 16px !important;
+      }
+      .modal-header h3 {
+        font-size: 1.5rem !important;
+        line-height: 1.2 !important;
+        padding-right: 36px !important;
+        text-align: left !important;
+      }
+      .modal-header p {
+        font-size: 0.9rem !important;
+        text-align: left !important;
+      }
+      .modal-body-content {
+        grid-template-columns: 1fr !important;
+        gap: 24px !important;
+      }
+      .modal-form h4, .modal-payment h4 {
+        font-size: 1.1rem !important;
+        margin-bottom: 16px !important;
+      }
+      .modal-payment {
+        padding: 20px 12px !important;
+        border-radius: 14px !important;
+      }
+      .qr-box {
+        padding: 16px 8px !important;
+        border-radius: 12px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .qr-box img {
+        width: 160px !important;
+        height: 160px !important;
+      }
+      .upi-id {
+        font-size: 0.95rem !important;
+        word-break: break-all !important;
+      }
+      .scan-text {
+        font-size: 0.85rem !important;
+      }
+      .modal-footer {
+        margin-top: 24px !important;
+        padding-top: 16px !important;
+      }
+      .btn-confirm-enroll {
+        width: 100% !important;
+        padding: 14px 24px !important;
+        font-size: 1rem !important;
+        border-radius: 14px !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo/Logo.pdf (1) 2.png" alt="Fawn Kids Logo">
+        <span>FAWN KIDS</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">HOME</a>
+        <a href="programs.html" class="active">PROGRAMS</a>
+        <a href="curriculum.html">CURRICULUM</a>
+        <a href="admission.html">ADMISSIONS</a>
+        <a href="about.html">ABOUT</a>
+      </div>
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-outline">Login</a>
+        <a href="signup.html" class="btn btn-primary">Sign up</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="dp-hero">
+      <div class="container">
+        <span class="dp-tag reveal">Creative Arts</span>
+        <h1 class="reveal">Drawing &amp; Painting Class</h1>
+        <p class="reveal">Unleash your child's creativity with our comprehensive art curriculum. From fundamental pencil shading to vibrant watercolors, we nurture every young artist's potential.</p>
+        
+        <div class="mode-badges reveal">
+          <div class="mode-badge"><i class="fa-solid fa-chalkboard-user"></i> Offline Teaching</div>
+          <div class="mode-badge"><i class="fa-solid fa-laptop"></i> Online Teaching</div>
+        </div>
+
+
+      </div>
+    </section>
+
+    <!-- Syllabus Section -->
+    <section class="syllabus-section">
+      <div class="container">
+        <div class="syllabus-header reveal">
+          <h2>Course Curriculum</h2>
+          <p>A structured, step-by-step approach to mastering the creative arts.</p>
+        </div>
+
+        <div class="syllabus-grid">
+          
+          <!-- Category 1 -->
+          <div class="syllabus-card reveal">
+            <div class="syllabus-card-header">
+              <div class="syllabus-icon"><i class="fa-solid fa-pen-fancy"></i></div>
+              <h3>Drawing Fundamentals</h3>
+            </div>
+            <ul class="syllabus-list">
+              <li><span class="num">1.</span> Fundamental Junior</li>
+              <li><span class="num">2.</span> Fundamental Senior</li>
+              <li><span class="num">3.</span> Intermediate Junior</li>
+              <li><span class="num">4.</span> Intermediate Senior</li>
+              <li><span class="num">5.</span> Advance Courses</li>
+              <li><span class="num">6.</span> Fundamental Drawing</li>
+              <li><span class="num">7.</span> Professional Training</li>
+              <li><span class="num">8.</span> Freehand Drawing</li>
+              <li><span class="num">9.</span> Memory Drawing</li>
+            </ul>
+            <button class="btn-enroll-module" onclick="openEnrollModal('Drawing Fundamentals')">Enroll in this Module</button>
+          </div>
+
+          <!-- Category 2 -->
+          <div class="syllabus-card reveal">
+            <div class="syllabus-card-header">
+              <div class="syllabus-icon"><i class="fa-solid fa-compass-drafting"></i></div>
+              <h3>Advanced Drawing Skills</h3>
+            </div>
+            <ul class="syllabus-list">
+              <li><span class="num">1.</span> Perspective Drawing</li>
+              <li><span class="num">2.</span> Anatomy Drawing</li>
+              <li><span class="num">3.</span> Pen Drawing</li>
+              <li><span class="num">4.</span> Pencil Shading</li>
+            </ul>
+            <button class="btn-enroll-module" onclick="openEnrollModal('Advanced Drawing Skills')">Enroll in this Module</button>
+          </div>
+
+          <!-- Category 3 -->
+          <div class="syllabus-card reveal">
+            <div class="syllabus-card-header">
+              <div class="syllabus-icon"><i class="fa-solid fa-palette"></i></div>
+              <h3>Color & Composition</h3>
+            </div>
+            <ul class="syllabus-list">
+              <li><span class="num">1.</span> Poster Colour</li>
+              <li><span class="num">2.</span> Colour Pencil</li>
+              <li><span class="num">3.</span> Still Life</li>
+              <li><span class="num">4.</span> Light & Shadow</li>
+            </ul>
+            <button class="btn-enroll-module" onclick="openEnrollModal('Color & Composition')">Enroll in this Module</button>
+          </div>
+
+          <!-- Category 4 -->
+          <div class="syllabus-card reveal">
+            <div class="syllabus-card-header">
+              <div class="syllabus-icon"><i class="fa-solid fa-brush"></i></div>
+              <h3>Specialized Techniques</h3>
+            </div>
+            <ul class="syllabus-list">
+              <li><span class="num">1.</span> Portrait Drawing</li>
+              <li><span class="num">2.</span> Charcoal Drawing</li>
+              <li><span class="num">3.</span> Oil Pastel</li>
+              <li><span class="num">4.</span> Soft Pastel</li>
+            </ul>
+            <button class="btn-enroll-module" onclick="openEnrollModal('Specialized Techniques')">Enroll in this Module</button>
+          </div>
+
+          <!-- Category 5 -->
+          <div class="syllabus-card reveal">
+            <div class="syllabus-card-header">
+              <div class="syllabus-icon"><i class="fa-solid fa-fill-drip"></i></div>
+              <h3>Painting Techniques</h3>
+            </div>
+            <ul class="syllabus-list">
+              <li><span class="num">1.</span> Watercolour Pencil</li>
+              <li><span class="num">2.</span> Acrylic Painting</li>
+              <li><span class="num">3.</span> Oil Painting</li>
+              <li><span class="num">4.</span> Watercolour Painting</li>
+            </ul>
+            <button class="btn-enroll-module" onclick="openEnrollModal('Painting Techniques')">Enroll in this Module</button>
+          </div>
+
+          <!-- Category 6 -->
+          <div class="syllabus-card reveal">
+            <div class="syllabus-card-header">
+              <div class="syllabus-icon"><i class="fa-solid fa-cubes"></i></div>
+              <h3>Other Courses Offered</h3>
+            </div>
+            <ul class="syllabus-list">
+              <li><span class="num">1.</span> Abacus & Vedic Maths</li>
+              <li><span class="num">2.</span> Rubik's Cube</li>
+              <li><span class="num">3.</span> Handwriting</li>
+              <li><span class="num">4.</span> Phonics</li>
+              <li><span class="num">5.</span> Hindi Classes / Sabha Exams</li>
+              <li><span class="num">6.</span> Music / Vocal Classes</li>
+              <li><span class="num">7.</span> Bharatanatyam</li>
+            </ul>
+            <button class="btn-enroll-module" onclick="openEnrollModal('Other Courses')">Enroll in this Module</button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  <!-- Enrollment Modal -->
+  <div class="enroll-modal-overlay" id="enrollModal">
+    <div class="enroll-modal">
+      <button class="close-modal" onclick="closeEnrollModal()"><i class="fa-solid fa-xmark"></i></button>
+      <div class="modal-header">
+        <h3 id="modalCourseName">Enroll in Course</h3>
+        <p>Complete your registration and payment to secure your slot.</p>
+      </div>
+      
+      <div class="modal-body-content">
+        <!-- Left: Details Form -->
+        <div class="modal-form">
+          <h4>1. Student Details</h4>
+          <form id="courseEnrollForm">
+            <div class="form-group">
+              <label>Student Name</label>
+              <input type="text" required placeholder="Enter full name">
+            </div>
+            <div class="form-group">
+              <label>Parent Phone Number</label>
+              <input type="tel" required placeholder="+91">
+            </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" required placeholder="name@example.com">
+            </div>
+            <div class="form-group">
+              <label>Mode of Learning</label>
+              <select required>
+                <option value="offline">Offline Teaching</option>
+                <option value="online">Online Teaching</option>
+              </select>
+            </div>
+          </form>
+        </div>
+
+        <!-- Right: Payment Section -->
+        <div class="modal-payment">
+          <h4>2. Scan & Pay</h4>
+          <div class="qr-box">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=priyarukvenkat@okhdfcbank&pn=Mangala%20Priya%20Venkatesen" alt="Google Pay QR Code">
+            <div class="upi-id">UPI ID: priyarukvenkat@okhdfcbank</div>
+          </div>
+          <p class="scan-text">Scan to pay with any UPI app (GPay, PhonePe, Paytm)</p>
+          
+          <div class="form-group" style="margin-top: 20px;">
+            <label style="text-align: center;">Transaction ID / UTR Number</label>
+            <input type="text" required placeholder="Enter 12-digit UTR" form="courseEnrollForm" style="text-align: center;">
+          </div>
+        </div>
+      </div>
+      
+      <div class="modal-footer">
+        <button type="submit" form="courseEnrollForm" class="btn-confirm-enroll">Confirm Enrollment</button>
+      </div>
+    </div>
+  </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-newsletter">
+          <h4>Stay in the loop</h4>
+          <p>Get updates on programs and learning insights</p>
+        </div>
+        <div class="newsletter-form-new">
+          <input type="email" placeholder="Your email">
+          <button class="btn-subscribe">Subscribe</button>
+        </div>
+      </div>
+
+      <div class="footer-main">
+        <div class="footer-info-col">
+          <img src="images/logo/Logo.pdf (1) 2.png" alt="Fawn Kids Logo" class="footer-logo">
+          <div class="footer-contact-item">
+            <strong>Address</strong>
+            No: 1 A/9, Nehru Nagar Main Road, Nehru Nagar, Tondiarpet, Chennai – 81.
+          </div>
+          <div class="footer-contact-item">
+            <strong>Contact</strong>
+            <a href="tel:+919445566377">+91 94455 66377</a> / <a href="tel:+919499909005">94999 09005</a><br>
+            <a href="mailto:fawnkidspreschool@gmail.com">fawnkidspreschool@gmail.com</a>
+          </div>
+          <div class="footer-socials">
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.instagram.com/fawnkids_preschool_academy?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" aria-label="Connect with Fawn Kids on Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-links-col">
+          <h5>Quick Links</h5>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="programs.html">Programs</a></li>
+            <li><a href="curriculum.html">Curriculum</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="about.html">About us</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <h5>Support</h5>
+          <ul>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="careers.html">Careers</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="resources.html">Resources</a></li>
+            <li><p>© 2025 Fawn Kids School. All rights reserved.</p></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom-new">
+        <div class="footer-privacy">Privacy policy</div>
+        <div class="footer-legal-links">
+          <a href="terms.html">Terms of service</a>
+          <a href="cookies.html">Cookie settings</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Scroll Reveal Animation Observer
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.15
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Enrollment Modal Logic
+    function openEnrollModal(courseName) {
+      document.getElementById('modalCourseName').textContent = 'Enroll in ' + courseName;
+      document.getElementById('enrollModal').classList.add('active');
+      document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+    
+    function closeEnrollModal() {
+      document.getElementById('enrollModal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    
+    // Close on outside click
+    document.getElementById('enrollModal').addEventListener('click', function(e) {
+      if(e.target === this) closeEnrollModal();
+    });
+    
+    // Form submission logic with Supabase sync
+    const enrollForm = document.getElementById('courseEnrollForm');
+    if (enrollForm) {
+      enrollForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const studentName = enrollForm.querySelector('input[placeholder="Enter full name"]').value.trim();
+        const parentPhone = enrollForm.querySelector('input[placeholder="+91"]').value.trim();
+        const email = enrollForm.querySelector('input[type="email"]').value.trim().toLowerCase();
+        const modeOfLearning = enrollForm.querySelector('select').value;
+        const transactionId = document.querySelector('input[placeholder="Enter 12-digit UTR"]').value.trim();
+        const courseName = document.getElementById('modalCourseName').textContent.replace('Enroll in ', '');
+        
+        const btn = document.querySelector('.btn-confirm-enroll');
+        const originalText = btn.innerHTML;
+        
+        btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Processing...';
+        btn.style.pointerEvents = 'none';
+        btn.style.opacity = '0.8';
+        
+        const record = {
+          student_name: studentName,
+          parent_phone: parentPhone,
+          email: email,
+          mode_of_learning: modeOfLearning,
+          course_name: courseName,
+          transaction_id: transactionId,
+          created_at: new Date().toISOString()
+        };
+        
+        window.FawnKidsSite.saveData("module_enrollments", window.FawnKidsSite.keys.enrollments, record, function(success) {
+          if (success) {
+            btn.innerHTML = '<i class="fa-solid fa-check"></i> Registration Successful!';
+            btn.style.background = '#1A5A11';
+            btn.style.opacity = '1';
+            
+            if (window.FawnKidsSite && window.FawnKidsSite.showToast) {
+              window.FawnKidsSite.showToast('Your enrollment request has been submitted!', 'success');
+            }
+            
+            setTimeout(() => {
+              closeEnrollModal();
+              btn.innerHTML = originalText;
+              btn.style.background = '';
+              btn.style.pointerEvents = 'all';
+              enrollForm.reset();
+              document.querySelector('input[placeholder="Enter 12-digit UTR"]').value = '';
+            }, 2000);
+          } else {
+            btn.innerHTML = originalText;
+            btn.style.background = '';
+            btn.style.pointerEvents = 'all';
+            btn.style.opacity = '1';
+            if (window.FawnKidsSite && window.FawnKidsSite.showToast) {
+              window.FawnKidsSite.showToast('Failed to save enrollment. Please try again.', 'error');
+            }
+          }
+        });
+      });
+    }
+  </script>
+  <script src="site.js"></script>
+</body>
+</html>

@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Programs - Fawn Kids</title>
+  <script>
+    // Immediate script to prevent dark mode flashing
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  </script>
+  <link rel="stylesheet" href="styles.css?v=11">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Gradient Border Property & Animation */
+    @property --gradient-angle {
+      syntax: "<angle>";
+      initial-value: 0deg;
+      inherits: false;
+    }
+
+    @keyframes gradient-rotate {
+      from {
+        --gradient-angle: 0deg;
+      }
+      to {
+        --gradient-angle: 360deg;
+      }
+    }
+
+    /* Specific Home Page Styles */
+    .hero-bg-shape {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 48%;
+      height: 100%;
+      background: #FAFAF7; /* Very subtle warm white/beige */
+      border-bottom-left-radius: 120px;
+      z-index: 1;
+    }
+    
+    /* Pure CSS Badges */
+    .css-badge-yellow {
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      background: linear-gradient(135deg, #FBE3A8, #F1CA74);
+      padding: 24px 20px;
+      border-radius: 20px;
+      box-shadow: 0 12px 24px rgba(241, 202, 116, 0.4);
+      text-align: center;
+      z-index: 10;
+      min-width: 110px;
+    }
+    .css-badge-yellow .badge-number {
+      font-family: 'Raleway', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #333;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .css-badge-yellow .badge-text {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #555;
+      letter-spacing: 1.5px;
+      line-height: 1.4;
+    }
+
+    .css-glassy-card {
+      position: absolute;
+      bottom: 40px;
+      left: -50px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 28px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+      z-index: 10;
+      width: 280px;
+      
+      /* Glowing Conic Gradient Border */
+      border: 2px solid transparent;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.55)),
+        conic-gradient(
+          from var(--gradient-angle, 0deg),
+          #584827 0%,
+          #c7a03c 37%,
+          #f9de90 50%,
+          #c7a03c 63%,
+          #584827 100%
+        );
+      background-clip: padding-box, border-box;
+      background-origin: padding-box, border-box;
+      animation: gradient-rotate 4s linear infinite;
+      transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
+    }
+    .css-glassy-card:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 30px 60px rgba(199, 160, 60, 0.25);
+    }
+    .css-glassy-card .stars {
+      color: #111;
+      margin-bottom: 16px;
+      font-size: 1.2rem;
+      display: flex;
+      gap: 6px;
+    }
+    .css-glassy-card .glassy-quote {
+      font-family: 'Raleway', sans-serif;
+      font-size: 1.5rem;
+      color: #111;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .css-glassy-card .glassy-author {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #333;
+      letter-spacing: 1.5px;
+    }
+
+    .banner-section {
+      padding: 60px 0;
+      text-align: center;
+    }
+    .banner-section h2 {
+      font-size: 2.8rem;
+      margin-bottom: 40px;
+      color: var(--color-text);
+    }
+    .banner-section h2 em {
+      color: var(--color-accent);
+      font-style: italic;
+    }
+    .banner-img {
+      width: 100%;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-top: 60px;
+    }
+    .feature-card {
+      border-radius: var(--radius-xl);
+      padding: 50px;
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-card.green {
+      background: var(--color-primary);
+      color: #fff;
+    }
+    .feature-card.brown {
+      background: #8A6B42;
+      color: #fff;
+    }
+    .feature-card.white {
+      background: var(--color-section-alt);
+      color: var(--color-text);
+    }
+    .feature-card-img {
+      padding: 0;
+      height: 350px;
+    }
+    .feature-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .feature-card h3 {
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+      color: inherit;
+    }
+    .feature-card p {
+      font-size: 2rem;
+      line-height: 1.4;
+      font-weight: 300;
+    }
+    .feature-card.green p,
+    .feature-card.brown p {
+      color: rgba(255, 255, 255, 0.95) !important;
+    }
+    .feature-card.green h3,
+    .feature-card.brown h3 {
+      color: #ffffff !important;
+    }
+    .feature-card.white p {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--color-text-muted);
+    }
+    .feature-card.white h3 {
+      font-size: 3.5rem;
+      color: var(--color-text);
+      font-weight: 300;
+      letter-spacing: 0;
+      margin-bottom: 10px;
+      font-family: var(--font-body);
+    }
+    .feature-card.white h3 span {
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      font-weight: 600;
+      margin-left: 15px;
+      vertical-align: middle;
+    }
+
+    /* Philosophy Section */
+    .philosophy-section {
+      padding: 120px 0;
+    }
+    .philosophy-img {
+      border-radius: var(--radius-xl) 100px var(--radius-xl) var(--radius-xl);
+      overflow: hidden;
+      height: 450px;
+    }
+    .philosophy-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .philosophy-content {
+      padding-left: 40px;
+    }
+    .philosophy-content h2 {
+      font-size: 4rem;
+      line-height: 1.1;
+      margin-top: 20px;
+    }
+    .philosophy-content h2 em {
+      color: #8A6B42;
+      font-style: italic;
+    }
+
+    /* Curriculum Section */
+    .curriculum-list {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+    .curriculum-item {
+      display: flex;
+      gap: 20px;
+    }
+    .curriculum-icon {
+      font-size: 1.5rem;
+      color: var(--color-text);
+      margin-top: 5px;
+    }
+    .curriculum-text h4 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+    .curriculum-text p {
+      font-size: 0.95rem;
+      color: var(--color-text-muted);
+    }
+    .curriculum-badges {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .curriculum-badge {
+      background: var(--color-section-alt);
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .curriculum-img {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      height: 600px;
+    }
+    .curriculum-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Programs Grid */
+    .programs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-top: 50px;
+    }
+    .prog-card {
+      border-radius: 32px;
+      padding: 50px;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      
+      /* Glassmorphism Backdrop Blur */
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      
+      /* Clean, Static Glass Background */
+      background: linear-gradient(var(--bg-start), var(--bg-end));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      
+      transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.5s ease;
+    }
+    .prog-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 32px;
+      padding: 3px; /* Border thickness */
+      background: conic-gradient(
+        from var(--gradient-angle, 0deg),
+        transparent 0%,
+        transparent 35%,
+        var(--glow-color) 50%,
+        transparent 65%,
+        transparent 100%
+      );
+      -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+              mask-composite: exclude;
+      pointer-events: none;
+      animation: gradient-rotate 4s linear infinite;
+    }
+    .prog-card:hover {
+      transform: translateY(-15px) scale(1.02);
+      box-shadow: 0 30px 60px var(--shadow-glow);
+    }
+    .prog-card .badge {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-weight: 700;
+      display: inline-block;
+      margin-bottom: 24px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .prog-card:hover .badge {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    }
+    .prog-card h3 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      font-weight: 400;
+      font-family: 'Raleway', sans-serif;
+      transition: transform 0.4s ease;
+      color: inherit;
+    }
+    .prog-card:hover h3 {
+      transform: translateX(10px);
+    }
+    .prog-card p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      line-height: 1.6;
+      opacity: 0.9;
+      color: inherit;
+    }
+    .prog-card ul {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 40px;
+      list-style: none;
+      padding-left: 0;
+    }
+    .prog-card ul li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .prog-btn {
+      display: inline-block;
+      padding: 12px 30px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-decoration: none;
+      margin-top: auto;
+      
+      /* Glassy Dark Button Style */
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #ffffff !important;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(5px);
+    }
+    .prog-btn:hover {
+      background: #ffffff !important;
+      color: #111111 !important;
+      border-color: #ffffff;
+      box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
+    }
+
+    /* Card Themes */
+    .prog-card.light {
+      --bg-start: rgba(30, 24, 15, 0.85);
+      --bg-end: rgba(18, 14, 8, 0.95);
+      --glow-color: #f9de90;
+      --shadow-glow: rgba(249, 222, 144, 0.25);
+      color: #ffffff;
+    }
+    .prog-card.light .badge { background: rgba(249, 222, 144, 0.15); color: #f9de90; border: 1px solid rgba(249, 222, 144, 0.3); }
+    .prog-card.light ul li i { color: #f9de90; font-size: 1rem; }
+
+    .prog-card.brown {
+      --bg-start: rgba(35, 18, 15, 0.85);
+      --bg-end: rgba(20, 10, 8, 0.95);
+      --glow-color: #ff8a73;
+      --shadow-glow: rgba(255, 138, 115, 0.25);
+      color: #ffffff;
+    }
+    .prog-card.brown .badge { background: rgba(255, 138, 115, 0.15); color: #ff8a73; border: 1px solid rgba(255, 138, 115, 0.3); }
+    .prog-card.brown ul li i { color: #ff8a73; font-size: 1rem; }
+
+    .prog-card.dark-green {
+      --bg-start: rgba(15, 28, 18, 0.85);
+      --bg-end: rgba(8, 16, 10, 0.95);
+      --glow-color: #8ae89c;
+      --shadow-glow: rgba(138, 232, 156, 0.2);
+      color: #ffffff;
+    }
+    .prog-card.dark-green .badge { background: rgba(138, 232, 156, 0.15); color: #8ae89c; border: 1px solid rgba(138, 232, 156, 0.3); }
+    .prog-card.dark-green ul li i { color: #8ae89c; font-size: 1rem; }
+
+    .prog-card.green {
+      --bg-start: rgba(32, 28, 12, 0.85);
+      --bg-end: rgba(18, 16, 6, 0.95);
+      --glow-color: #fce074;
+      --shadow-glow: rgba(252, 224, 116, 0.25);
+      color: #ffffff;
+    }
+    .prog-card.green .badge { background: rgba(252, 224, 116, 0.15); color: #fce074; border: 1px solid rgba(252, 224, 116, 0.3); }
+    .prog-card.green ul li i { color: #fce074; font-size: 1rem; }
+
+    /* Other Courses – deep ocean teal */
+    .prog-card.teal {
+      --bg-start: rgba(15, 25, 35, 0.85);
+      --bg-end: rgba(8, 14, 20, 0.95);
+      --glow-color: #74cbfb;
+      --shadow-glow: rgba(116, 203, 251, 0.2);
+      color: #ffffff;
+    }
+    .prog-card.teal .badge { background: rgba(116, 203, 251, 0.15); color: #74cbfb; border: 1px solid rgba(116, 203, 251, 0.3); }
+    .prog-card.teal ul li i { color: #74cbfb; font-size: 1rem; }
+
+    /* CTA Section */
+    .cta-banner-new {
+      background: var(--color-primary);
+      border-radius: var(--radius-xl);
+      padding: 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      margin: 100px 0;
+      color: #fff;
+    }
+    .cta-banner-new h2 {
+      font-size: 3.5rem;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .cta-banner-new h2 em {
+      font-style: italic;
+      color: #D4B97A;
+    }
+    .cta-banner-new p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 30px;
+      max-width: 400px;
+    }
+    .cta-banner-new .buttons {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    .btn-brown {
+      background: #8A6B42;
+      color: #fff;
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    .btn-brown:hover {
+      background: #755935;
+      transform: translateY(-2px);
+    }
+    .btn-text-link {
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .cta-banner-new img {
+      border-radius: var(--radius-lg);
+      width: 100%;
+    }
+
+    /* FAQ */
+    .faq-section {
+      padding: 80px 0;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .faq-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    .faq-header h2 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    .faq-header .subtitle {
+      color: var(--color-text-muted);
+    }
+    .faq-item {
+      border-bottom: 1px solid var(--color-border);
+      padding: 24px 0;
+      transition: all 0.3s ease;
+    }
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      font-size: 1.15rem;
+      cursor: pointer;
+      color: #111;
+      transition: color 0.3s ease;
+    }
+    .faq-question:hover {
+      color: var(--color-teal);
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+      font-size: 0.95rem;
+      transition: all 0.4s ease-in-out;
+    }
+    .faq-item.active .faq-question {
+      color: var(--color-teal);
+    }
+    .faq-item.active .faq-answer {
+      max-height: 500px;
+      opacity: 1;
+      margin-top: 15px;
+    }
+    .faq-question i {
+      transition: transform 0.4s ease;
+    }
+    .faq-item.active .faq-question i {
+      transform: rotate(180deg);
+    }
+    .faq-contact {
+      text-align: center;
+      margin-top: 50px;
+    }
+    .faq-contact h3 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+    .btn-outline-gray {
+      border: 1px solid var(--color-border);
+      padding: 10px 24px;
+      border-radius: 50px;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    /* NEW INTERACTION STYLES */
+    .schedule-card {
+      background: #fff;
+      padding: 40px;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+    .schedule-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(166, 124, 70, 0.15);
+      border-color: rgba(166, 124, 70, 0.3);
+    }
+    .schedule-card span {
+      transition: letter-spacing 0.3s ease;
+    }
+    .schedule-card:hover span {
+      letter-spacing: 2px;
+    }
+    
+    .timeline-stage {
+      text-align: center;
+      width: 120px;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+    }
+    .timeline-stage:hover {
+      transform: translateY(-10px) scale(1.1);
+    }
+    .timeline-stage .circle-outer {
+      transition: all 0.4s ease;
+    }
+    .timeline-stage:hover .circle-outer {
+      border-width: 4px !important;
+      padding: 4px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    .learning-img-hover {
+      transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.8s ease;
+      cursor: pointer;
+    }
+    .learning-img-hover:hover {
+      transform: scale(1.03) rotate(1deg);
+      box-shadow: 0 30px 60px rgba(166, 124, 70, 0.2) !important;
+    }
+    .learning-list li i {
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .learning-list li:hover i {
+      transform: scale(1.5);
+    }
+
+    /* Timeline Navigation default styling */
+    .timeline-nav {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      gap: 60px;
+      margin: 80px 0 40px;
+      position: relative;
+    }
+    .timeline-stage {
+      flex: 1;
+      text-align: center;
+      position: relative;
+      max-width: 180px;
+    }
+
+    @media (max-width: 1024px) {
+      /* Timeline Navigation vertical stack on mobile/tablet */
+      .timeline-nav {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 30px !important;
+        margin: 40px auto !important;
+        max-width: 320px !important;
+        padding-left: 40px !important;
+        position: relative !important;
+      }
+      /* Vertical connecting line */
+      .timeline-nav::before {
+        content: '';
+        position: absolute;
+        left: 51px;
+        top: 20px;
+        bottom: 20px;
+        width: 2px;
+        background: #E8E0D8;
+        z-index: 1;
+      }
+      .timeline-stage {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        text-align: left !important;
+        gap: 20px !important;
+        max-width: 100% !important;
+        width: 100% !important;
+      }
+      .timeline-stage .circle-wrapper {
+        margin-bottom: 0 !important;
+        z-index: 2;
+        background: var(--color-section-alt) !important; /* Cover the connecting line behind the circle blending perfectly */
+        padding: 4px 0;
+      }
+      .timeline-stage .stage-info {
+        display: flex;
+        flex-direction: column;
+      }
+      .timeline-stage p, .timeline-stage h4 {
+        margin-bottom: 2px !important;
+      }
+
+      .programs-grid {
+        grid-template-columns: 1fr !important;
+        gap: 24px !important;
+        padding: 0 10px !important;
+      }
+      .prog-card {
+        background: #000000 !important;
+        color: #ffffff !important;
+        border: none !important;
+        padding: 35px 25px !important;
+        border-radius: 24px !important;
+        min-height: 220px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        justify-content: flex-start !important;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15) !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
+      .prog-card::before {
+        display: none !important;
+      }
+      .prog-card .badge {
+        background: rgba(255, 255, 255, 0.15) !important;
+        color: #ffffff !important;
+        border: 1px solid rgba(255, 255, 255, 0.25) !important;
+        font-size: 0.7rem !important;
+        margin-bottom: 16px !important;
+        padding: 6px 12px !important;
+      }
+      .prog-card h3 {
+        color: #ffffff !important;
+        font-size: 1.8rem !important;
+        font-weight: 600 !important;
+        margin-bottom: 12px !important;
+        transform: none !important;
+        text-align: left !important;
+      }
+      .prog-card p {
+        color: rgba(255, 255, 255, 0.8) !important;
+        font-size: 0.95rem !important;
+        line-height: 1.6 !important;
+        margin-bottom: 24px !important;
+        text-align: left !important;
+      }
+      .prog-card ul {
+        display: none !important; /* Hide checklist on mobile for clean vertical alignment */
+      }
+      .prog-btn {
+        background: #ffffff !important;
+        color: #000000 !important;
+        border: none !important;
+        width: 100% !important;
+        text-align: center !important;
+        font-size: 0.9rem !important;
+        font-weight: 700 !important;
+        border-radius: 12px !important;
+        padding: 14px 0 !important;
+        margin-top: auto !important;
+        display: block !important;
+        box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1) !important;
+      }
+      .prog-btn:hover {
+        background: #f0f0f0 !important;
+        transform: translateY(-2px) !important;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      body .programs-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+        width: 100vw !important;
+        max-width: 100vw !important;
+        margin-left: calc(50% - 50vw) !important;
+        margin-right: calc(50% - 50vw) !important;
+        padding: 0 !important;
+        gap: 32px !important;
+        box-sizing: border-box !important;
+        justify-items: center !important;
+      }
+
+      body .programs-grid .prog-card {
+        width: calc(100vw - 96px) !important;
+        max-width: 580px !important;
+        margin-left: 48px !important;
+        margin-right: auto !important;
+        min-height: 260px !important;
+        padding: 36px 38px !important;
+        border-radius: 20px !important;
+        background: #000000 !important;
+        box-shadow: none !important;
+        box-sizing: border-box !important;
+      }
+
+      body .programs-grid .prog-card .badge {
+        background: transparent !important;
+        border: 0 !important;
+        color: #ffffff !important;
+        font-size: 1.45rem !important;
+        font-weight: 500 !important;
+        letter-spacing: 0 !important;
+        line-height: 1.2 !important;
+        padding: 0 !important;
+        margin-bottom: 0 !important;
+        text-transform: none !important;
+      }
+
+      body .programs-grid .prog-card h3 {
+        display: block !important;
+        color: #ffffff !important;
+        font-size: 1.8rem !important;
+        line-height: 1.2 !important;
+        margin: 18px 0 12px !important;
+      }
+
+      body .programs-grid .prog-card p {
+        display: block !important;
+        color: rgba(255, 255, 255, 0.78) !important;
+        font-size: 0.95rem !important;
+        line-height: 1.55 !important;
+        margin-bottom: 22px !important;
+      }
+
+      body .programs-grid .prog-card ul {
+        display: none !important;
+      }
+
+      body .programs-grid .prog-card .prog-btn {
+        display: inline-block !important;
+        width: auto !important;
+        min-width: 150px !important;
+        padding: 13px 24px !important;
+        border-radius: 10px !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body .programs-grid {
+        gap: 28px !important;
+      }
+
+      body .programs-grid .prog-card {
+        width: calc(100vw - 72px) !important;
+        margin-left: 24px !important;
+        min-height: 232px !important;
+        padding: 34px 38px !important;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      body .programs-grid {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) !important;
+        width: 100vw !important;
+        max-width: 100vw !important;
+        margin-left: calc(50% - 50vw) !important;
+        margin-right: calc(50% - 50vw) !important;
+        padding: 0 !important;
+        gap: 28px !important;
+        justify-items: center !important;
+      }
+
+      body .programs-grid .prog-card {
+        width: calc(100vw - 48px) !important;
+        max-width: 580px !important;
+        min-height: auto !important;
+        margin: 0 auto !important;
+        padding: 34px 28px !important;
+        border-radius: 28px !important;
+        background: linear-gradient(var(--bg-start), var(--bg-end)) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        box-shadow: 0 18px 42px var(--shadow-glow) !important;
+        color: #ffffff !important;
+        backdrop-filter: blur(25px) !important;
+        -webkit-backdrop-filter: blur(25px) !important;
+      }
+
+      body .programs-grid .reveal-left,
+      body .programs-grid .reveal-right {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      body .programs-grid .prog-card::before {
+        display: block !important;
+        border-radius: inherit !important;
+      }
+
+      body .programs-grid .prog-card.light .badge { background: rgba(249, 222, 144, 0.15) !important; color: #f9de90 !important; border: 1px solid rgba(249, 222, 144, 0.3) !important; }
+      body .programs-grid .prog-card.brown .badge { background: rgba(255, 138, 115, 0.15) !important; color: #ff8a73 !important; border: 1px solid rgba(255, 138, 115, 0.3) !important; }
+      body .programs-grid .prog-card.dark-green .badge { background: rgba(138, 232, 156, 0.15) !important; color: #8ae89c !important; border: 1px solid rgba(138, 232, 156, 0.3) !important; }
+      body .programs-grid .prog-card.green .badge { background: rgba(252, 224, 116, 0.15) !important; color: #fce074 !important; border: 1px solid rgba(252, 224, 116, 0.3) !important; }
+      body .programs-grid .prog-card.teal .badge { background: rgba(116, 203, 251, 0.15) !important; color: #74cbfb !important; border: 1px solid rgba(116, 203, 251, 0.3) !important; }
+
+      body .programs-grid .prog-card .badge {
+        display: inline-block !important;
+        font-size: 0.7rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 1.5px !important;
+        line-height: 1.2 !important;
+        margin-bottom: 20px !important;
+        padding: 7px 14px !important;
+        border-radius: 30px !important;
+        text-transform: uppercase !important;
+      }
+
+      body .programs-grid .prog-card h3 {
+        display: block !important;
+        color: inherit !important;
+        font-size: 2rem !important;
+        font-weight: 400 !important;
+        line-height: 1.2 !important;
+        margin: 0 0 16px !important;
+      }
+
+      body .programs-grid .prog-card p {
+        display: block !important;
+        color: inherit !important;
+        font-size: 1rem !important;
+        line-height: 1.55 !important;
+        margin-bottom: 24px !important;
+        opacity: 0.86 !important;
+      }
+
+      body .programs-grid .prog-card ul {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+        margin-bottom: 32px !important;
+      }
+
+      body .programs-grid .prog-card .prog-btn {
+        display: inline-block !important;
+        width: 100% !important;
+        padding: 14px 22px !important;
+        border-radius: 8px !important;
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        color: #ffffff !important;
+        text-align: center !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo/Logo.pdf (1) 2.png" alt="Fawn Kids Logo">
+        <span>FAWN KIDS</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">HOME</a>
+        <a href="programs.html" class="active">PROGRAMS</a>
+        <a href="curriculum.html">CURRICULUM</a>
+        <a href="admission.html">ADMISSIONS</a>
+        <a href="about.html">ABOUT</a>
+      </div>
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-outline">Login</a>
+        <a href="signup.html" class="btn btn-primary">Sign up</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Programs Hero -->
+  <section class="container" style="padding-top: 140px; padding-bottom: 60px;">
+    <div class="programs-hero-card" style="background: #092B1C; border-radius: 40px; padding: 80px 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; position: relative; overflow: hidden;">
+      <div class="hero-content reveal-left" style="color: #fff; position: relative; z-index: 2;">
+        <span style="background: rgba(255,255,255,0.1); padding: 8px 16px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">PROGRAMS</span>
+        <h1 style="font-size: 4rem; line-height: 1.1; margin: 24px 0; font-weight: 400;">
+          A Journey Built<br>for Every<br>
+          <em style="color: #D4B97A; font-family: 'Raleway', sans-serif; font-style: italic;">Child's Growth.</em>
+        </h1>
+        <p style="font-size: 1.1rem; color: rgba(255,255,255,0.8); margin-bottom: 40px; max-width: 450px; line-height: 1.6;">
+          From Playgroup, Nursery, LKG to UKG, our Montessori programs nurture curiosity, independence, and a lifelong love of learning.
+        </p>
+        <div style="display: flex; gap: 24px; align-items: center;">
+        <a href="curriculum.html" class="btn btn-primary" style="background: #1A5A11; text-transform: uppercase;">EXPLORE</a>
+        <a href="curriculum.html" style="color: #fff; font-weight: 600; text-decoration: none; font-size: 0.95rem; display: flex; align-items: center; gap: 8px;">Explore curriculum <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+      
+      <!-- Stats Right Side -->
+      <div class="reveal-right" style="position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 20px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 320px;">
+          <!-- Stat 1 -->
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 24px; border-radius: 24px; text-align: center;">
+            <h3 style="font-size: 2.2rem; color: #fff; margin-bottom: 5px; font-family: 'Raleway', sans-serif; font-weight: 400;">4</h3>
+            <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600;">PROGRAMS</p>
+          </div>
+          <!-- Stat 2 -->
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 24px; border-radius: 24px; text-align: center;">
+            <h3 style="font-size: 2.2rem; color: #fff; margin-bottom: 5px; font-family: 'Raleway', sans-serif; font-weight: 400;">100%</h3>
+            <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600;">MONTESSORI</p>
+          </div>
+          <!-- Stat 3 -->
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 24px; border-radius: 24px; text-align: center;">
+            <h3 style="font-size: 2.2rem; color: #fff; margin-bottom: 5px; font-family: 'Raleway', sans-serif; font-weight: 400;">10+</h3>
+            <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600;">EDUCATORS</p>
+          </div>
+          <!-- Stat 4 -->
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 24px; border-radius: 24px; text-align: center;">
+            <h3 style="font-size: 2.2rem; color: #fff; margin-bottom: 5px; font-family: 'Raleway', sans-serif; font-weight: 400;">2-6</h3>
+            <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600;">AGE GROUP</p>
+          </div>
+        </div>
+        <!-- Parent Approved Badge -->
+        <div style="background: #F1CA74; padding: 14px 32px; border-radius: 100px; color: #111; font-weight: 700; display: inline-flex; flex-direction: column; align-items: center; margin-top: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+          <div style="display: flex; gap: 4px; margin-bottom: 6px; font-size: 0.9rem;">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+          </div>
+          <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px;">PARENT APPROVED</span>
+        </div>
+      </div>
+      
+      <!-- Background subtle gradient circle -->
+      <div style="position: absolute; right: -100px; top: -100px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(26,90,17,0.4) 0%, transparent 70%); z-index: 1;"></div>
+    </div>
+  </section>
+
+  <!-- Specialized Drawing & Painting Course -->
+  <section class="container" style="padding-top: 100px;">
+    <div class="cta-banner-new reveal" style="margin: 0; background: #092B1C; position: relative; overflow: hidden; border-radius: 32px; align-items: center;">
+      <div style="position: absolute; right: -100px; top: -100px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(212, 185, 122, 0.2) 0%, transparent 70%); z-index: 1;"></div>
+      <div style="position: relative; z-index: 2; text-align: left;">
+        <span style="background: rgba(212, 185, 122, 0.15); color: #D4B97A; padding: 8px 20px; border-radius: 20px; font-weight: 700; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 24px; display: inline-block;">CREATIVE ARTS</span>
+        <h2 style="font-size: 3.5rem; color: #fff; line-height: 1.1; margin-bottom: 20px;">
+          Drawing &amp;<br><em style="color: #D4B97A; font-style: italic;">Painting Class</em>
+        </h2>
+        <p style="font-size: 1.1rem; color: rgba(255,255,255,0.8); margin-bottom: 30px; line-height: 1.6; max-width: 100%;">
+          A vibrant space where imagination meets color. Our Drawing &amp; Painting classes foster fine motor skills, unleash creativity, and allow your child to express themselves confidently through art.
+        </p>
+        <a href="drawing-painting.html" class="btn-brown" style="display: inline-block; text-decoration: none;">Enroll Now</a>
+      </div>
+      <div style="position: relative; z-index: 2;">
+        <img src="images/drawing_painting.png" alt="Child drawing and painting" style="border-radius: 24px; width: 100%; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
+      </div>
+    </div>
+  </section>
+
+  <!-- Programs -->
+  <section class="section section-alt" style="padding-top: 100px;">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 80px;" class="reveal">
+        <p style="text-transform: uppercase; letter-spacing: 3px; color: #8A6B42; font-weight: 700; font-size: 0.75rem; margin-bottom: 25px;">NURTURING EVERY MILESTONE</p>
+        <h2 style="font-size: 4.5rem; line-height: 1.1; margin-bottom: 30px; font-weight: 400; color: #092B1C; font-family: var(--font-body);">
+          Our <em style="color: #8A6B42; font-family: 'Raleway', sans-serif; font-style: italic;">four programs,</em><br>one seamless<br>journey.
+        </h2>
+        <p style="font-size: 1.05rem; color: #555; max-width: 650px; margin: 0 auto 60px; line-height: 1.6;">
+          A seamless educational journey from Playgroup, Nursery, LKG and UKG —<br>building confidence and capability step by step.
+        </p>
+        
+        <!-- Timeline Navigation visual (UI/UX Pro Max Responsive) -->
+        <div class="timeline-nav">
+          <!-- Stage 01 -->
+          <div class="timeline-stage">
+            <div class="circle-wrapper">
+              <div class="circle-outer" style="width: 24px; height: 24px; border-radius: 50%; border: 2px solid #8A6B42; display: flex; align-items: center; justify-content: center;">
+                <div style="width: 12px; height: 12px; border-radius: 50%; background: #8A6B42;"></div>
+              </div>
+            </div>
+            <div class="stage-info">
+              <p style="font-size: 0.6rem; color: #8A6B42; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px;">STAGE 01</p>
+              <h4 style="font-size: 1.4rem; font-family: 'Raleway', sans-serif; color: #092B1C; font-weight: 400; margin-bottom: 6px;">Playgroup</h4>
+              <p style="font-size: 0.65rem; color: #888; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">AGES 2 - 2.5</p>
+            </div>
+          </div>
+
+          <!-- Stage 02 -->
+          <div class="timeline-stage">
+            <div class="circle-wrapper">
+              <div class="circle-outer" style="width: 24px; height: 24px; border-radius: 50%; border: 2px solid #1A5A11; display: flex; align-items: center; justify-content: center;">
+                <div style="width: 12px; height: 12px; border-radius: 50%; background: #1A5A11;"></div>
+              </div>
+            </div>
+            <div class="stage-info">
+              <p style="font-size: 0.6rem; color: #8A6B42; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px;">STAGE 02</p>
+              <h4 style="font-size: 1.4rem; font-family: 'Raleway', sans-serif; color: #092B1C; font-weight: 400; margin-bottom: 6px;">Nursery</h4>
+              <p style="font-size: 0.65rem; color: #888; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">AGES 2.5 - 3.5</p>
+            </div>
+          </div>
+
+          <!-- Stage 03 -->
+          <div class="timeline-stage">
+            <div class="circle-wrapper">
+              <div class="circle-outer" style="width: 24px; height: 24px; border-radius: 50%; border: 2px solid #092B1C; display: flex; align-items: center; justify-content: center;">
+                <div style="width: 12px; height: 12px; border-radius: 50%; background: #092B1C;"></div>
+              </div>
+            </div>
+            <div class="stage-info">
+              <p style="font-size: 0.6rem; color: #8A6B42; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px;">STAGE 03</p>
+              <h4 style="font-size: 1.4rem; font-family: 'Raleway', sans-serif; color: #092B1C; font-weight: 400; margin-bottom: 6px;">LKG</h4>
+              <p style="font-size: 0.65rem; color: #888; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">AGES 3.5 - 4.5</p>
+            </div>
+          </div>
+
+          <!-- Stage 04 -->
+          <div class="timeline-stage">
+            <div class="circle-wrapper">
+              <div class="circle-outer" style="width: 24px; height: 24px; border-radius: 50%; border: 2px solid #3A834A; display: flex; align-items: center; justify-content: center;">
+                <div style="width: 12px; height: 12px; border-radius: 50%; background: #3A834A;"></div>
+              </div>
+            </div>
+            <div class="stage-info">
+              <p style="font-size: 0.6rem; color: #8A6B42; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px;">STAGE 04</p>
+              <h4 style="font-size: 1.4rem; font-family: 'Raleway', sans-serif; color: #092B1C; font-weight: 400; margin-bottom: 6px;">UKG</h4>
+              <p style="font-size: 0.65rem; color: #888; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">AGES 4.5 - 6</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="programs-grid" style="margin-top: 0;">
+        <!-- Playgroup -->
+        <div class="prog-card light reveal-left">
+          <span class="badge">FIRST STEPS</span>
+          <h3>Playgroup</h3>
+          <p>The perfect first step in your child's educational journey. We build early confidence and foundational skills through expert-guided exploration.</p>
+          <ul>
+            <li><i class="fa-regular fa-circle-check"></i> EARLY SOCIAL SKILLS</li>
+            <li><i class="fa-regular fa-circle-check"></i> HANDS-ON DISCOVERY</li>
+          </ul>
+          <a href="playgroup-program.html" class="prog-btn">LEARN MORE</a>
+        </div>
+
+        <!-- Nursery -->
+        <div class="prog-card brown reveal-right">
+          <span class="badge">EARLY EXPLORERS</span>
+          <h3>Nursery</h3>
+          <p>Transitioning from pure play to structured exploration. We foster independence, early vocabulary, and cognitive skills in a vibrant, engaging setting.</p>
+          <ul>
+            <li><i class="fa-regular fa-circle-check"></i> VOCABULARY ENRICHMENT</li>
+            <li><i class="fa-regular fa-circle-check"></i> CREATIVE EXPRESSION</li>
+          </ul>
+          <a href="nursery-program.html" class="prog-btn">LEARN MORE</a>
+        </div>
+
+        <!-- LKG -->
+        <div class="prog-card dark-green reveal-left">
+          <span class="badge">MOST POPULAR</span>
+          <h3>LKG</h3>
+          <p>Transitioning to structured Montessori activities, focusing on language, logic, and creative expression.</p>
+          <ul>
+            <li><i class="fa-regular fa-circle-check"></i> HANDS-ON MONTESSORI LEARNING</li>
+            <li><i class="fa-regular fa-circle-check"></i> ADVANCED LOGICAL THINKING</li>
+          </ul>
+          <a href="lkg-program.html" class="prog-btn">LEARN MORE</a>
+        </div>
+
+        <!-- UKG -->
+        <div class="prog-card green reveal-right">
+          <span class="badge">SENIOR YEAR</span>
+          <h3>UKG</h3>
+          <p>Advanced Montessori concepts preparing children for formal schooling with confidence and academic readiness.</p>
+          <ul>
+            <li><i class="fa-regular fa-circle-check"></i> SCHOOL READINESS PROGRAM</li>
+            <li><i class="fa-regular fa-circle-check"></i> CONFIDENT COMMUNICATION</li>
+          </ul>
+          <a href="ukg-program.html" class="prog-btn">LEARN MORE</a>
+        </div>
+
+        <!-- Other Courses -->
+        <div class="prog-card teal reveal-left">
+          <span class="badge">BEYOND ACADEMICS</span>
+          <h3>Other Courses</h3>
+          <p>Enriching your child's journey with specialized programs designed to nurture unique talents beyond the standard curriculum.</p>
+          <ul>
+            <li><i class="fa-regular fa-circle-check"></i> MULTIPLE SKILL TRACKS</li>
+            <li><i class="fa-regular fa-circle-check"></i> EXPERT-LED SESSIONS</li>
+          </ul>
+          <a href="drawing-painting.html" class="prog-btn">LEARN MORE</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hands-On Learning -->
+  <section class="container" style="padding: 100px 0;">
+    <div class="grid-2" style="align-items: center;">
+      <div class="reveal-left">
+        <h2 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 24px;">Hands-On<br>Learning,<br><em style="color: #A67C46; font-family: 'Raleway', sans-serif; font-style: italic;">Hearts-On Care</em></h2>
+        <p style="font-size: 1.1rem; color: #555; margin-bottom: 30px; line-height: 1.6;">
+          Our Montessori classrooms are carefully prepared environments where children can move freely, choose their own activities, and learn at their own pace.
+        </p>
+        <ul class="learning-list" style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 16px;">
+          <li style="display: flex; gap: 12px; align-items: flex-start; cursor: default;"><i class="fa-solid fa-check" style="color: #A67C46; margin-top: 5px;"></i> <span style="line-height: 1.5;"><strong>Child-Led Discovery:</strong> Children naturally gravitate towards activities that fulfill their developmental needs.</span></li>
+          <li style="display: flex; gap: 12px; align-items: flex-start; cursor: default;"><i class="fa-solid fa-check" style="color: #A67C46; margin-top: 5px;"></i> <span style="line-height: 1.5;"><strong>Mixed Age Groups:</strong> Younger children learn from older peers, while older children reinforce their knowledge by helping others.</span></li>
+          <li style="display: flex; gap: 12px; align-items: flex-start; cursor: default;"><i class="fa-solid fa-check" style="color: #A67C46; margin-top: 5px;"></i> <span style="line-height: 1.5;"><strong>Specially Designed Materials:</strong> Self-correcting materials allow children to learn independently.</span></li>
+        </ul>
+      </div>
+      <div class="reveal-right" style="position: relative;">
+        <img src="images/program page/Children learning.png" class="learning-img-hover" alt="Children learning with blocks" style="width: 100%; border-radius: 32px; box-shadow: 0 20px 40px rgba(0,0,0,0.1);">
+      </div>
+    </div>
+  </section>
+
+  <!-- Structured Freedom -->
+  <section class="section section-alt" style="text-align: center; padding: 100px 0;">
+    <div class="container">
+      <p style="text-transform: uppercase; letter-spacing: 2px; color: #A67C46; font-weight: 600; font-size: 0.8rem; margin-bottom: 10px;">A DAY AT FAWN KIDS</p>
+      <h2 style="font-size: 3.5rem; margin-bottom: 16px;">Structured <em style="color: #A67C46; font-family: 'Raleway', sans-serif; font-style: italic;">freedom</em>,<br>every single day.</h2>
+      <p style="font-size: 1.1rem; color: #555; max-width: 600px; margin: 0 auto 60px;">Give your child a structured day full of engaging activities that stimulate growth and joy.</p>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; text-align: left;">
+        <div class="schedule-card reveal-left">
+          <span style="color: #A67C46; font-weight: 600; font-size: 0.85rem; letter-spacing: 1px;">8:30 AM - 9:00 AM</span>
+          <h3 style="font-size: 1.5rem; margin: 10px 0;">Arrival & Morning Work</h3>
+          <p style="color: #666; line-height: 1.6;">Children arrive, greet their teachers, and begin their independent work cycle.</p>
+        </div>
+        <div class="schedule-card reveal-right">
+          <span style="color: #A67C46; font-weight: 600; font-size: 0.85rem; letter-spacing: 1px;">9:00 AM - 11:30 AM</span>
+          <h3 style="font-size: 1.5rem; margin: 10px 0;">The Montessori Work Cycle</h3>
+          <p style="color: #666; line-height: 1.6;">Uninterrupted time for children to engage deeply with materials of their choice.</p>
+        </div>
+        <div class="schedule-card reveal-left">
+          <span style="color: #A67C46; font-weight: 600; font-size: 0.85rem; letter-spacing: 1px;">11:30 AM - 12:30 PM</span>
+          <h3 style="font-size: 1.5rem; margin: 10px 0;">Outdoor Nature Play</h3>
+          <p style="color: #666; line-height: 1.6;">Gross motor development and connection with nature in our secure play area.</p>
+        </div>
+        <div class="schedule-card reveal-right">
+          <span style="color: #A67C46; font-weight: 600; font-size: 0.85rem; letter-spacing: 1px;">12:30 PM - 1:30 PM</span>
+          <h3 style="font-size: 1.5rem; margin: 10px 0;">Lunch & Rest</h3>
+          <p style="color: #666; line-height: 1.6;">A time for nourishment and quiet reflection, fostering independence in self-care.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="container">
+    <div class="cta-banner-new reveal">
+      <div>
+        <h2>Secure Your<br>Child's Future<br><em>with Fawn Kids.</em></h2>
+        <p>Schedule a private tour of our campus, explore our curriculum, and see our safe play areas in action.</p>
+        <div class="buttons">
+          <a href="tel:+919445566377" class="btn-brown">BOOK A CALL</a>
+          <a href="resources.html#program-guide" class="btn-text-link">VIEW PROGRAM DETAILS</a>
+        </div>
+      </div>
+      <div>
+        <img src="images/Blog/65/Active learning.png" alt="Teacher and child">
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-newsletter">
+          <h4>Stay in the loop</h4>
+          <p>Get updates on programs and learning insights</p>
+        </div>
+        <div class="newsletter-form-new">
+          <input type="email" placeholder="Your email">
+          <button class="btn-subscribe">Subscribe</button>
+        </div>
+      </div>
+
+      <div class="footer-main">
+        <div class="footer-info-col">
+          <img src="images/logo/Logo.pdf (1) 2.png" alt="Fawn Kids Logo" class="footer-logo">
+          <div class="footer-contact-item">
+            <strong>Address</strong>
+            No: 1 A/9, Nehru Nagar Main Road, Nehru Nagar, Tondiarpet, Chennai – 81.
+          </div>
+          <div class="footer-contact-item">
+            <strong>Contact</strong>
+            <a href="tel:+919445566377">+91 94455 66377</a> / <a href="tel:+919499909005">94999 09005</a><br>
+            <a href="mailto:fawnkidspreschool@gmail.com">fawnkidspreschool@gmail.com</a>
+          </div>
+          <div class="footer-socials">
+            <a href="contact.html#connect-online" aria-label="Connect with Fawn Kids"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.instagram.com/fawnkids_preschool_academy?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" aria-label="Connect with Fawn Kids on Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="contact.html#connect-online" aria-label="Connect with Fawn Kids"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="careers.html" aria-label="Fawn Kids careers"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="resources.html#family-guides" aria-label="Fawn Kids resources"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-links-col">
+          <h5>Quick Links</h5>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="programs.html">Programs</a></li>
+            <li><a href="curriculum.html">Curriculum</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="about.html">About us</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <h5>Support</h5>
+          <ul>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="careers.html">Careers</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="resources.html">Resources</a></li>
+            <li><p>© 2025 Fawn Kids School. All rights reserved.</p></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom-new">
+        <div class="footer-privacy">Privacy policy</div>
+        <div class="footer-legal-links">
+          <a href="terms.html">Terms of service</a>
+          <a href="cookies.html">Cookie settings</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="site.js"></script>
+  <script>
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Scroll Reveal Animation Observer
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.15
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
+      observer.observe(el);
+    });
+
+    // FAQ Accordion Logic
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      question.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        
+        // Close all other FAQs
+        faqItems.forEach(faq => {
+          faq.classList.remove('active');
+        });
+
+        // Open current FAQ if it was not active
+        if (!isActive) {
+          item.classList.add('active');
+        }
+      });
+    });
+  </script>
+
+  <!-- Curtain Transition Overlay -->
+  <div id="curtain-overlay"></div>
+
+  <!-- Floating Dark Mode Toggle Button -->
+  <button id="theme-toggle-btn" class="floating-theme-toggle" aria-label="Toggle Dark Mode">
+    <div class="icon-wrapper">
+      <i class="fas fa-moon moon-icon"></i>
+      <i class="fas fa-sun sun-icon"></i>
+    </div>
+  </button>
+
+  <script>
+    (function() {
+      const toggleBtn = document.getElementById('theme-toggle-btn');
+      const curtain = document.getElementById('curtain-overlay');
+      
+      if (toggleBtn && curtain) {
+        let isAnimating = false;
+        
+        toggleBtn.addEventListener('click', () => {
+          if (isAnimating) return;
+          isAnimating = true;
+          
+          const isCurrentlyDark = document.documentElement.classList.contains('dark');
+          const nextTheme = isCurrentlyDark ? 'light' : 'dark';
+          
+          // Set curtain background color based on next theme bg token
+          curtain.style.backgroundColor = nextTheme === 'dark' ? '#0e0e0e' : '#FAF6F0';
+          
+          // Drop the curtain (scaleY from 0 to 1, origin top)
+          curtain.style.transformOrigin = 'top';
+          curtain.style.transform = 'scaleY(1)';
+          
+          // Wait for curtain to cover screen (550ms)
+          setTimeout(() => {
+            // Toggle theme class
+            if (nextTheme === 'dark') {
+              document.documentElement.classList.add('dark');
+              localStorage.setItem('theme', 'dark');
+            } else {
+              document.documentElement.classList.remove('dark');
+              localStorage.setItem('theme', 'light');
+            }
+            
+            // Raise the curtain (scaleY from 1 to 0, origin bottom)
+            curtain.style.transformOrigin = 'bottom';
+            curtain.style.transform = 'scaleY(0)';
+            
+            // Complete transition after raising
+            setTimeout(() => {
+              // Reset origin for next time
+              curtain.style.transformOrigin = 'top';
+              isAnimating = false;
+            }, 550);
+          }, 550);
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admissions - Fawn Kids</title>
+  <script>
+    // Immediate script to prevent dark mode flashing
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  </script>
+  <link rel="stylesheet" href="styles.css?v=11">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --color-primary: #0E4735;
+      --color-accent: #D46B2A;
+      --color-bg-light: #F8F7F4;
+      --font-heading: 'Raleway', sans-serif;
+    }
+
+    input, select, textarea, button {
+      font-family: var(--font-heading) !important;
+      font-variant-numeric: lining-nums;
+      -moz-font-feature-settings: "lnum";
+      -webkit-font-feature-settings: "lnum";
+      font-feature-settings: "lnum";
+    }
+
+    /* Admissions Hero Section */
+    .admissions-hero {
+      padding: 180px 0 60px;
+      text-align: center;
+      background: var(--color-bg-light);
+    }
+    .hero-card {
+      background: #1A1A1A;
+      color: white;
+      padding: 80px 60px;
+      border-radius: 60px;
+      position: relative;
+      overflow: hidden;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .hero-card::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: -100px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(226, 192, 125, 0.08) 0%, transparent 70%);
+      transform: translateY(-50%);
+      z-index: 0;
+    }
+    .hero-card .subtitle {
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 20px;
+      display: block;
+    }
+    .hero-card h1 {
+      font-family: var(--font-heading);
+      font-size: 4rem;
+      font-weight: 700;
+      margin-bottom: 25px;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      color: #FFFFFF !important;
+    }
+    .hero-card p {
+      max-width: 550px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.9) !important;
+      line-height: 1.6;
+    }
+
+    /* Main Grid Layout */
+    .admission-content {
+      padding: 80px 0;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 40px;
+    }
+
+    /* Left Card: Form */
+    .registration-card {
+      background: #fff;
+      border-radius: 40px;
+      padding: 60px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.02);
+      border: 1px solid #F0F0F0;
+    }
+    .registration-card h2 {
+      font-size: 2.2rem;
+      color: #1A1A1A;
+      margin-bottom: 15px;
+    }
+    .registration-card p {
+      color: #666;
+      margin-bottom: 40px;
+      font-size: 0.95rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .form-group.full-width {
+      grid-column: span 2;
+    }
+    .form-group label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #333;
+    }
+    .form-group input, .form-group select {
+      background: #F8F8F8;
+      border: 1px solid #EEEEEE;
+      padding: 15px 20px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+    .form-group input:focus, .form-group select:focus {
+      background: #fff;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 4px rgba(14, 71, 53, 0.05);
+    }
+    .btn-submit {
+      background: var(--color-primary);
+      color: white;
+      padding: 18px 35px;
+      border-radius: 12px;
+      border: none;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 4px 0 #07251B;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-submit::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -100%;
+      width: 50%;
+      height: 200%;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
+      transform: rotate(30deg);
+      transition: all 0.6s ease;
+    }
+    .btn-submit:hover::after { left: 150%; }
+    .btn-submit:hover {
+      background: #092B1C;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 #07251B;
+    }
+    .btn-submit:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #07251B;
+    }
+
+    /* Right Cards */
+    .sidebar-card {
+      background: #fff;
+      border-radius: 40px;
+      padding: 45px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.02);
+      border: 1px solid #F0F0F0;
+      margin-bottom: 30px;
+    }
+    .tour-card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+    .icon-box {
+      background: #FEF3E1;
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #D46B2A;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .tour-card-header h3 {
+      font-size: 1.5rem;
+      margin-bottom: 5px;
+    }
+    .tour-card-header p {
+      font-size: 0.85rem;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    /* Calendar Mockup */
+    .calendar-mockup {
+      background: #F8F7F4;
+      border-radius: 20px;
+      padding: 25px;
+      margin-bottom: 25px;
+    }
+    .cal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .cal-header span { font-weight: 700; font-size: 0.9rem; color: #1A1A1A; }
+    .cal-nav {
+      display: flex;
+      gap: 15px;
+      font-size: 0.8rem;
+      color: #888;
+    }
+    .cal-nav i { cursor: pointer; transition: color 0.2s; padding: 5px; }
+    .cal-nav i:hover { color: #1A1A1A; }
+
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 2px;
+      text-align: center;
+    }
+    .cal-day-label { font-size: 0.6rem; color: #999; margin-bottom: 10px; font-weight: 700; }
+    .cal-date {
+      font-size: 0.85rem;
+      padding: 10px 0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: #444;
+      font-weight: 500;
+    }
+    .cal-date:not(.empty):hover { background: #EAEAEA; }
+    .cal-date.active { background: #3A7065; color: white !important; }
+    .cal-date.empty { cursor: default; color: #CCC; }
+    .cal-date.today { color: var(--color-primary); font-weight: 700; border: 1px solid rgba(14, 71, 53, 0.1); }
+
+    .btn-tour {
+      width: 100%;
+      background: #3A7065;
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 4px 0 #2D584F;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-tour::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -100%;
+      width: 50%;
+      height: 200%;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+      transform: rotate(30deg);
+      transition: all 0.6s ease;
+    }
+    .btn-tour:hover::after { left: 150%; }
+    .btn-tour:hover {
+      background: #2D584F;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 #2D584F;
+    }
+    .btn-tour:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #2D584F;
+    }
+
+    /* Map & Location */
+    .location-section h3 {
+      font-size: 1.6rem;
+      margin-bottom: 25px;
+    }
+    .map-link {
+      display: block;
+      text-decoration: none;
+      margin-bottom: 30px;
+    }
+    .map-container {
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      border: 1px solid #EEE;
+      position: relative;
+      height: 250px;
+    }
+    .map-container img {
+      width: 100%;
+      height: 100%;
+      transform: scale(1.6);
+      transform-origin: center center;
+      object-fit: cover;
+      display: block;
+    }
+    
+    /* Pulsing Pin */
+    .map-pin {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+    }
+    .pin-circle {
+      width: 44px;
+      height: 44px;
+      background: #7A6021;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.2rem;
+      position: relative;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .pin-pulse {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      border-radius: 50%;
+      background: #7A6021;
+      opacity: 0.4;
+      animation: pinPulse 2s infinite;
+      z-index: -1;
+    }
+    @keyframes pinPulse {
+      0% { transform: scale(1); opacity: 0.4; }
+      100% { transform: scale(2.5); opacity: 0; }
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: 0.9rem;
+      color: #444;
+    }
+    .info-item i { color: var(--color-accent); font-size: 1rem; }
+
+    /* CTA Section */
+    .admission-cta {
+      background: #0E4735;
+      padding: 100px 0;
+      border-radius: 60px;
+      margin: 50px 0 100px;
+      text-align: center;
+      color: white;
+    }
+    .admission-cta h2 {
+      font-size: 3.5rem;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      margin-bottom: 20px;
+      line-height: 1.2;
+      color: #FFFFFF !important;
+    }
+    .admission-cta p {
+      color: rgba(255,255,255,0.9) !important;
+      margin-bottom: 40px;
+      font-size: 1.1rem;
+    }
+    .cta-flex {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+    }
+    .btn-orange {
+      background: #D46B2A;
+      color: white;
+      padding: 18px 45px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s ease;
+    }
+    .btn-orange:hover {
+      background: #B95A20;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(212, 107, 42, 0.4);
+    }
+    .hotline {
+      text-align: left;
+    }
+    .hotline span { font-size: 0.75rem; color: #E2C07D; text-transform: uppercase; letter-spacing: 1px; display: block; }
+    .hotline strong { font-size: 1.5rem; display: block; margin-top: 5px; }
+
+    @media (max-width: 1000px) {
+      .admission-content { grid-template-columns: 1fr; }
+      .hero-card h1 { font-size: 3rem; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-group.full-width { grid-column: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo/Logo.pdf (1) 2.png" alt="Fawn Kids Logo">
+        <span>FAWN KIDS</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">HOME</a>
+        <a href="programs.html">PROGRAMS</a>
+        <a href="curriculum.html">CURRICULUM</a>
+        <a href="admission.html" class="active">ADMISSIONS</a>
+        <a href="about.html">ABOUT</a>
+      </div>
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-outline">Login</a>
+        <a href="signup.html" class="btn btn-primary">Sign up</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="admissions-hero reveal">
+    <div class="container">
+      <div class="hero-card">
+        <span class="subtitle">BEGIN THE JOURNEY</span>
+        <h1>Enrollment & Admissions</h1>
+        <p>We welcome families who value curiosity, nature-inspired learning, and a sophisticated approach to early childhood excellence.</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="admission-content">
+      
+      <!-- Left: Registration Form -->
+      <section class="registration-card reveal-left">
+        <h2>Register Your Interest</h2>
+        <p>Please provide the following details to begin your child's enrollment application.</p>
+        
+        <form class="admission-form">
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label>Child's Full Name</label>
+              <input type="text" placeholder="Full name">
+            </div>
+            <div class="form-group">
+              <label>Child's Date of Birth</label>
+              <input type="text" placeholder="DD / MM / YYYY" class="date-mask" maxlength="14" inputmode="numeric">
+            </div>
+            <div class="form-group">
+              <label>Child's Age / Level</label>
+              <select>
+                <option>Playgroup (2-3 years)</option>
+                <option>Nursery (3-4 years)</option>
+                <option>LKG (4-5 years)</option>
+                <option>UKG (5-6 years)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Parent/Contact Name</label>
+              <input type="text" placeholder="Father/ Mother /Guardians">
+            </div>
+            <div class="form-group">
+              <label>Contact Email</label>
+              <input type="email" placeholder="sarah2@gmail.com">
+            </div>
+            <div class="form-group">
+              <label>Desired Start Date</label>
+              <input type="text" placeholder="DD / MM / YYYY" class="date-mask" maxlength="14" inputmode="numeric">
+            </div>
+          </div>
+          <button type="submit" class="btn-submit">
+            Submit Application <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </form>
+      </section>
+
+      <!-- Right: Sidebar -->
+      <aside>
+        <!-- Tour Card -->
+        <div class="sidebar-card reveal-right">
+          <div class="tour-card-header">
+            <div class="icon-box">
+              <i class="fa-solid fa-calendar-check"></i>
+            </div>
+            <div>
+              <h3>Book a Private Tour</h3>
+              <p>Experience our serene forest-inspired environment first-hand. Select a date for a personal guided walk-through.</p>
+            </div>
+          </div>
+
+          <div class="calendar-mockup">
+            <div class="cal-header">
+              <span id="currentMonthYear">October 2024</span>
+              <div class="cal-nav">
+                <i class="fa-solid fa-chevron-left" id="prevMonth"></i>
+                <i class="fa-solid fa-chevron-right" id="nextMonth"></i>
+              </div>
+            </div>
+            <div class="cal-grid" id="calendarGrid">
+              <!-- Calendar will be generated by JS -->
+            </div>
+          </div>
+
+          <button class="btn-tour" type="button">Request this Slot</button>
+        </div>
+
+        <!-- Location Section -->
+        <div class="location-section reveal-right" style="margin-top: 60px;">
+          <h3>Our Location</h3>
+          <div class="sidebar-card" style="margin-top: 20px; padding: 30px;">
+            <a href="https://www.google.com/maps/place/1,+Nehru+Nagar+Main+Rd,+opposite+to+Hotel,+Nehru+Nagar,+Tondiarpet,+Chennai,+Tamil+Nadu+600081/@13.1267516,80.2741564,17z/data=!3m1!4b1!4m6!3m5!1s0x3a5265800a787c01:0x396c119490013b25!8m2!3d13.1267516!4d80.2767313!16s%2Fg%2F11sjwg6yg2?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="map-link" style="margin-bottom: 25px;">
+              <div class="map-container">
+                <img src="images/admission page/export-2026-04-23T16-41-54-512Z/Map & Location@2x.png" alt="School Location Map">
+                <div class="map-pin">
+                  <div class="pin-circle">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <div class="pin-pulse"></div>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <div class="contact-info">
+              <div class="info-item" style="align-items: flex-start;">
+                <i class="fa-solid fa-location-dot" style="margin-top: 3px;"></i>
+                <span>No: 1 A/9, Nehru Nagar Main Road, Nehru Nagar, Tondiarpet, Chennai — 81</span>
+              </div>
+              <div class="info-item" style="align-items: flex-start;">
+                <i class="fa-solid fa-phone" style="margin-top: 3px;"></i>
+                <span>+91 94455 66377 / 94999 09005</span>
+              </div>
+              <div class="info-item" style="align-items: flex-start;">
+                <i class="fa-solid fa-envelope" style="margin-top: 3px;"></i>
+                <span>fawnkidspreschool@gmail.com</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+
+    <!-- CTA Strip -->
+    <div class="admission-cta reveal">
+      <div class="container">
+        <h2>Quality Early Education is a necessity not a luxury</h2>
+        <p>Take the first step towards your child's brilliant future today.</p>
+        <div class="cta-flex">
+          <a href="contact.html" class="btn-orange">Contact Us</a>
+          <div class="hotline">
+            <span>Admission Hotline</span>
+            <strong><a href="tel:+919445566377" style="color: inherit;">+91 94455 66377</a></strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-newsletter">
+          <h4>Stay in the loop</h4>
+          <p>Get updates on programs and learning insights</p>
+        </div>
+        <div class="newsletter-form-new">
+          <input type="email" placeholder="Your email">
+          <button class="btn-subscribe">Subscribe</button>
+        </div>
+      </div>
+
+      <div class="footer-main">
+        <div class="footer-info-col">
+          <img src="images/logo/Logo.pdf (1) 2.png" alt="Fawn Kids Logo" class="footer-logo">
+          <div class="footer-contact-item">
+            <strong>Address</strong>
+            No: 1 A/9, Nehru Nagar Main Road, Nehru Nagar, Tondiarpet, Chennai – 81.
+          </div>
+          <div class="footer-contact-item">
+            <strong>Contact</strong>
+            <a href="tel:+919445566377">+91 94455 66377</a> / <a href="tel:+919499909005">94999 09005</a><br>
+            <a href="mailto:fawnkidspreschool@gmail.com">fawnkidspreschool@gmail.com</a>
+          </div>
+          <div class="footer-socials">
+            <a href="contact.html#connect-online" aria-label="Connect with Fawn Kids"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.instagram.com/fawnkids_preschool_academy?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" aria-label="Connect with Fawn Kids on Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="contact.html#connect-online" aria-label="Connect with Fawn Kids"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="careers.html" aria-label="Fawn Kids careers"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="resources.html#family-guides" aria-label="Fawn Kids resources"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-links-col">
+          <h5>Quick Links</h5>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="programs.html">Programs</a></li>
+            <li><a href="curriculum.html">Curriculum</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="about.html">About us</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <h5>Support</h5>
+          <ul>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="careers.html">Careers</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="resources.html">Resources</a></li>
+            <li><p>© 2025 Fawn Kids School. All rights reserved.</p></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom-new">
+        <div class="footer-privacy">Privacy policy</div>
+        <div class="footer-legal-links">
+          <a href="terms.html">Terms of service</a>
+          <a href="cookies.html">Cookie settings</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="site.js"></script>
+  <script>
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Scroll Reveal Animation Observer
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
+      observer.observe(el);
+    });
+
+    // --- Dynamic Calendar Logic ---
+    let currentDate = new Date();
+    let selectedDate = null;
+
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+
+    function renderCalendar() {
+      const monthYearDisplay = document.getElementById('currentMonthYear');
+      const calendarGrid = document.getElementById('calendarGrid');
+      
+      const year = currentDate.getFullYear();
+      const month = currentDate.getMonth();
+      
+      monthYearDisplay.textContent = `${monthNames[month]} ${year}`;
+      
+      // Clear grid
+      calendarGrid.innerHTML = '';
+      
+      // Add day labels
+      const days = ['MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SU'];
+      days.forEach(day => {
+        const dayEl = document.createElement('div');
+        dayEl.className = 'cal-day-label';
+        dayEl.textContent = day;
+        calendarGrid.appendChild(dayEl);
+      });
+      
+      // Get first day of month and total days
+      const firstDayOfMonth = new Date(year, month, 1).getDay(); // 0 is Sunday
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      
+      // Adjust first day for Monday start (ISO)
+      let startOffset = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1;
+      
+      // Previous month padding
+      const prevMonthLastDay = new Date(year, month, 0).getDate();
+      for (let i = startOffset; i > 0; i--) {
+        const dateEl = document.createElement('div');
+        dateEl.className = 'cal-date empty';
+        dateEl.textContent = prevMonthLastDay - i + 1;
+        calendarGrid.appendChild(dateEl);
+      }
+      
+      // Current month days
+      const today = new Date();
+      for (let i = 1; i <= daysInMonth; i++) {
+        const dateEl = document.createElement('div');
+        dateEl.className = 'cal-date';
+        dateEl.textContent = i < 10 ? `0${i}` : i;
+        
+        // Mark today
+        if (year === today.getFullYear() && month === today.getMonth() && i === today.getDate()) {
+          dateEl.classList.add('today');
+        }
+        
+        // Mark selected
+        if (selectedDate && year === selectedDate.year && month === selectedDate.month && i === selectedDate.day) {
+          dateEl.classList.add('active');
+        }
+        
+        dateEl.addEventListener('click', () => {
+          document.querySelectorAll('.cal-date').forEach(d => d.classList.remove('active'));
+          dateEl.classList.add('active');
+          selectedDate = { year, month, day: i };
+          
+          // Feedback animation
+          dateEl.style.transform = 'scale(0.9)';
+          setTimeout(() => dateEl.style.transform = 'scale(1)', 150);
+        });
+        
+        calendarGrid.appendChild(dateEl);
+      }
+      
+      // Next month padding
+      const totalCells = 42; // 6 rows of 7
+      const remainingCells = totalCells - (startOffset + daysInMonth);
+      for (let i = 1; i <= remainingCells; i++) {
+        const dateEl = document.createElement('div');
+        dateEl.className = 'cal-date empty';
+        dateEl.textContent = i < 10 ? `0${i}` : i;
+        calendarGrid.appendChild(dateEl);
+      }
+    }
+
+    document.getElementById('prevMonth').addEventListener('click', () => {
+      currentDate.setMonth(currentDate.getMonth() - 1);
+      renderCalendar();
+    });
+
+    document.getElementById('nextMonth').addEventListener('click', () => {
+      currentDate.setMonth(currentDate.getMonth() + 1);
+      renderCalendar();
+    });
+
+    // Initial render
+    renderCalendar();
+
+    // Date Masking Logic (DD / MM / YYYY)
+    document.querySelectorAll('.date-mask').forEach(input => {
+      input.addEventListener('input', (e) => {
+        let value = e.target.value.replace(/\D/g, ''); 
+        let formattedValue = '';
+        
+        if (value.length > 0) {
+          formattedValue = value.substring(0, 2);
+          if (value.length > 2) {
+            formattedValue += ' / ' + value.substring(2, 4);
+            if (value.length > 4) {
+              formattedValue += ' / ' + value.substring(4, 8);
+            }
+          }
+        }
+        
+        e.target.value = formattedValue;
+      });
+
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace') {
+          const value = e.target.value;
+          if (value.endsWith(' / ')) {
+            e.target.value = value.substring(0, value.length - 3);
+            e.preventDefault();
+          }
+        }
+      });
+    });
+
+    // Form Submission Interaction
+    const admissionForm = document.querySelector('.admission-form');
+    admissionForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const fullName = admissionForm.querySelector('input[placeholder="Full name"]').value.trim();
+      const parentName = admissionForm.querySelector('input[placeholder="Father/ Mother /Guardians"]').value.trim();
+      const email = admissionForm.querySelector('input[type="email"]').value.trim().toLowerCase();
+      const dob = admissionForm.querySelectorAll('.date-mask')[0].value.trim();
+      const startDate = admissionForm.querySelectorAll('.date-mask')[1].value.trim();
+      const level = admissionForm.querySelector('select').value;
+
+      if (!fullName || !parentName || !email || !dob || !startDate) {
+        window.FawnKidsSite.showToast('Please complete every admission field before submitting.', 'error');
+        return;
+      }
+
+      const btn = admissionForm.querySelector('.btn-submit');
+      const originalText = btn.innerHTML;
+      const admissionEntries = window.FawnKidsSite.readCollection(window.FawnKidsSite.keys.admissions);
+      const referenceId = 'FK-' + String(admissionEntries.length + 1).padStart(3, '0');
+      
+      btn.style.width = btn.offsetWidth + 'px';
+      btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Processing...';
+      btn.style.opacity = '0.7';
+      btn.style.pointerEvents = 'none';
+      
+      setTimeout(() => {
+        const record = {
+          reference_id: referenceId,
+          full_name: fullName,
+          parent_name: parentName,
+          email: email,
+          dob: dob,
+          level: level,
+          start_date: startDate,
+          selected_tour_date: selectedDate,
+          created_at: new Date().toISOString()
+        };
+
+        window.FawnKidsSite.saveData("admissions", window.FawnKidsSite.keys.admissions, record, function (success) {
+          if (success) {
+            btn.innerHTML = '<i class="fa-solid fa-check"></i> Application Sent!';
+            btn.style.background = '#28a745';
+            btn.style.opacity = '1';
+            window.FawnKidsSite.showToast('Application saved with reference ' + referenceId + '.', 'success');
+            
+            setTimeout(() => {
+              btn.innerHTML = originalText;
+              btn.style.background = '';
+              btn.style.pointerEvents = 'all';
+              admissionForm.reset();
+            }, 3000);
+          } else {
+            btn.innerHTML = originalText;
+            btn.style.background = '';
+            btn.style.pointerEvents = 'all';
+            window.FawnKidsSite.showToast('Failed to sync with server. Please try again.', 'error');
+          }
+        });
+      }, 1500);
+    });
+
+    const requestSlotButton = document.querySelector('.btn-tour');
+    requestSlotButton.addEventListener('click', () => {
+      if (!selectedDate) {
+        window.FawnKidsSite.showToast('Select a tour date from the calendar first.', 'error');
+        return;
+      }
+
+      const startDateInput = document.querySelectorAll('.date-mask')[1];
+      const formattedDate = String(selectedDate.day).padStart(2, '0') + ' / ' + String(selectedDate.month + 1).padStart(2, '0') + ' / ' + selectedDate.year;
+      startDateInput.value = formattedDate;
+      document.querySelector('.admission-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.querySelector('input[placeholder="Full name"]').focus();
+      window.FawnKidsSite.showToast('Selected tour date moved into your form.', 'success');
+    });
+
+    // Map Hover Effect - REMOVED AS PER USER REQUEST
+  </script>
+  <!-- Curtain Transition Overlay -->
+  <div id="curtain-overlay"></div>
+
+  <!-- Floating Dark Mode Toggle Button -->
+  <button id="theme-toggle-btn" class="floating-theme-toggle" aria-label="Toggle Dark Mode">
+    <div class="icon-wrapper">
+      <i class="fas fa-moon moon-icon"></i>
+      <i class="fas fa-sun sun-icon"></i>
+    </div>
+  </button>
+
+  <script>
+    (function() {
+      const toggleBtn = document.getElementById('theme-toggle-btn');
+      const curtain = document.getElementById('curtain-overlay');
+      
+      if (toggleBtn && curtain) {
+        let isAnimating = false;
+        
+        toggleBtn.addEventListener('click', () => {
+          if (isAnimating) return;
+          isAnimating = true;
+          
+          const isCurrentlyDark = document.documentElement.classList.contains('dark');
+          const nextTheme = isCurrentlyDark ? 'light' : 'dark';
+          
+          curtain.style.backgroundColor = nextTheme === 'dark' ? '#0e0e0e' : '#FAF6F0';
+          curtain.style.transformOrigin = 'top';
+          curtain.style.transform = 'scaleY(1)';
+          
+          setTimeout(() => {
+            if (nextTheme === 'dark') {
+              document.documentElement.classList.add('dark');
+              localStorage.setItem('theme', 'dark');
+            } else {
+              document.documentElement.classList.remove('dark');
+              localStorage.setItem('theme', 'light');
+            }
+            
+            curtain.style.transformOrigin = 'bottom';
+            curtain.style.transform = 'scaleY(0)';
+            
+            setTimeout(() => {
+              curtain.style.transformOrigin = 'top';
+              isAnimating = false;
+            }, 550);
+          }, 550);
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
