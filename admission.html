@@ -142,6 +142,31 @@
       border-color: var(--color-primary);
       box-shadow: 0 0 0 4px rgba(14, 71, 53, 0.05);
     }
+    .phone-input-wrapper {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .phone-prefix {
+      background: #F8F8F8;
+      border: 1px solid #EEEEEE;
+      padding: 15px 16px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      height: 52px;
+      box-sizing: border-box;
+    }
+    html.dark .phone-prefix {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.12);
+      color: #FFFFFF;
+    }
     .btn-submit {
       background: var(--color-primary);
       color: white;
@@ -505,6 +530,13 @@
               <label>Desired Start Date</label>
               <input type="text" placeholder="DD / MM / YYYY" class="date-mask" maxlength="14" inputmode="numeric">
             </div>
+            <div class="form-group">
+              <label>Contact Phone Number</label>
+              <div class="phone-input-wrapper">
+                <span class="phone-prefix">+91</span>
+                <input type="tel" placeholder="98765 43210" class="phone-mask" maxlength="11" inputmode="numeric" style="flex: 1;">
+              </div>
+            </div>
           </div>
           <button type="submit" class="btn-submit">
             Submit Application <i class="fa-solid fa-arrow-right"></i>
@@ -822,6 +854,19 @@
       });
     });
 
+    // Phone Masking Logic (5 digits + space + 5 digits)
+    document.querySelectorAll('.phone-mask').forEach(input => {
+      input.addEventListener('input', (e) => {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length > 10) value = value.substring(0, 10);
+        if (value.length > 5) {
+          e.target.value = value.substring(0, 5) + ' ' + value.substring(5);
+        } else {
+          e.target.value = value;
+        }
+      });
+    });
+
     // Form Submission Interaction
     const admissionForm = document.querySelector('.admission-form');
     if (admissionForm) {
@@ -830,12 +875,14 @@
         const fullName = admissionForm.querySelector('input[placeholder="Full name"]').value.trim();
         const parentName = admissionForm.querySelector('input[placeholder="Father/ Mother /Guardians"]').value.trim();
         const email = admissionForm.querySelector('input[type="email"]').value.trim().toLowerCase();
+        const phoneRaw = admissionForm.querySelector('.phone-mask') ? admissionForm.querySelector('.phone-mask').value.trim() : '';
+        const phone = phoneRaw ? ('+91 ' + phoneRaw) : '';
         const dob = admissionForm.querySelectorAll('.date-mask')[0].value.trim();
         const startDate = admissionForm.querySelectorAll('.date-mask')[1].value.trim();
         const level = admissionForm.querySelector('select').value;
 
-        if (!fullName || !parentName || !email || !dob || !startDate) {
-          window.FawnKidsSite.showToast('Please complete every admission field before submitting.', 'error');
+        if (!fullName || !parentName || !email || !phoneRaw || !dob || !startDate) {
+          window.FawnKidsSite.showToast('Please complete every admission field including contact phone number.', 'error');
           return;
         }
 
@@ -872,6 +919,7 @@
             full_name: fullName,
             parent_name: parentName,
             email: email,
+            phone: phone,
             dob: dob,
             level: level,
             start_date: startDate,
@@ -892,6 +940,7 @@
             'Child\'s Age / Level': level,
             'Parent / Contact Name': parentName,
             'Contact Email': email,
+            'Contact Phone Number': phone,
             'Desired Start Date': startDate,
             'Selected Tour Date': formattedTourDate,
             'Submitted At': record.created_at
