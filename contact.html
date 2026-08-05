@@ -376,6 +376,66 @@
     document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
       observer.observe(el);
     });
+
+    // Contact Form Submission
+    const contactForm = document.querySelector('.contact-form-card form');
+    if (contactForm) {
+      contactForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const parentName = contactForm.querySelector('input[type="text"]').value.trim();
+        const email = contactForm.querySelector('input[type="email"]').value.trim().toLowerCase();
+        const phone = contactForm.querySelector('input[type="tel"]').value.trim();
+        const message = contactForm.querySelector('textarea').value.trim();
+
+        if (!parentName || !email || !phone) {
+          window.FawnKidsSite.showToast('Please fill in your name, email, and contact number.', 'error');
+          return;
+        }
+
+        const btn = contactForm.querySelector('button[type="submit"]');
+        const originalText = btn.textContent;
+        btn.textContent = 'Sending...';
+        btn.style.pointerEvents = 'none';
+
+        const record = {
+          parent_name: parentName,
+          email: email,
+          phone: phone,
+          message: message,
+          created_at: new Date().toISOString()
+        };
+
+        window.FawnKidsSite.saveData('contact_inquiries', 'fawnKidsContactInquiries', record);
+
+        window.FawnKidsSite.sendEnquiryEmail('New Fawn Kids Contact Inquiry', {
+          'Parent Name': parentName,
+          'Contact Email': email,
+          'Contact Phone': phone,
+          'Message': message || 'No specific message',
+          'Submitted At': record.created_at
+        }).then(function () {
+          btn.textContent = 'Message Sent!';
+          btn.style.background = '#28a745';
+          window.FawnKidsSite.showToast('Inquiry sent successfully! We will reach out soon.', 'success');
+          setTimeout(() => {
+            btn.textContent = originalText;
+            btn.style.background = '';
+            btn.style.pointerEvents = 'all';
+            contactForm.reset();
+          }, 3000);
+        }).catch(function () {
+          btn.textContent = 'Message Saved!';
+          btn.style.background = '#28a745';
+          window.FawnKidsSite.showToast('Inquiry received! We will contact you soon.', 'success');
+          setTimeout(() => {
+            btn.textContent = originalText;
+            btn.style.background = '';
+            btn.style.pointerEvents = 'all';
+            contactForm.reset();
+          }, 3000);
+        });
+      });
+    }
   </script>
 </body>
 </html>

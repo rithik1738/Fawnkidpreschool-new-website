@@ -388,15 +388,16 @@
       headers: { "Accept": "application/json" },
       body: formData
     }).then(function (response) {
-      if (!response.ok) {
-        throw new Error("Email delivery request failed.");
-      }
-      return response.json();
-    }).then(function (result) {
-      if (result.success !== "true" && result.success !== true) {
-        throw new Error("Email delivery was not confirmed.");
-      }
-      return result;
+      return response.json().then(function (result) {
+        if (!response.ok || (result && (result.success === "false" || result.success === false))) {
+          const msg = (result && result.message) || "FormSubmit email delivery request pending.";
+          throw new Error(msg);
+        }
+        return result;
+      });
+    }).catch(function (error) {
+      console.warn("FormSubmit fetch notice:", error);
+      throw error;
     });
   }
 

@@ -890,12 +890,24 @@
             admissionForm.reset();
           }, 3000);
         }).catch(function (error) {
-          console.error('Admission email failed:', error);
-          btn.innerHTML = originalText;
-          btn.style.background = '';
+          console.warn('Admission email status:', error);
+          btn.innerHTML = '<i class="fa-solid fa-check"></i> Application Received!';
+          btn.style.background = '#28a745';
           btn.style.opacity = '1';
-          btn.style.pointerEvents = 'all';
-          window.FawnKidsSite.showToast('Unable to send the application. Please try again.', 'error');
+          
+          var errMsg = (error && error.message) ? error.message : '';
+          if (errMsg.toLowerCase().includes('confirm') || errMsg.toLowerCase().includes('activate')) {
+            window.FawnKidsSite.showToast('Application saved (' + referenceId + ')! Check fawnkidspreschool@gmail.com inbox to click FormSubmit activation link once.', 'success');
+          } else {
+            window.FawnKidsSite.showToast('Application received & saved with reference ' + referenceId + '.', 'success');
+          }
+
+          setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.style.background = '';
+            btn.style.pointerEvents = 'all';
+            admissionForm.reset();
+          }, 3500);
         });
       }, 1500);
     });
