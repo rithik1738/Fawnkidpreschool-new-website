@@ -183,7 +183,7 @@ h4 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
 .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
 .nav-links a.active { color: var(--color-teal); }
 
-.nav-actions { display: flex; align-items: center; gap: 12px; }
+.nav-actions { display: none !important; }
 .mobile-actions { display: none !important; }
 
 /* --- Buttons (New 3D Style) --- */
