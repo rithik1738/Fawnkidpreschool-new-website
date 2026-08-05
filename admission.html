@@ -147,24 +147,39 @@
       gap: 8px;
       align-items: center;
     }
-    .phone-prefix {
+    .phone-prefix-select {
       background: #F8F8F8;
       border: 1px solid #EEEEEE;
-      padding: 15px 16px;
+      padding: 12px 14px;
       border-radius: 12px;
       font-size: 0.95rem;
       font-weight: 700;
       color: #333;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      user-select: none;
+      cursor: pointer;
+      outline: none;
       height: 52px;
       box-sizing: border-box;
+      transition: all 0.3s ease;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23333333' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 32px;
     }
-    html.dark .phone-prefix {
-      background: rgba(255, 255, 255, 0.06);
+    .phone-prefix-select:focus {
+      background-color: #fff;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 4px rgba(14, 71, 53, 0.05);
+    }
+    html.dark .phone-prefix-select {
+      background-color: rgba(255, 255, 255, 0.06);
       border-color: rgba(255, 255, 255, 0.12);
+      color: #FFFFFF;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23FFFFFF' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    }
+    html.dark .phone-prefix-select option {
+      background-color: #1A1A1A;
       color: #FFFFFF;
     }
     .btn-submit {
@@ -533,8 +548,25 @@
             <div class="form-group">
               <label>Contact Phone Number</label>
               <div class="phone-input-wrapper">
-                <span class="phone-prefix">+91</span>
-                <input type="tel" placeholder="98765 43210" class="phone-mask" maxlength="11" inputmode="numeric" style="flex: 1;">
+                <select class="phone-prefix-select" aria-label="Country Dialing Code">
+                  <option value="+91" selected>🇮🇳 +91 (IN)</option>
+                  <option value="+971">🇦🇪 +971 (UAE)</option>
+                  <option value="+1">🇺🇸 +1 (US/CA)</option>
+                  <option value="+44">🇬🇧 +44 (UK)</option>
+                  <option value="+65">🇸🇬 +65 (SG)</option>
+                  <option value="+60">🇲🇾 +60 (MY)</option>
+                  <option value="+61">🇦🇺 +61 (AU)</option>
+                  <option value="+974">🇶🇦 +974 (QA)</option>
+                  <option value="+968">🇴🇲 +968 (OM)</option>
+                  <option value="+966">🇸🇦 +966 (SA)</option>
+                  <option value="+965">🇰🇼 +965 (KW)</option>
+                  <option value="+973">🇧🇭 +973 (BH)</option>
+                  <option value="+94">🇱🇰 +94 (LK)</option>
+                  <option value="+49">🇩🇪 +49 (DE)</option>
+                  <option value="+33">🇫🇷 +33 (FR)</option>
+                  <option value="+64">🇳🇿 +64 (NZ)</option>
+                </select>
+                <input type="tel" placeholder="98765 43210" class="phone-mask" maxlength="15" inputmode="numeric" style="flex: 1;">
               </div>
             </div>
           </div>
@@ -875,8 +907,9 @@
         const fullName = admissionForm.querySelector('input[placeholder="Full name"]').value.trim();
         const parentName = admissionForm.querySelector('input[placeholder="Father/ Mother /Guardians"]').value.trim();
         const email = admissionForm.querySelector('input[type="email"]').value.trim().toLowerCase();
+        const countryCode = admissionForm.querySelector('.phone-prefix-select') ? admissionForm.querySelector('.phone-prefix-select').value : '+91';
         const phoneRaw = admissionForm.querySelector('.phone-mask') ? admissionForm.querySelector('.phone-mask').value.trim() : '';
-        const phone = phoneRaw ? ('+91 ' + phoneRaw) : '';
+        const phone = phoneRaw ? (countryCode + ' ' + phoneRaw) : '';
         const dob = admissionForm.querySelectorAll('.date-mask')[0].value.trim();
         const startDate = admissionForm.querySelectorAll('.date-mask')[1].value.trim();
         const level = admissionForm.querySelector('select').value;
