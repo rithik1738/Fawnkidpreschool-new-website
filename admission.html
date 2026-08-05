@@ -862,24 +862,40 @@
         };
 
         window.FawnKidsSite.saveData("admissions", window.FawnKidsSite.keys.admissions, record, function (success) {
-          if (success) {
-            btn.innerHTML = '<i class="fa-solid fa-check"></i> Application Sent!';
-            btn.style.background = '#28a745';
-            btn.style.opacity = '1';
-            window.FawnKidsSite.showToast('Application saved with reference ' + referenceId + '.', 'success');
-            
-            setTimeout(() => {
-              btn.innerHTML = originalText;
-              btn.style.background = '';
-              btn.style.pointerEvents = 'all';
-              admissionForm.reset();
-            }, 3000);
-          } else {
+          if (!success) {
+            console.warn('Admission was saved locally but could not be synced to the database.');
+          }
+        });
+
+        window.FawnKidsSite.sendEnquiryEmail('New Fawn Kids admission application', {
+          'Reference ID': referenceId,
+          "Child's Full Name": fullName,
+          "Child's Date of Birth": dob,
+          'Child\'s Age / Level': level,
+          'Parent / Contact Name': parentName,
+          'Contact Email': email,
+          'Desired Start Date': startDate,
+          'Selected Tour Date': selectedDate ? (String(selectedDate.day).padStart(2, '0') + ' / ' + String(selectedDate.month + 1).padStart(2, '0') + ' / ' + selectedDate.year) : 'Not selected',
+          'Submitted At': record.created_at
+        }).then(function () {
+          btn.innerHTML = '<i class="fa-solid fa-check"></i> Application Sent!';
+          btn.style.background = '#28a745';
+          btn.style.opacity = '1';
+          window.FawnKidsSite.showToast('Application sent with reference ' + referenceId + '.', 'success');
+
+          setTimeout(() => {
             btn.innerHTML = originalText;
             btn.style.background = '';
             btn.style.pointerEvents = 'all';
-            window.FawnKidsSite.showToast('Failed to sync with server. Please try again.', 'error');
-          }
+            admissionForm.reset();
+          }, 3000);
+        }).catch(function (error) {
+          console.error('Admission email failed:', error);
+          btn.innerHTML = originalText;
+          btn.style.background = '';
+          btn.style.opacity = '1';
+          btn.style.pointerEvents = 'all';
+          window.FawnKidsSite.showToast('Unable to send the application. Please try again.', 'error');
         });
       }, 1500);
     });

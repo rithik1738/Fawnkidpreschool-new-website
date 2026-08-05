@@ -2,19 +2,40 @@
   // ==========================================
   // SUPABASE CONFIGURATION
   // ==========================================
-  // Enter your Supabase Project Details here to connect.
-  // If left empty, the site will automatically fall back to saving everything locally!
+  // The values are loaded from src/supabaseClient.js.
+  // If that file cannot load, the site falls back to saving everything locally.
   const SUPABASE_CONFIG = {
-    url: "https://jukfwjlqbwasfnzqlsxz.supabase.co",       // e.g., "https://your-project-id.supabase.co"
-    anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp1a2Z3amxxYndhc2ZuenFsc3h6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxMDM5NzMsImV4cCI6MjA5NDY3OTk3M30.woAn5d2zAV9FoSX38FPslgpOCMVSgKOFA2r89AovgAE"
+    url: "",
+    anonKey: ""
   };
 
   let supabaseClient = null;
 
+  function loadSupabaseConfig(callback) {
+    if (window.FawnKidsSupabaseConfig) {
+      callback(window.FawnKidsSupabaseConfig);
+      return;
+    }
+
+    const configScript = document.createElement("script");
+    configScript.src = "src/supabaseClient.js";
+    configScript.onload = function () {
+      callback(window.FawnKidsSupabaseConfig || null);
+    };
+    configScript.onerror = function () {
+      console.warn("Supabase configuration file could not be loaded. Using local storage fallback.");
+      callback(null);
+    };
+    document.head.appendChild(configScript);
+  }
+
   // Initialize Supabase Client dynamically
   function initSupabase(callback) {
-    if (!SUPABASE_CONFIG.url || !SUPABASE_CONFIG.anonKey) {
-      console.log("Supabase URL/Key not set. Fallback to LocalStorage is active.");
+    // Accept both old JWT (eyJ...) and new publishable (sb_publishable_...) key formats
+    var hasValidKey = SUPABASE_CONFIG.anonKey &&
+      (SUPABASE_CONFIG.anonKey.startsWith('eyJ') || SUPABASE_CONFIG.anonKey.startsWith('sb_publishable_'));
+    if (!SUPABASE_CONFIG.url || !hasValidKey) {
+      console.log("Supabase URL/Key not set or invalid. Fallback to LocalStorage is active.");
       if (callback) callback(null);
       return;
     }
@@ -346,6 +367,39 @@
     }
   }
 
+  function sendEnquiryEmail(subject, fields) {
+    const formData = new FormData();
+    formData.append("_subject", subject);
+    formData.append("_template", "table");
+    formData.append("_captcha", "false");
+
+    const replyTo = fields["Contact Email"] || fields["Email Address"];
+    if (replyTo) {
+      formData.append("_replyto", replyTo);
+    }
+
+    Object.keys(fields).forEach(function (label) {
+      const value = fields[label];
+      formData.append(label, value === undefined || value === null ? "" : String(value));
+    });
+
+    return fetch("https://formsubmit.co/ajax/fawnkidspreschool@gmail.com", {
+      method: "POST",
+      headers: { "Accept": "application/json" },
+      body: formData
+    }).then(function (response) {
+      if (!response.ok) {
+        throw new Error("Email delivery request failed.");
+      }
+      return response.json();
+    }).then(function (result) {
+      if (result.success !== "true" && result.success !== true) {
+        throw new Error("Email delivery was not confirmed.");
+      }
+      return result;
+    });
+  }
+
   function getSupabaseClient() {
     return supabaseClient;
   }
@@ -364,18 +418,34 @@
       }).then(function (result) {
         if (result.error) {
           console.error("Supabase Auth Sign Up error:", result.error);
-          if (callback) callback(false, result.error.message);
+          var errMsg = result.error.message || '';
+          if (errMsg.toLowerCase().includes('already registered') || errMsg.toLowerCase().includes('user already exists')) {
+            errMsg = 'That email is already registered. Please log in instead.';
+          } else if (errMsg.toLowerCase().includes('password')) {
+            errMsg = 'Password must be at least 6 characters long.';
+          }
+          if (callback) callback(false, errMsg);
         } else {
+          // Check if Supabase returned a session (email confirm OFF) or just a user (confirm ON)
+          const needsConfirm = result.data && result.data.user && !result.data.session;
           if (!existsLocally) {
             localUsers.push({ name: name, email: email, password: password, createdAt: new Date().toISOString() });
             writeCollection(STORAGE_KEYS.users, localUsers);
           }
-          if (callback) callback(true);
+          if (needsConfirm) {
+            // Email confirmation is ON - tell user to check inbox
+            if (callback) callback(true, 'CHECK_EMAIL');
+          } else {
+            if (callback) callback(true);
+          }
         }
+      }).catch(function (error) {
+        console.error("Supabase Auth Sign Up request failed:", error);
+        if (callback) callback(false, "Unable to reach the account service. Please try again.");
       });
     } else {
       if (existsLocally) {
-        if (callback) callback(false, "That email already exists. Please log in instead.");
+        if (callback) callback(false, "That email is already registered. Please log in instead.");
         return;
       }
       localUsers.push({ name: name, email: email, password: password, createdAt: new Date().toISOString() });
@@ -392,7 +462,16 @@
       }).then(function (result) {
         if (result.error) {
           console.error("Supabase Auth Log In error:", result.error);
-          if (callback) callback(false, result.error.message);
+          var errMsg = result.error.message || '';
+          // User-friendly error messages in English
+          if (errMsg.toLowerCase().includes('email not confirmed')) {
+            errMsg = 'Your email is not yet confirmed. Please check your inbox and click the confirmation link, then try again.';
+          } else if (errMsg.toLowerCase().includes('invalid login credentials') || errMsg.toLowerCase().includes('invalid email or password')) {
+            errMsg = 'Incorrect email or password. Please try again or sign up.';
+          } else if (errMsg.toLowerCase().includes('too many requests')) {
+            errMsg = 'Too many login attempts. Please wait a moment and try again.';
+          }
+          if (callback) callback(false, errMsg);
         } else {
           const user = result.data.user;
           const sessionUser = {
@@ -403,12 +482,15 @@
           localStorage.setItem('fawnKidsCurrentUser', JSON.stringify(sessionUser));
           if (callback) callback(true, null, sessionUser);
         }
+      }).catch(function (error) {
+        console.error("Supabase Auth Log In request failed:", error);
+        if (callback) callback(false, "Unable to reach the account service. Please try again.");
       });
     } else {
       const localUsers = readCollection(STORAGE_KEYS.users);
       const matchingUser = localUsers.find(function (user) { return user.email === email && user.password === password; });
       if (!matchingUser) {
-        if (callback) callback(false, "Invalid email or password. Check credentials or Sign up.");
+        if (callback) callback(false, "Incorrect email or password. Please try again or sign up.");
         return;
       }
       const sessionUser = {
@@ -427,19 +509,27 @@
     writeCollection: writeCollection,
     showToast: showToast,
     saveData: saveData,
+    sendEnquiryEmail: sendEnquiryEmail,
     getSupabaseClient: getSupabaseClient,
     signUp: signUpUser,
     login: loginUser
   };
 
   document.addEventListener("DOMContentLoaded", function () {
-    initSupabase(function (client) {
-      // Call handlers after Supabase init check
-      attachNewsletterHandlers();
-      attachSocialAuthHandlers();
-      prefillLoginEmail();
-      setupMobileNavigation();
-      setupThemeToggle();
+    loadSupabaseConfig(function (config) {
+      if (config && config.url && config.anonKey) {
+        SUPABASE_CONFIG.url = config.url;
+        SUPABASE_CONFIG.anonKey = config.anonKey;
+      }
+
+      initSupabase(function (client) {
+        // Call handlers after Supabase init check
+        attachNewsletterHandlers();
+        attachSocialAuthHandlers();
+        prefillLoginEmail();
+        setupMobileNavigation();
+        setupThemeToggle();
+      });
     });
   });
 })();

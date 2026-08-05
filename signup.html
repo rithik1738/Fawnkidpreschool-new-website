@@ -497,19 +497,34 @@
       window.FawnKidsSite.signUp(name, email, password, function (success, errorMsg) {
         if (success) {
           localStorage.setItem(window.FawnKidsSite.keys.lastSignupEmail, email);
-          btn.innerHTML = '<i class="fa-solid fa-check"></i> Account Created!';
-          btn.style.background = '#22C55E';
-          
-          if (window.FawnKidsSite && window.FawnKidsSite.showToast) {
-            window.FawnKidsSite.showToast('Registration successful! Redirecting to login...', 'success');
+          if (errorMsg === 'CHECK_EMAIL') {
+            // Email confirmation is ON — tell the user to check inbox
+            btn.innerHTML = '<i class="fa-solid fa-envelope"></i> Check Your Email!';
+            btn.style.background = '#2D6A4F';
+            btn.style.opacity = '1';
+            btn.style.pointerEvents = 'none';
+            if (window.FawnKidsSite && window.FawnKidsSite.showToast) {
+              window.FawnKidsSite.showToast('Account created! Please check your email (' + email + ') to confirm before logging in.', 'success');
+            }
+            setTimeout(() => {
+              btn.innerHTML = originalText;
+              btn.style.background = '';
+              btn.style.pointerEvents = '';
+              signupForm.reset();
+            }, 5000);
+          } else {
+            btn.innerHTML = '<i class="fa-solid fa-check"></i> Account Created!';
+            btn.style.background = '#22C55E';
+            if (window.FawnKidsSite && window.FawnKidsSite.showToast) {
+              window.FawnKidsSite.showToast('Registration successful! Redirecting to login...', 'success');
+            }
+            setTimeout(() => {
+              btn.textContent = originalText;
+              btn.style.background = '';
+              btn.style.pointerEvents = '';
+              window.location.href = 'login.html';
+            }, 1700);
           }
-          
-          setTimeout(() => {
-            btn.textContent = originalText;
-            btn.style.background = '';
-            btn.style.pointerEvents = '';
-            window.location.href = 'login.html';
-          }, 1700);
         } else {
           btn.textContent = 'Sign up';
           btn.style.background = '';

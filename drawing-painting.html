@@ -731,31 +731,44 @@
         };
         
         window.FawnKidsSite.saveData("module_enrollments", window.FawnKidsSite.keys.enrollments, record, function(success) {
-          if (success) {
-            btn.innerHTML = '<i class="fa-solid fa-check"></i> Registration Successful!';
-            btn.style.background = '#1A5A11';
-            btn.style.opacity = '1';
-            
-            if (window.FawnKidsSite && window.FawnKidsSite.showToast) {
-              window.FawnKidsSite.showToast('Your enrollment request has been submitted!', 'success');
-            }
-            
-            setTimeout(() => {
-              closeEnrollModal();
-              btn.innerHTML = originalText;
-              btn.style.background = '';
-              btn.style.pointerEvents = 'all';
-              enrollForm.reset();
-              document.querySelector('input[placeholder="Enter 12-digit UTR"]').value = '';
-            }, 2000);
-          } else {
+          if (!success) {
+            console.warn('Enrollment was saved locally but could not be synced to the database.');
+          }
+        });
+
+        window.FawnKidsSite.sendEnquiryEmail('New Fawn Kids course enrollment', {
+          'Course Name': courseName,
+          'Student Name': studentName,
+          'Parent Phone Number': parentPhone,
+          'Email Address': email,
+          'Mode of Learning': modeOfLearning,
+          'Transaction ID / UTR Number': transactionId,
+          'Submitted At': record.created_at
+        }).then(function () {
+          btn.innerHTML = '<i class="fa-solid fa-check"></i> Registration Successful!';
+          btn.style.background = '#1A5A11';
+          btn.style.opacity = '1';
+
+          if (window.FawnKidsSite && window.FawnKidsSite.showToast) {
+            window.FawnKidsSite.showToast('Your enrollment request has been submitted!', 'success');
+          }
+
+          setTimeout(() => {
+            closeEnrollModal();
             btn.innerHTML = originalText;
             btn.style.background = '';
             btn.style.pointerEvents = 'all';
-            btn.style.opacity = '1';
-            if (window.FawnKidsSite && window.FawnKidsSite.showToast) {
-              window.FawnKidsSite.showToast('Failed to save enrollment. Please try again.', 'error');
-            }
+            enrollForm.reset();
+            document.querySelector('input[placeholder="Enter 12-digit UTR"]').value = '';
+          }, 2000);
+        }).catch(function (error) {
+          console.error('Enrollment email failed:', error);
+          btn.innerHTML = originalText;
+          btn.style.background = '';
+          btn.style.pointerEvents = 'all';
+          btn.style.opacity = '1';
+          if (window.FawnKidsSite && window.FawnKidsSite.showToast) {
+            window.FawnKidsSite.showToast('Unable to send the enrollment request. Please try again.', 'error');
           }
         });
       });
