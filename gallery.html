@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery — Fawn Kids Academy</title>
+  <meta name="description" content="Explore beautiful moments at Fawn Kids Academy. See our students learning, playing, and growing through Montessori activities, nature exploration, and creative arts.">
+  <script>
+    // Immediate script to prevent dark mode flashing
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  </script>
+  <link rel="stylesheet" href="styles.css?v=11">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* ═══════════════════════════════════════════════════════════
+       GALLERY PAGE — Premium Immersive Photo Gallery
+       Inspired by wireframe: Hero + Masonry Grid + Lightbox
+    ═══════════════════════════════════════════════════════════ */
+
+    /* ─── Hero Section ─── */
+    .gallery-hero {
+      position: relative;
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #0a0a0a;
+    }
+
+    .gallery-hero-mosaic {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 4px;
+      opacity: 0.35;
+      filter: brightness(0.6);
+      transition: opacity 1.2s ease;
+    }
+
+    .gallery-hero-mosaic img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 12s ease;
+    }
+
+    .gallery-hero-mosaic img:nth-child(odd) {
+      animation: hero-pan-1 20s ease-in-out infinite alternate;
+    }
+    .gallery-hero-mosaic img:nth-child(even) {
+      animation: hero-pan-2 25s ease-in-out infinite alternate;
+    }
+
+    @keyframes hero-pan-1 {
+      0% { transform: scale(1.05); }
+      100% { transform: scale(1.15); }
+    }
+    @keyframes hero-pan-2 {
+      0% { transform: scale(1.1); }
+      100% { transform: scale(1.02); }
+    }
+
+    .gallery-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(10,10,10,0.3) 0%,
+        rgba(10,10,10,0.6) 50%,
+        rgba(10,10,10,0.95) 100%
+      );
+      z-index: 1;
+    }
+
+    .gallery-hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 800px;
+      padding: 0 30px;
+    }
+
+    .gallery-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 50px;
+      color: rgba(255,255,255,0.8);
+      font-size: 0.8rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+      backdrop-filter: blur(10px);
+      animation: badge-glow 3s ease-in-out infinite;
+    }
+
+    @keyframes badge-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(166,124,70,0); }
+      50% { box-shadow: 0 0 30px rgba(166,124,70,0.2); }
+    }
+
+    .gallery-hero-content h1 {
+      font-family: 'Raleway', sans-serif;
+      font-size: 5rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.05;
+      letter-spacing: -3px;
+      margin-bottom: 25px;
+    }
+
+    .gallery-hero-content h1 span {
+      background: linear-gradient(135deg, #F1CA74, #A67C46);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .gallery-hero-content p {
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.6);
+      max-width: 550px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+
+    .gallery-hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      margin-top: 50px;
+    }
+
+    .gallery-hero-stat {
+      text-align: center;
+    }
+
+    .gallery-hero-stat .stat-number {
+      font-family: 'Raleway', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #F1CA74;
+      line-height: 1;
+      margin-bottom: 5px;
+    }
+
+    .gallery-hero-stat .stat-label {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .hero-scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.4);
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      animation: scroll-bounce 2s ease-in-out infinite;
+      cursor: pointer;
+    }
+
+    .hero-scroll-indicator i {
+      font-size: 1.2rem;
+    }
+
+    @keyframes scroll-bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(10px); }
+    }
+
+    /* ─── Navbar Fix for Dark Hero ─── */
+    html:not(.dark) .navbar:not(.scrolled) .nav-links a,
+    html:not(.dark) .navbar:not(.scrolled) .nav-logo span {
+      color: #ffffff !important;
+    }
+    html:not(.dark) .navbar:not(.scrolled) .nav-links a::after {
+      background: #ffffff !important;
+    }
+
+    /* ─── Filter Bar ─── */
+    .gallery-filter-section {
+      padding: 80px 0 40px;
+      background: #FAF6F0;
+      position: sticky;
+      top: 70px;
+      z-index: 50;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .gallery-filter-section.stuck {
+      box-shadow: 0 4px 30px rgba(0,0,0,0.06);
+    }
+
+    html.dark .gallery-filter-section {
+      background: #111;
+    }
+
+    .filter-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .filter-heading {
+      font-family: 'Raleway', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #1A1A1A;
+    }
+
+    html.dark .filter-heading {
+      color: #f0f0f0;
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-tab {
+      padding: 10px 24px;
+      border-radius: 50px;
+      border: 1.5px solid #ddd;
+      background: transparent;
+      color: #555;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      white-space: nowrap;
+    }
+
+    .filter-tab:hover {
+      border-color: #A67C46;
+      color: #A67C46;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(166,124,70,0.15);
+    }
+
+    .filter-tab.active {
+      background: #1A1A1A;
+      border-color: #1A1A1A;
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+
+    html.dark .filter-tab {
+      border-color: #333;
+      color: #aaa;
+    }
+
+    html.dark .filter-tab:hover {
+      border-color: #F1CA74;
+      color: #F1CA74;
+    }
+
+    html.dark .filter-tab.active {
+      background: #F1CA74;
+      border-color: #F1CA74;
+      color: #111;
+    }
+
+    .filter-count {
+      padding: 8px 16px;
+      border-radius: 50px;
+      background: rgba(166,124,70,0.08);
+      color: #A67C46;
+      font-size: 0.8rem;
+      font-weight: 600;
+      font-family: 'Raleway', sans-serif;
+    }
+
+    /* ─── Masonry Gallery Grid ─── */
+    .gallery-grid-section {
+      padding: 40px 0 120px;
+      background: #FAF6F0;
+    }
+
+    html.dark .gallery-grid-section {
+      background: #0e0e0e;
+    }
+
+    .masonry-grid {
+      columns: 4;
+      column-gap: 16px;
+    }
+
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 16px;
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(40px) scale(0.95);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .gallery-item.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .gallery-item.hidden {
+      display: none;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      display: block;
+      border-radius: 16px;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), filter 0.4s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.06);
+      filter: brightness(0.85);
+    }
+
+    .gallery-item-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        transparent 50%,
+        rgba(0,0,0,0.7) 100%
+      );
+      border-radius: 16px;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 25px;
+    }
+
+    .gallery-item:hover .gallery-item-overlay {
+      opacity: 1;
+    }
+
+    .gallery-item-overlay .item-category {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #F1CA74;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .gallery-item-overlay .item-title {
+      font-family: 'Raleway', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.3;
+    }
+
+    .gallery-item-overlay .item-expand {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1rem;
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: all 0.3s ease;
+    }
+
+    .gallery-item:hover .item-expand {
+      background: rgba(255,255,255,0.25);
+      transform: scale(1.1);
+    }
+
+    /* ─── Lightbox ─── */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0,0,0,0.95);
+      backdrop-filter: blur(20px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    .lightbox.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    .lightbox-close:hover {
+      background: rgba(255,255,255,0.15);
+      transform: rotate(90deg);
+    }
+
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    .lightbox-nav:hover {
+      background: rgba(255,255,255,0.15);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .lightbox-prev {
+      left: 30px;
+    }
+
+    .lightbox-next {
+      right: 30px;
+    }
+
+    .lightbox-image-container {
+      max-width: 85vw;
+      max-height: 85vh;
+      position: relative;
+    }
+
+    .lightbox-image-container img {
+      max-width: 100%;
+      max-height: 85vh;
+      border-radius: 12px;
+      object-fit: contain;
+      transform: scale(0.9);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+    }
+
+    .lightbox.active .lightbox-image-container img {
+      transform: scale(1);
+    }
+
+    .lightbox-info {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      z-index: 10;
+    }
+
+    .lightbox-info .lb-category {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #F1CA74;
+      margin-bottom: 5px;
+    }
+
+    .lightbox-info .lb-title {
+      font-family: 'Raleway', sans-serif;
+      font-size: 1rem;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .lightbox-counter {
+      position: absolute;
+      top: 35px;
+      left: 30px;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 1px;
+      z-index: 10;
+    }
+
+    /* ─── Featured Showcase Strip ─── */
+    .gallery-showcase {
+      padding: 100px 0;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    html.dark .gallery-showcase {
+      background: #111;
+    }
+
+    .showcase-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .showcase-header .subtitle {
+      color: #A67C46;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 15px;
+      display: block;
+      font-weight: 600;
+    }
+
+    .showcase-header h2 {
+      font-family: 'Raleway', sans-serif;
+      font-size: 3rem;
+      font-weight: 800;
+      color: #1A1A1A;
+      letter-spacing: -1px;
+    }
+
+    html.dark .showcase-header h2 {
+      color: #f0f0f0;
+    }
+
+    .showcase-scroll {
+      display: flex;
+      gap: 20px;
+      animation: showcase-scroll 40s linear infinite;
+      width: max-content;
+    }
+
+    .showcase-scroll:hover {
+      animation-play-state: paused;
+    }
+
+    @keyframes showcase-scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .showcase-card {
+      flex-shrink: 0;
+      width: 320px;
+      height: 240px;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .showcase-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .showcase-card:hover img {
+      transform: scale(1.08);
+    }
+
+    /* ─── CTA Section ─── */
+    .gallery-cta {
+      padding: 120px 0;
+      background: #F5F1EB;
+      text-align: center;
+    }
+
+    html.dark .gallery-cta {
+      background: #0a0a0a;
+    }
+
+    .gallery-cta-inner {
+      background: linear-gradient(135deg, #1A1A1A, #2D2D2D);
+      border-radius: 40px;
+      padding: 80px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gallery-cta-inner::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(166,124,70,0.2), transparent 70%);
+      border-radius: 50%;
+    }
+
+    .gallery-cta-inner h2 {
+      font-family: 'Raleway', sans-serif;
+      font-size: 3.2rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+      position: relative;
+    }
+
+    .gallery-cta-inner p {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.6);
+      max-width: 500px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+      position: relative;
+    }
+
+    .gallery-cta-btns {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      position: relative;
+    }
+
+    .btn-gold {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 36px;
+      background: linear-gradient(135deg, #F1CA74, #A67C46);
+      border-radius: 50px;
+      color: #1A1A1A;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: all 0.35s ease;
+      box-shadow: 0 8px 25px rgba(166,124,70,0.3);
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(166,124,70,0.45);
+    }
+
+    .btn-ghost-white {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 36px;
+      border: 1.5px solid rgba(255,255,255,0.25);
+      border-radius: 50px;
+      color: #fff;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: all 0.35s ease;
+      background: transparent;
+    }
+
+    .btn-ghost-white:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.4);
+      transform: translateY(-3px);
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 1200px) {
+      .masonry-grid {
+        columns: 3;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .gallery-hero-content h1 {
+        font-size: 3.5rem;
+        letter-spacing: -2px;
+      }
+
+      .gallery-hero-mosaic {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .masonry-grid {
+        columns: 2;
+      }
+
+      .gallery-hero-stats {
+        gap: 40px;
+      }
+
+      .filter-container {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .gallery-cta-inner {
+        padding: 60px 30px;
+      }
+
+      .gallery-cta-inner h2 {
+        font-size: 2.5rem;
+      }
+
+      .showcase-header h2 {
+        font-size: 2.2rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .gallery-hero {
+        min-height: 70vh;
+      }
+
+      .gallery-hero-content h1 {
+        font-size: 2.5rem;
+        letter-spacing: -1px;
+      }
+
+      .gallery-hero-content p {
+        font-size: 1rem;
+      }
+
+      .gallery-hero-mosaic {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+      }
+
+      .gallery-hero-stats {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .gallery-hero-stat .stat-number {
+        font-size: 2rem;
+      }
+
+      .masonry-grid {
+        columns: 1;
+        column-gap: 0;
+      }
+
+      .gallery-filter-section {
+        padding: 40px 0 20px;
+        top: 60px;
+      }
+
+      .filter-tabs {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 8px;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .lightbox-nav {
+        width: 42px;
+        height: 42px;
+      }
+
+      .lightbox-prev { left: 10px; }
+      .lightbox-next { right: 10px; }
+      .lightbox-close { top: 15px; right: 15px; width: 42px; height: 42px; }
+
+      .gallery-cta-inner h2 {
+        font-size: 2rem;
+      }
+
+      .showcase-card {
+        width: 260px;
+        height: 200px;
+      }
+    }
+
+    /* ─── Loading shimmer ─── */
+    .gallery-item.loading {
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      min-height: 200px;
+      border-radius: 16px;
+    }
+
+    html.dark .gallery-item.loading {
+      background: linear-gradient(90deg, #1a1a1a 25%, #222 50%, #1a1a1a 75%);
+      background-size: 200% 100%;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* Smooth filter transitions */
+    .gallery-item {
+      transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .gallery-item.filter-out {
+      opacity: 0;
+      transform: scale(0.85);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo/Logo.pdf (1) 2.png" alt="Fawn Kids Logo">
+        <span>FAWN KIDS</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">HOME</a>
+        <a href="programs.html">PROGRAMS</a>
+        <a href="curriculum.html">CURRICULUM</a>
+        <a href="admission.html">ADMISSIONS</a>
+        <a href="about.html">ABOUT</a>
+      </div>
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-outline">Login</a>
+        <a href="signup.html" class="btn btn-primary">Sign up</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- ═══ Hero Section ═══ -->
+    <section class="gallery-hero" id="gallery-hero">
+      <div class="gallery-hero-mosaic">
+        <img src="images/Gallery/IMG-20260804-WA0011.jpg" alt="Classroom" loading="eager">
+        <img src="images/Gallery/IMG_20260806_174311.jpg" alt="Student" loading="eager">
+        <img src="images/Gallery/IMG-20260804-WA0015.jpg" alt="Learning" loading="eager">
+        <img src="images/Gallery/IMG-20260730-WA0002.jpg" alt="Gardening" loading="eager">
+        <img src="images/Gallery/IMG_20260806_174422.jpg" alt="Student" loading="eager">
+        <img src="images/Gallery/IMG-20260804-WA0021.jpg" alt="Activities" loading="eager">
+        <img src="images/Gallery/IMG_20260806_174509.jpg" alt="Student" loading="eager">
+        <img src="images/Gallery/IMG-20260804-WA0024.jpg" alt="Learning" loading="eager">
+        <img src="images/Gallery/IMG_20260806_174730.jpg" alt="Student" loading="eager">
+        <img src="images/Gallery/IMG-20260804-WA0016.jpg" alt="Activities" loading="eager">
+        <img src="images/Gallery/IMG_20260806_174930.jpg" alt="Student" loading="eager">
+        <img src="images/Gallery/IMG-20260804-WA0019.jpg" alt="Classroom" loading="eager">
+        <img src="images/Gallery/IMG_20260806_175242.jpg" alt="Student" loading="eager">
+        <img src="images/Gallery/IMG_20260806_175420.jpg" alt="Student" loading="eager">
+        <img src="images/Gallery/IMG_20260806_175524.jpg" alt="Student" loading="eager">
+      </div>
+      <div class="gallery-hero-overlay"></div>
+      <div class="gallery-hero-content">
+        <div class="gallery-hero-badge">
+          <i class="fa-solid fa-camera"></i>
+          Our Gallery
+        </div>
+        <h1>Moments That <span>Stay Forever</span></h1>
+        <p>Every smile, every discovery, every milestone — captured beautifully at Fawn Kids Academy.</p>
+        <div class="gallery-hero-stats">
+          <div class="gallery-hero-stat">
+            <div class="stat-number" data-count="17">0</div>
+            <div class="stat-label">Photos</div>
+          </div>
+          <div class="gallery-hero-stat">
+            <div class="stat-number" data-count="4">0</div>
+            <div class="stat-label">Categories</div>
+          </div>
+          <div class="gallery-hero-stat">
+            <div class="stat-number" data-count="100">0</div>
+            <div class="stat-label">Happy Moments</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-scroll-indicator" onclick="document.getElementById('gallery-filters').scrollIntoView({behavior:'smooth'})">
+        <span>Scroll to Explore</span>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+    </section>
+
+    <!-- ═══ Filter Section ═══ -->
+    <section class="gallery-filter-section" id="gallery-filters">
+      <div class="container">
+        <div class="filter-container">
+          <h2 class="filter-heading">Explore Gallery</h2>
+          <div class="filter-tabs" id="filterTabs">
+            <button class="filter-tab active" data-filter="all">All</button>
+            <button class="filter-tab" data-filter="classroom">Classroom</button>
+            <button class="filter-tab" data-filter="montessori">Montessori</button>
+            <button class="filter-tab" data-filter="nature">Nature & Garden</button>
+            <button class="filter-tab" data-filter="portraits">Student Portraits</button>
+          </div>
+          <div class="filter-count" id="filterCount">17 Photos</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ Masonry Gallery Grid ═══ -->
+    <section class="gallery-grid-section">
+      <div class="container">
+        <div class="masonry-grid" id="galleryGrid">
+
+          <!-- Classroom Activities -->
+          <div class="gallery-item" data-category="classroom" data-index="0">
+            <img src="images/Gallery/IMG-20260804-WA0011.jpg" alt="Montessori classroom session at Fawn Kids" loading="lazy">
+            <div class="gallery-item-overlay">
+              <div class="item-expand"><i class="fa-solid fa-expand"></i></div>
+              <span class="item-category">Classroom</span>
+              <span class="item-title">Montessori Classroom Session</span>
+            </div>
+          </div>
+
+          <!-- Montessori Learning -->
+          <div class="gallery-item" data-category="montessori" data-index="1">
+            <img src="images/Gallery/IMG-20260804-WA0015.jpg" alt="Montessori color sorting activity" loading="lazy">
+            <div class="gallery-item-overlay">
+              <div class="item-expand"><i class="fa-solid fa-expand"></i></div>
+              <span class="item-category">Montessori</span>
+              <span class="item-title">Color Sorting with Wooden Blocks</span>
+            </div>
+          </div>
+
+          <!-- Nature -->
+          <div class="gallery-item" data-category="nature" data-index="2">
+            <img src="images/Gallery/IMG-20260730-WA0002.jpg" alt="Student with sprouted plants" loading="lazy">
+            <div class="gallery-item-overlay">
+              <div class="item-expand"><i class="fa-solid fa-expand"></i></div>
+              <span class="item-category">Nature & Garden</span>
+              <span class="item-title">Little Green Thumbs</span>
+            </div>
+          </div>
+
+          <!-- Portrait -->
+          <div class="gallery-item" data-category="portraits" data-index="3">
+            <img src="images/Gallery/IMG_20260806_174311.jpg" alt="Smiling student at Fawn Kids" loading="lazy">
+            <div class="gallery-item-overlay">
+              <div class="item-expand"><i class="fa-solid fa-expand"></i></div>
+              <span class="item-category">Student Portraits</span>
+              <span class="item-title">Proud Little Gardener</span>
+            </div>
+          </div>
+
+          <!-- More Montessori -->
+          <div class="gallery-item" data-category="montessori" data-index="4">
+            <img src="images/Gallery/IMG-20260804-WA0021.jpg" alt="Teacher guiding students with flash cards" loading="lazy">
+            <div class="gallery-item-overlay">
+              <div class="item-expand"><i class="fa-solid fa-expand"></i></div>
+              <span class="item-category">Montessori</span>
+              <span class="item-title">Learning with Picture Cards</span>
+            </div>
+          </div>
+
+          <!-- Portrait -->
+          <div class="gallery-item" data-category="portraits" data-index="5">
+            <img src="images/Gallery/IMG_20260806_174422.jpg" alt="Happy student at Fawn Kids" loading="lazy">
+            <div class="gallery-item-overlay">
+              <div class="item-expand"><i class="fa-solid fa-expand"></i></div>
+              <span class="item-category">Student Portraits</span>
+              <span class="item-title">Joy in Every Discovery</span>
+            </div>
+          </div>
+
+          <!-- Classroom -->
+          <div class="gallery-item" data-category="classroom" data-index="6">
+            <img src="images/Gallery/IMG-20260804-WA0016.jpg" alt="Classroom activities at Fawn Kids" loading="lazy">
+            <div class="gallery-item-overlay">
+              <div class="item-expand"><i class="fa-solid fa-expand"></i></div>
+              <span class="item-category">Classroom</span>
+              <span class="item-title">Guided Learning Moments</span>
+            </div>
+          </div>
+
+          <!-- Portrait -->
+          <div class="gallery-item" data-category="portraits" data-index="7">
+            <img src="images/Gallery/IMG_20260806_174509.jpg" alt="Student exploring at Fawn Kids" loading="lazy">
+            <div class="gallery-item-overlay">
+              <div class="item-expand"><i class="fa-solid fa-expand"></i></div>
+              <span class="item-category">Student Portraits</span>
+              <span class="item-title">Curious Little Explorer</span>
+            </div>
+          </div>
+
+          <!-- Montessori -->
+          <div class="gallery-item" data-category="montessori" data-index="8">
+            <img src="images/Gallery/IMG-20260804-WA0019.jpg" alt="Montessori sensory activities" loading="lazy">
+            <div class="gallery-item-overlay">
+              <div class="item-expand"><i class="fa-solid fa-expand"></i></div>
+              <span class="item-category">Montessori</span>
+              <span class="item-title">Hands-On Sensory Learning</span>
+            </div>
+          </div>
+
+          <!-- Portrait -->
+          <div class="gallery-item" data-category="portraits" data-index="9">
+            <img src="images/Gallery/IMG_20260806_174730.jpg" alt="Student at Fawn Kids" loading="lazy">
+            <div class="gallery-item-overlay">
+              <div class="item-expand"><i class="fa-solid fa-expand"></i></div>
+              <span class="item-category">Student Portraits</span>
+              <span class="item-title">Bright Minds Shine</span>
+            </div>
+          </div>
+
+          <!-- Nature/Montessori -->
+          <div class="gallery-item" data-category="montessori" data-index="10">
+            <img src="images/Gallery/IMG-20260804-WA0024.jpg" alt="Montessori materials exploration" loading="lazy">
+            <div class="gallery-item-overlay">
+              <div class="item-expand"><i class="fa-solid fa-expand"></i></div>
+              <span class="item-category">Montessori</span>
+              <span class="item-title">Exploring Montessori Materials</span>
+            </div>
+          </div>
+
+          <!-- Portrait -->
+          <div class="gallery-item" data-category="portraits" data-index="11">
+            <img src="images/Gallery/IMG_20260806_174930.jpg" alt="Student at Fawn Kids" loading="lazy">
+            <div class="gallery-item-overlay">
+              <div class="item-expand"><i class="fa-solid fa-expand"></i></div>
+              <span class="item-category">Student Portraits</span>
+              <span class="item-title">Growing with Confidence</span>
+            </div>
+          </div>
+
+          <!-- Portrait -->
+          <div class="gallery-item" data-category="portraits" data-index="12">
+            <img src="images/Gallery/IMG_20260806_175242.jpg" alt="Student at Fawn Kids" loading="lazy">
+            <div class="gallery-item-overlay">
+              <div class="item-expand"><i class="fa-solid fa-expand"></i></div>
+              <span class="item-category">Student Portraits</span>
+              <span class="item-title">A Smile Says It All</span>
+            </div>
+          </div>
+
+          <!-- Portrait -->
+          <div class="gallery-item" data-category="portraits" data-index="13">
+            <img src="images/Gallery/IMG_20260806_175420.jpg" alt="Student at Fawn Kids" loading="lazy">
+            <div class="gallery-item-overlay">
+              <div class="item-expand"><i class="fa-solid fa-expand"></i></div>
+              <span class="item-category">Student Portraits</span>
+              <span class="item-title">Learning is Fun</span>
+            </div>
+          </div>
+
+          <!-- Nature -->
+          <div class="gallery-item" data-category="nature" data-index="14">
+            <img src="images/Gallery/IMG_20260806_175524.jpg" alt="Nature exploration at Fawn Kids" loading="lazy">
+            <div class="gallery-item-overlay">
+              <div class="item-expand"><i class="fa-solid fa-expand"></i></div>
+              <span class="item-category">Nature & Garden</span>
+              <span class="item-title">Nurturing Nature's Gift</span>
+            </div>
+          </div>
+
+          <!-- Portrait -->
+          <div class="gallery-item" data-category="portraits" data-index="15">
+            <img src="images/Gallery/IMG_20260806_175644.jpg" alt="Student at Fawn Kids" loading="lazy">
+            <div class="gallery-item-overlay">
+              <div class="item-expand"><i class="fa-solid fa-expand"></i></div>
+              <span class="item-category">Student Portraits</span>
+              <span class="item-title">Future Star</span>
+            </div>
+          </div>
+
+          <!-- Portrait -->
+          <div class="gallery-item" data-category="portraits" data-index="16">
+            <img src="images/Gallery/IMG_20260806_175831.jpg" alt="Student at Fawn Kids" loading="lazy">
+            <div class="gallery-item-overlay">
+              <div class="item-expand"><i class="fa-solid fa-expand"></i></div>
+              <span class="item-category">Student Portraits</span>
+              <span class="item-title">Pure Happiness</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ Auto-scrolling Showcase ═══ -->
+    <section class="gallery-showcase">
+      <div class="container">
+        <div class="showcase-header reveal">
+          <span class="subtitle">Featured Moments</span>
+          <h2>Highlights from Our Academy</h2>
+        </div>
+      </div>
+      <div class="showcase-scroll" id="showcaseScroll">
+        <!-- First set -->
+        <div class="showcase-card"><img src="images/Gallery/IMG-20260804-WA0011.jpg" alt="Classroom"></div>
+        <div class="showcase-card"><img src="images/Gallery/IMG_20260806_174311.jpg" alt="Student"></div>
+        <div class="showcase-card"><img src="images/Gallery/IMG-20260804-WA0015.jpg" alt="Montessori"></div>
+        <div class="showcase-card"><img src="images/Gallery/IMG-20260730-WA0002.jpg" alt="Garden"></div>
+        <div class="showcase-card"><img src="images/Gallery/IMG_20260806_174422.jpg" alt="Student"></div>
+        <div class="showcase-card"><img src="images/Gallery/IMG-20260804-WA0021.jpg" alt="Activities"></div>
+        <div class="showcase-card"><img src="images/Gallery/IMG_20260806_174509.jpg" alt="Student"></div>
+        <div class="showcase-card"><img src="images/Gallery/IMG_20260806_174930.jpg" alt="Student"></div>
+        <!-- Duplicate for seamless loop -->
+        <div class="showcase-card"><img src="images/Gallery/IMG-20260804-WA0011.jpg" alt="Classroom"></div>
+        <div class="showcase-card"><img src="images/Gallery/IMG_20260806_174311.jpg" alt="Student"></div>
+        <div class="showcase-card"><img src="images/Gallery/IMG-20260804-WA0015.jpg" alt="Montessori"></div>
+        <div class="showcase-card"><img src="images/Gallery/IMG-20260730-WA0002.jpg" alt="Garden"></div>
+        <div class="showcase-card"><img src="images/Gallery/IMG_20260806_174422.jpg" alt="Student"></div>
+        <div class="showcase-card"><img src="images/Gallery/IMG-20260804-WA0021.jpg" alt="Activities"></div>
+        <div class="showcase-card"><img src="images/Gallery/IMG_20260806_174509.jpg" alt="Student"></div>
+        <div class="showcase-card"><img src="images/Gallery/IMG_20260806_174930.jpg" alt="Student"></div>
+      </div>
+    </section>
+
+    <!-- ═══ CTA Section ═══ -->
+    <section class="gallery-cta">
+      <div class="container">
+        <div class="gallery-cta-inner reveal">
+          <h2>Want to See More?</h2>
+          <p>Schedule a visit to experience the magic of Fawn Kids Academy in person. See our classrooms, meet our teachers, and feel the warmth.</p>
+          <div class="gallery-cta-btns">
+            <a href="admission.html" class="btn-gold">
+              <i class="fa-solid fa-calendar-check"></i>
+              Book a Tour
+            </a>
+            <a href="contact.html" class="btn-ghost-white">
+              <i class="fa-solid fa-phone"></i>
+              Contact Us
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-newsletter">
+          <h4>Stay in the loop</h4>
+          <p>Get updates on programs and learning insights</p>
+        </div>
+        <div class="newsletter-form-new">
+          <input type="email" placeholder="Your email">
+          <button class="btn-subscribe">Subscribe</button>
+        </div>
+      </div>
+
+      <div class="footer-main">
+        <div class="footer-info-col">
+          <img src="images/logo/Logo.pdf (1) 2.png" alt="Fawn Kids Logo" class="footer-logo">
+          <div class="footer-contact-item">
+            <strong>Address</strong>
+            No: 1 A/9, Nehru Nagar Main Road, Nehru Nagar, Tondiarpet, Chennai – 81.
+          </div>
+          <div class="footer-contact-item">
+            <strong>Contact</strong>
+            <a href="tel:+919445566377">+91 94455 66377</a> / <a href="tel:+919499909005">94999 09005</a><br>
+            <a href="mailto:fawnkidspreschool@gmail.com">fawnkidspreschool@gmail.com</a>
+          </div>
+          <div class="footer-socials">
+            <a href="contact.html#connect-online" aria-label="Connect with Fawn Kids"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.instagram.com/fawnkids_preschool_academy?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" aria-label="Connect with Fawn Kids on Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="contact.html#connect-online" aria-label="Connect with Fawn Kids"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="careers.html" aria-label="Fawn Kids careers"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="resources.html#family-guides" aria-label="Fawn Kids resources"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-links-col">
+          <h5>Quick Links</h5>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="programs.html">Programs</a></li>
+            <li><a href="curriculum.html">Curriculum</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="about.html">About us</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <h5>Support</h5>
+          <ul>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="careers.html">Careers</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="resources.html">Resources</a></li>
+            <li><p>© 2025 Fawn Kids School. All rights reserved.</p></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom-new">
+        <div class="footer-privacy">Privacy policy</div>
+        <div class="footer-legal-links">
+          <a href="terms.html">Terms of service</a>
+          <a href="cookies.html">Cookie settings</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lightbox Modal -->
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-counter" id="lightboxCounter"></div>
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+    <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
+    <div class="lightbox-image-container">
+      <img id="lightboxImg" src="" alt="Gallery image">
+    </div>
+    <div class="lightbox-info">
+      <div class="lb-category" id="lightboxCategory"></div>
+      <div class="lb-title" id="lightboxTitle"></div>
+    </div>
+  </div>
+
+  <!-- Curtain Transition Overlay -->
+  <div id="curtain-overlay"></div>
+
+  <!-- Floating Dark Mode Toggle Button -->
+  <button id="theme-toggle-btn" class="floating-theme-toggle" aria-label="Toggle Dark Mode">
+    <div class="icon-wrapper">
+      <i class="fas fa-moon moon-icon"></i>
+      <i class="fas fa-sun sun-icon"></i>
+    </div>
+  </button>
+
+  <script src="site.js"></script>
+  <script>
+    // ═══════════════════════════════════════════════════════
+    // GALLERY PAGE SCRIPTS
+    // ═══════════════════════════════════════════════════════
+
+    // ─── Navbar Scroll Effect ───
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+
+      // Sticky filter bar shadow
+      const filterSection = document.getElementById('gallery-filters');
+      if (filterSection) {
+        const rect = filterSection.getBoundingClientRect();
+        if (rect.top <= 71) {
+          filterSection.classList.add('stuck');
+        } else {
+          filterSection.classList.remove('stuck');
+        }
+      }
+    });
+
+    // ─── Counter Animation ───
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const counters = entry.target.querySelectorAll('.stat-number');
+          counters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-count'));
+            const duration = 2000;
+            const increment = target / (duration / 16);
+            let current = 0;
+            const timer = setInterval(() => {
+              current += increment;
+              if (current >= target) {
+                counter.textContent = target + '+';
+                clearInterval(timer);
+              } else {
+                counter.textContent = Math.floor(current);
+              }
+            }, 16);
+          });
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    const heroStats = document.querySelector('.gallery-hero-stats');
+    if (heroStats) counterObserver.observe(heroStats);
+
+    // ─── Gallery Item Reveal on Scroll ───
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const galleryObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, index * 80);
+          galleryObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '50px' });
+
+    galleryItems.forEach(item => galleryObserver.observe(item));
+
+    // ─── Filter Functionality ───
+    const filterTabs = document.querySelectorAll('.filter-tab');
+    const filterCount = document.getElementById('filterCount');
+
+    filterTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Update active tab
+        filterTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        const filter = tab.getAttribute('data-filter');
+        let visibleCount = 0;
+
+        galleryItems.forEach(item => {
+          const category = item.getAttribute('data-category');
+          if (filter === 'all' || category === filter) {
+            item.classList.remove('hidden', 'filter-out');
+            item.classList.add('visible');
+            visibleCount++;
+          } else {
+            item.classList.add('filter-out');
+            setTimeout(() => {
+              item.classList.add('hidden');
+            }, 350);
+          }
+        });
+
+        filterCount.textContent = visibleCount + ' Photos';
+      });
+    });
+
+    // ─── Lightbox ───
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxCategory = document.getElementById('lightboxCategory');
+    const lightboxTitle = document.getElementById('lightboxTitle');
+    const lightboxCounter = document.getElementById('lightboxCounter');
+    const lightboxClose = document.getElementById('lightboxClose');
+    const lightboxPrev = document.getElementById('lightboxPrev');
+    const lightboxNext = document.getElementById('lightboxNext');
+
+    let currentIndex = 0;
+    let visibleItems = [];
+
+    function updateVisibleItems() {
+      visibleItems = Array.from(document.querySelectorAll('.gallery-item:not(.hidden)'));
+    }
+
+    function openLightbox(index) {
+      updateVisibleItems();
+      currentIndex = index;
+      updateLightboxContent();
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function updateLightboxContent() {
+      const item = visibleItems[currentIndex];
+      if (!item) return;
+      const img = item.querySelector('img');
+      const category = item.querySelector('.item-category');
+      const title = item.querySelector('.item-title');
+
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt;
+      lightboxCategory.textContent = category ? category.textContent : '';
+      lightboxTitle.textContent = title ? title.textContent : '';
+      lightboxCounter.textContent = (currentIndex + 1) + ' / ' + visibleItems.length;
+    }
+
+    function nextImage() {
+      currentIndex = (currentIndex + 1) % visibleItems.length;
+      updateLightboxContent();
+    }
+
+    function prevImage() {
+      currentIndex = (currentIndex - 1 + visibleItems.length) % visibleItems.length;
+      updateLightboxContent();
+    }
+
+    // Event Listeners
+    galleryItems.forEach((item, idx) => {
+      item.addEventListener('click', () => {
+        updateVisibleItems();
+        const visibleIdx = visibleItems.indexOf(item);
+        if (visibleIdx !== -1) openLightbox(visibleIdx);
+      });
+    });
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightboxPrev.addEventListener('click', prevImage);
+    lightboxNext.addEventListener('click', nextImage);
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('active')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') prevImage();
+    });
+
+    // Click outside to close
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox || e.target.classList.contains('lightbox-image-container')) {
+        closeLightbox();
+      }
+    });
+
+    // Touch swipe for lightbox
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    lightbox.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    lightbox.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      const diff = touchStartX - touchEndX;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) nextImage();
+        else prevImage();
+      }
+    }, { passive: true });
+
+    // ─── Scroll Reveal Observer ───
+    const revealObserverOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.15
+    };
+
+    const revealObserver = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, revealObserverOptions);
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
+      revealObserver.observe(el);
+    });
+
+    // ─── Dark Mode Toggle ───
+    (function() {
+      const toggleBtn = document.getElementById('theme-toggle-btn');
+      const curtain = document.getElementById('curtain-overlay');
+      
+      if (toggleBtn && curtain) {
+        let isAnimating = false;
+        
+        toggleBtn.addEventListener('click', () => {
+          if (isAnimating) return;
+          isAnimating = true;
+          
+          const isCurrentlyDark = document.documentElement.classList.contains('dark');
+          const nextTheme = isCurrentlyDark ? 'light' : 'dark';
+          
+          curtain.style.backgroundColor = nextTheme === 'dark' ? '#0e0e0e' : '#FAF6F0';
+          curtain.style.transformOrigin = 'top';
+          curtain.style.transform = 'scaleY(1)';
+          
+          setTimeout(() => {
+            if (nextTheme === 'dark') {
+              document.documentElement.classList.add('dark');
+              localStorage.setItem('theme', 'dark');
+            } else {
+              document.documentElement.classList.remove('dark');
+              localStorage.setItem('theme', 'light');
+            }
+            
+            curtain.style.transformOrigin = 'bottom';
+            curtain.style.transform = 'scaleY(0)';
+            
+            setTimeout(() => {
+              curtain.style.transformOrigin = 'top';
+              isAnimating = false;
+            }, 550);
+          }, 550);
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
